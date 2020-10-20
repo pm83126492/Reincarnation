@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLV3 : Player
 {
-    public GameObject obstacle;
+    private GameObject obstacle;
     public Transform Hookpoint, Hookpoint2, Hookpoint3, Hookpoint4;
     public DistanceJoint2D PlayerJoint, HookJoint, HookJoint2, HookJoint3, HookJoint4;
     public bool isSwing,isSwingJump,isSwing2,isSwingJump2;
@@ -235,7 +235,7 @@ public class PlayerLV3 : Player
                     //SwingParent.transform.rotation = new Quaternion(0, 0, gameObject.transform.rotation.z, 0);
                     //obstacle.transform.rotation= new Quaternion(0, 0, SwingParent.transform.rotation.z, 0);
                     //transform.position = new Vector3(obstacle.transform.position.x, 5, transform.position.z);
-                    transform.position = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y-5, transform.position.z);
+                    transform.position = new Vector3(obstacle.transform.position.x, obstacle.transform.position.y-5.5f, transform.position.z);
                     if (rigidbody2D.velocity.x > 0)
                     {
                         //anim.SetBool("SwingRight", true);

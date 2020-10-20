@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
             {
                 anim.SetBool("Push", false);
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                //obstacle.GetComponent<FixedJoint2D>().enabled = false;
                 obstacle = null;
             }
         }
