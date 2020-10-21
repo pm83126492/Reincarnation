@@ -138,14 +138,17 @@ public class PlayerLV2 : Player
             }
             if (isObstacle)
             {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
+                if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
                 {
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 5;
-                    if (rigidbody2D.velocity.x >= 0)
+                    Obstacle();
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                    if (rigidbody2D.velocity.x < 0)
                     {
-                        Obstacle();
+                        anim.SetBool("Push", false);
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                        obstacle = null;
                     }
-                    anim.SetBool("Push", true);
                 }
                 else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
                 {
