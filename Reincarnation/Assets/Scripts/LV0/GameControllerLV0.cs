@@ -221,7 +221,7 @@ public class GameControllerLV0 : MonoBehaviour
                 PlayerAnim.SetBool("Staff", true);
                 LightTimer += Time.deltaTime;
                // DoorFlowerLight.SetFloat("_Amount", Mathf.Clamp(LightTimer / OneDuration, 0, 2));
-                if (LightTimer >= 3)
+                if (LightTimer >= 4)
                 {
                     CanvasGroupTimer += Time.deltaTime;
                     DoorCanvasGroup.alpha = CanvasGroupTimer / OneDuration;
