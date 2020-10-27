@@ -19,19 +19,19 @@ public class GameControllerLV03 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y <= -12)
+        if (player.transform.position.y <= -18)
         {
             virtualCamera.Follow = null;
             //virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2;
         }
-        if (player.transform.position.y <= -15)
+        if (player.transform.position.y <= -30)
         {
             BlackAnim.SetTrigger("FadeOut");
         }
 
         if (blackFade.CanChangeScene)
         {
-            SceneManager.LoadScene("LV4");
+            SceneManager.LoadScene("LV3");
         }
     }
 }
