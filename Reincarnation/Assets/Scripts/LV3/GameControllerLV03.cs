@@ -10,6 +10,12 @@ public class GameControllerLV03 : MonoBehaviour
     public Animator BlackAnim;
     public BlackFade blackFade;
     public CinemachineVirtualCamera virtualCamera;
+    public GameObject PlayerCirminalHand;
+    public GameObject criminalBody01, criminalBody02, criminalBody03, criminalBody04;
+    public SpriteRenderer criminal01, criminal02, criminal03, criminal04;
+    public Sprite[] criminal_hand;
+    public PlayerLV3 playerLV3;
+    bool isDown;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +38,66 @@ public class GameControllerLV03 : MonoBehaviour
         if (blackFade.CanChangeScene)
         {
             SceneManager.LoadScene("LV3");
+        }
+
+        BreakHand();
+    }
+
+    void BreakHand()
+    {
+        if(playerLV3.isSwingJump)
+        {
+            StartCoroutine(BreakHandTime());           
+        }
+        else
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    IEnumerator BreakHandTime()
+    {
+        yield return new WaitForSeconds(5f);
+        if (playerLV3.hit2.collider.gameObject.tag == "Swing")
+        {
+            PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[0];
+            criminalBody01.SetActive(true);
+            criminal01.enabled = false;
+        }
+        else if (playerLV3.hit2.collider.gameObject.tag == "Swing2")
+        {
+            PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[1];
+            criminalBody02.SetActive(true);
+            criminal02.enabled = false;
+        }
+        else if (playerLV3.hit2.collider.gameObject.tag == "Swing3")
+        {
+            PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[2];
+            criminalBody03.SetActive(true);
+            criminal03.enabled = false;
+        }
+        else if (playerLV3.hit2.collider.gameObject.tag == "Swing4")
+        {
+            PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[3];
+            criminalBody04.SetActive(true);
+            criminal04.enabled = false;
+        }
+        PlayerCirminalHand.SetActive(true);
+        playerLV3.transform.parent = null;
+        playerLV3.rigidbody2D.isKinematic = false;
+        if (!isDown)
+        {
+            if (playerLV3.obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+                playerLV3.rigidbody2D.velocity = new Vector2(4.5f, 0);
+            }
+            else if (playerLV3.obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 0)
+            {
+                transform.localRotation = new Quaternion(0, 180, 0, 0);
+                playerLV3.rigidbody2D.velocity = new Vector2(-4.5f, 0);
+            }
+            isDown = true;
         }
     }
 }

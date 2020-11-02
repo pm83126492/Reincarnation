@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
                 if (!isJumpButton)
                 {
                     OneTouchY2 = touch.position.y;
-                    if (OneTouchY + 50 < OneTouchY2)
+                    if (OneTouchY + 100 < OneTouchY2)
                     {
                         isJumpButton = true;
                     }
@@ -238,7 +238,7 @@ public class Player : MonoBehaviour
                 if (!isJumpButton2)
                 {
                     TwoTouchY2 = touch2.position.y;
-                    if (TwoTouchY + 50 < TwoTouchY2)
+                    if (TwoTouchY + 100 < TwoTouchY2)
                     {
                         isJumpButton2 = true;
                     }
@@ -302,7 +302,7 @@ public class Player : MonoBehaviour
                 if (!isJumpButton3)
                 {
                     ThreeTouchY2 = touch1.position.y;
-                    if (ThreeTouchY + 50 < ThreeTouchY2)
+                    if (ThreeTouchY + 100 < ThreeTouchY2)
                     {
                         isJumpButton3 = true;
                     }
@@ -344,7 +344,7 @@ public class Player : MonoBehaviour
         }
 
         //判斷是否跳
-        if ((OneTouchY + 50 < OneTouchY2 || TwoTouchY + 50 < TwoTouchY2||ThreeTouchY+50<ThreeTouchY2) && !jump)
+        if ((OneTouchY + 100 < OneTouchY2 || TwoTouchY + 100 < TwoTouchY2||ThreeTouchY+100<ThreeTouchY2) && !jump)
         {
             jump = true;
         }

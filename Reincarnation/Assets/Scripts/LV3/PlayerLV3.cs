@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLV3 : Player
 {
     public GameObject obstacle2;
-    public bool isSwing, isSwingJump, isSwing2, isSwingJump2;
+    public bool isSwing, isSwingJump, isSwing2, isSwingJump2,isColliderSwing;
     public GameObject PlayerPoint;
     public GameObject SwingParent;
     public SwingRotation swingRotation;
@@ -36,8 +36,7 @@ public class PlayerLV3 : Player
             //第一隻手指
             if (touch.phase == TouchPhase.Began)
             {
-                if (!isSwing)
-                {
+                
                     if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
                     {
                         obstacle2 = hit2.collider.gameObject;
@@ -60,7 +59,7 @@ public class PlayerLV3 : Player
                             obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
                         }
                     }
-                }
+                
             }
 
             if (touch.phase == TouchPhase.Ended)
@@ -125,8 +124,7 @@ public class PlayerLV3 : Player
 
             if (touch1.phase == TouchPhase.Began)
             {
-                if (!isSwing2)
-                {
+                
                     if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
                     {
                         obstacle2 = hit2.collider.gameObject;
@@ -150,7 +148,7 @@ public class PlayerLV3 : Player
                         }
                         OneTouchX = OneTouchX2 = 0;
                     }
-                }
+                
             }
 
             if (touch1.phase == TouchPhase.Ended)
@@ -184,8 +182,7 @@ public class PlayerLV3 : Player
             //第二隻手指放掉瞬間
             if (touch2.phase == TouchPhase.Began)
             {
-                if (!isSwing)
-                {
+                
                     if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
                     {
                         obstacle2 = hit2.collider.gameObject;
@@ -208,7 +205,7 @@ public class PlayerLV3 : Player
                             obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
                         }
                     }
-                }
+                
             }
 
             if (touch2.phase == TouchPhase.Ended)
@@ -250,10 +247,11 @@ public class PlayerLV3 : Player
         if (Input.GetKeyDown(KeyCode.E))
         {
 
-            if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
+            if (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4")
             {
                 obstacle2 = hit2.collider.gameObject;
                 isSwing = true;
+                isSwingJump = true;
                 rigidbody2D.isKinematic = true;
                 anim.SetBool("Swing", true);
                 obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
@@ -275,8 +273,9 @@ public class PlayerLV3 : Player
         }
         if (Input.GetKeyUp(KeyCode.E))
         {
-            if (isSwing)
+            if (isSwingJump)
             {
+                isSwingJump = false;
                 transform.parent = null;
                 rigidbody2D.isKinematic = false;
                 if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0&& obstacle2.GetComponent<Rigidbody2D>().velocity.y>0)
@@ -309,5 +308,18 @@ public class PlayerLV3 : Player
             isSwing2 = false;
         }
 
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Swing")|| other.gameObject.CompareTag("Swing2") || other.gameObject.CompareTag("Swing3") || other.gameObject.CompareTag("Swing4"))
+        {
+            isColliderSwing = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        isColliderSwing = false;
     }
 }
