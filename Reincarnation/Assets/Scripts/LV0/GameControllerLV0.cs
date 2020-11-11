@@ -9,8 +9,10 @@ public class GameControllerLV0 : MonoBehaviour
     public Canvas TeachUI;
     public bool IsWin;
     public bool IsWin02;
+    bool isUseDrawUI;
     bool isUseObjUI;
     public Player player;
+    public EnemyAI enemyAI;
     public BlackFade blackFade;
 
     public CanvasGroup DoorCanvasGroup;
@@ -30,12 +32,12 @@ public class GameControllerLV0 : MonoBehaviour
     private float TwoDuration = 2f;
     private float CanNotMoveTime;
     public Animation anim;
-    public Animator PlayerAnim;
+    public Animator PlayerAnim,EnemyAnim;
     public Animator BlockFadeAnim;
     public Animation Dooranim;
 
-    public GameObject bloom;
-    public GameObject DoorEffect;
+    public GameObject DrawObject, DrawCanvas;
+    public GameObject bloom, Vignette;
     public GameObject Door;
     public GameObject DoorFlower;
     public GameObject DoorOpen;
@@ -44,8 +46,14 @@ public class GameControllerLV0 : MonoBehaviour
     public GameObject JumpMoveUI;
     public GameObject SlideMoveUI;
     public GameObject UseObjUI;
-    public BoxCollider2D DoorCollider;
+    public BoxCollider2D DoorCollider, UIInvisibleWall;
     public BoxCollider2D DoorWinCollider;
+
+    public ParticleSystem FormationEffect;
+    public GameObject DisappearEffect,EnemyTransform;
+    public SpriteRenderer EnemyObject;
+
+    float EnemyToPlayerDistance;
     public enum state
     {
         NONE,
@@ -66,10 +74,8 @@ public class GameControllerLV0 : MonoBehaviour
     void Start()
     {
         bloom.SetActive(false);
-        player.GetComponent<MeshRenderer>().sortingOrder = 40;
         player.enabled = false;
         StartCoroutine(TurnRightMoveUI());
-        DoorEffect.GetComponent<MeshRenderer>().sortingOrder = 0;
         Door.SetActive(true);
         DoorFlower.SetActive(true);
         DoorOpen.SetActive(false);
@@ -89,7 +95,15 @@ public class GameControllerLV0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //關卡們狀態機
         DoorState();
+        //畫符事件
+        DrawLineEvent();
+        //無常出現
+        EnemyAppear();
+
+
+
         //解謎成功
         if (IsWin == true && IsWin02 == true)
         {
@@ -324,6 +338,7 @@ public class GameControllerLV0 : MonoBehaviour
                 {
                     TeachUI.enabled = false;
                     SlideMoveUI.SetActive(false);
+                    UIInvisibleWall.enabled = false;
                     GameState = state.NONE;
                 }
                 else if (GameState == state.UseObj)
@@ -340,32 +355,24 @@ public class GameControllerLV0 : MonoBehaviour
     IEnumerator TurnRightMoveUI()
     {
         yield return new WaitForSeconds(4);
-      //  PlayerAnim.SetTrigger("idle");
-      //  player.enabled = false;
         GameState = state.RightMove;
     }
 
     IEnumerator TurnLeftMoveUI()
     {
         yield return new WaitForSeconds(4);
-      //  PlayerAnim.SetTrigger("idle");
-      //  player.enabled = false;
         GameState = state.LeftMove;
     }
 
     IEnumerator TurnJumpMoveUI()
     {
         yield return new WaitForSeconds(4);
-       // PlayerAnim.SetTrigger("idle");
-       // player.enabled = false;
         GameState = state.JumpMove;
     }
 
     IEnumerator TurnSlideMoveUI()
     {
         yield return new WaitForSeconds(4);
-        // PlayerAnim.SetTrigger("idle");
-        // player.enabled = false;
         GameState = state.SlideMove;
     }
 
@@ -376,4 +383,54 @@ public class GameControllerLV0 : MonoBehaviour
             BlockFadeAnim.SetTrigger("FadeOut");
         }
     }
+
+    void EnemyAppear()
+    {
+        if (player.transform.position.x >= 3 && !isUseDrawUI)
+        {
+            enemyAI.enabled = true;
+        }
+    }
+
+    void DrawLineEvent()
+    {
+        EnemyToPlayerDistance = Vector2.Distance(EnemyTransform.transform.position, player.transform.position);
+
+        if (EnemyToPlayerDistance<=10.5f&&!isUseDrawUI)
+        {
+            isUseDrawUI = true;
+            player.anim.SetFloat("WalkSpeed", 0);
+            player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
+            player.enabled = false;
+            DrawCanvas.SetActive(true);
+            DrawObject.SetActive(true);
+            bloom.SetActive(true);
+        }
+
+        if(EnemyToPlayerDistance <= 4f && isUseDrawUI)
+        {
+            enemyAI.enabled = false;
+        }
+
+        if (LineCollider.ColliderNumber == 10)
+        {
+            bloom.SetActive(false);
+            DrawCanvas.SetActive(false);
+            DrawObject.SetActive(false);
+            FormationEffect.Play();
+            StartCoroutine(DisappearEffectOpen());
+            LineCollider.ColliderNumber += 1;
+        }
+    }
+    IEnumerator DisappearEffectOpen()
+    {
+        yield return new WaitForSeconds(2);
+        enemyAI.enabled = false;
+        EnemyAnim.SetBool("Disappear", true);
+        //EnemyObject.enabled = false;
+        DissolveTimer += Time.deltaTime;        
+        Instantiate(DisappearEffect, EnemyTransform.transform.position, EnemyTransform.transform.rotation);
+        player.enabled = true;
+    }
+   
 }

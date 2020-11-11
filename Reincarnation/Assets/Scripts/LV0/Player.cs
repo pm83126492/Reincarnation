@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public float JumpForce = 13f;
     private float horizontalMove;
 
+    public float StopSlideTime;//停止滑行時間
+
     public bool isNotStop;
     public bool isNotStop2;
 
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
     public bool isTouch2;
     public bool isTouch3;
     public bool isSlide;
+    public bool isColliderEnemy;
 
     public float footOffset = 0;
     public float groundDistance = 0.5f;
@@ -274,7 +277,7 @@ public class Player : MonoBehaviour
             {
                 if (isObstacle)
                 {
-                    if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
+                    if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
                     {
                         anim.SetBool("Push", true);
                         Obstacle();
@@ -451,4 +454,5 @@ public class Player : MonoBehaviour
         obstacle.GetComponent<FixedJoint2D>().enabled = true;
         obstacle.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
     }
+
 }

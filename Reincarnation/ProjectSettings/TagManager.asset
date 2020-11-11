@@ -19,6 +19,8 @@ TagManager:
   - Swing4
   - effect
   - UseObj
+  - DrawCollider
+  - Enemy
   layers:
   - Default
   - TransparentFX
