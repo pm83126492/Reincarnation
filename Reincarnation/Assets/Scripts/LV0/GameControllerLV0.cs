@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class GameControllerLV0 : MonoBehaviour
@@ -31,13 +33,15 @@ public class GameControllerLV0 : MonoBehaviour
     private float OneDuration = 1f;
     private float TwoDuration = 2f;
     private float CanNotMoveTime;
+    public int FlashingNumber;
+    public float FlashTime;
     public Animation anim;
     public Animator PlayerAnim,EnemyAnim;
     public Animator BlockFadeAnim;
     public Animation Dooranim;
 
     public GameObject DrawObject, DrawCanvas;
-    public GameObject bloom, Vignette;
+    public GameObject bloom;
     public GameObject Door;
     public GameObject DoorFlower;
     public GameObject DoorOpen;
@@ -52,8 +56,10 @@ public class GameControllerLV0 : MonoBehaviour
     public ParticleSystem FormationEffect;
     public GameObject DisappearEffect,EnemyTransform;
     public SpriteRenderer EnemyObject;
-
+    public Vignette vignette;
+    public Volume volume;
     float EnemyToPlayerDistance;
+    public bool is123, is456;
     public enum state
     {
         NONE,
@@ -73,6 +79,11 @@ public class GameControllerLV0 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Vignette tmp;
+        if (volume.profile.TryGet<Vignette>(out tmp))
+        {
+            vignette = tmp;
+        }
         bloom.SetActive(false);
         player.enabled = false;
         StartCoroutine(TurnRightMoveUI());
@@ -95,14 +106,32 @@ public class GameControllerLV0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //關卡們狀態機
+        //關卡門狀態機
         DoorState();
         //畫符事件
-        DrawLineEvent();
+       // DrawLineEvent();
         //無常出現
         EnemyAppear();
-
-
+        if (vignette.color.value.r == 0.7f)
+        {
+            is123 = true;
+        }
+        else if (vignette.color.value.r == 0f)
+        {
+            is123 = false;
+        }
+        if (!is123)
+        {
+            DissolveTimer += Time.deltaTime;
+            LightTimer = 0;
+            vignette.color.value = new Color(Mathf.Clamp(DissolveTimer / 0.5f, 0, 0.7f), 0f, 0f);
+        }
+        else if(is123)
+        {
+            LightTimer += Time.deltaTime;
+            DissolveTimer = 0;
+            vignette.color.value = new Color(Mathf.Clamp(0.7f - LightTimer / 0.5f, 0, 0.7f), 0f, 0f);
+        }
 
         //解謎成功
         if (IsWin == true && IsWin02 == true)
@@ -388,6 +417,10 @@ public class GameControllerLV0 : MonoBehaviour
     {
         if (player.transform.position.x >= 3 && !isUseDrawUI)
         {
+            if (enemyAI.enabled == false)
+            {
+                EnemyComingFlashing(FlashingNumber, FlashTime);
+            }
             enemyAI.enabled = true;
         }
     }
@@ -433,4 +466,15 @@ public class GameControllerLV0 : MonoBehaviour
         player.enabled = true;
     }
    
+    void EnemyComingFlashing(int Number,float Seconds)
+    {
+        StartCoroutine(Flashing(Number, Seconds));
+    }
+    IEnumerator Flashing(int Number, float Seconds)
+    {
+        for (int i=0; i< Number*2; i++)
+        {
+            yield return new WaitForSeconds(Seconds);
+        }
+    }
 }

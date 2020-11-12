@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2411,6 +2411,8 @@ MonoBehaviour:
   DoorCrackHDR: {fileID: 2100000, guid: f4af34c2ae5a92d4b97668ec6c061b77, type: 2}
   DoorFlowerDissolveMaterial: {fileID: 2100000, guid: 1eb8af61f1e64d548b64665e31350976,
     type: 2}
+  FlashingNumber: 0
+  FlashTime: 0
   anim: {fileID: 1093175758}
   PlayerAnim: {fileID: 1531614766}
   EnemyAnim: {fileID: 895373999}
@@ -2419,7 +2421,6 @@ MonoBehaviour:
   DrawObject: {fileID: 100925794}
   DrawCanvas: {fileID: 1333174974}
   bloom: {fileID: 1161313910}
-  Vignette: {fileID: 0}
   Door: {fileID: 1991884873}
   DoorFlower: {fileID: 1115621814}
   DoorOpen: {fileID: 623326809}
@@ -2436,6 +2437,10 @@ MonoBehaviour:
     type: 3}
   EnemyTransform: {fileID: 895373996}
   EnemyObject: {fileID: 895373998}
+  vignette: {fileID: 0}
+  volume: {fileID: 387778840}
+  is123: 0
+  is456: 0
   GameState: 0
 --- !u!4 &512828590
 Transform:
@@ -8589,7 +8594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &885367523
 Transform:
   m_ObjectHideFlags: 0
