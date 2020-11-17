@@ -12,6 +12,7 @@ public class GameControllerLV03 : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
     public GameObject PlayerCirminalHand;
     public GameObject criminalBody01, criminalBody02, criminalBody03, criminalBody04;
+    public GameObject RockFloor;
     public SpriteRenderer criminal01, criminal02, criminal03, criminal04;
     public Sprite[] criminal_hand;
     public PlayerLV3 playerLV3;
@@ -20,12 +21,17 @@ public class GameControllerLV03 : MonoBehaviour
     void Start()
     {
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0;
+        if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
+        {
+            IntrodutionUI.isNotOnce = false;
+            IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y <= -18)
+        if (player.transform.position.y <= -18|| player.transform.position.x >= 35)
         {
             virtualCamera.Follow = null;
             //virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2;
@@ -33,6 +39,10 @@ public class GameControllerLV03 : MonoBehaviour
         if (player.transform.position.y <= -30)
         {
             BlackAnim.SetTrigger("FadeOut");
+        }
+        if (player.transform.position.y >= -12)
+        {
+            RockFloor.transform.position = new Vector3(100, 100, 100);
         }
 
         if (blackFade.CanChangeScene)
@@ -45,7 +55,7 @@ public class GameControllerLV03 : MonoBehaviour
 
     void BreakHand()
     {
-        if(playerLV3.isSwingJump)
+        if((playerLV3.isSwingJump&&!playerLV3.isSwingJump2 )||(!playerLV3.isSwingJump && playerLV3.isSwingJump2))
         {
             StartCoroutine(BreakHandTime());           
         }

@@ -45,7 +45,7 @@ public class PlayerLV2 : Player
             }
             if (touch.phase == TouchPhase.Stationary && OneTouchX == OneTouchX2)
             {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle)
+                if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle&&rigidbody2D.velocity.x==0)
                 {
                     isTouchOrgan = true;
                 }
@@ -246,7 +246,7 @@ public class PlayerLV2 : Player
             GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
             GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
             GetComponent<PlayerLV2>().enabled = false;
-            anim.SetTrigger("IceSmokeDie");
+            anim.SetTrigger("IceOrganDie");
         }
     }
 }

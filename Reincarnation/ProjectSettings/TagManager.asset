@@ -21,6 +21,8 @@ TagManager:
   - UseObj
   - DrawCollider
   - Enemy
+  - EnemyAppearCollider
+  - smallobstacle
   layers:
   - Default
   - TransparentFX

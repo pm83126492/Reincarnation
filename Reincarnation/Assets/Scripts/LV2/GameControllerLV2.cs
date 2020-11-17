@@ -20,6 +20,11 @@ public class GameControllerLV2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
+        {
+            IntrodutionUI.isNotOnce = false;
+            IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
+        }
         isWin = false;
         StartCoroutine(PlaySmokeIce01());
         StartCoroutine(PlaySmokeIce02());

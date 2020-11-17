@@ -31,7 +31,7 @@ public class Line : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             theTrail.transform.parent = null;
-            edgeCollider.enabled = false;
+            //edgeCollider.enabled = false;
         }
     }
 

@@ -36,36 +36,38 @@ public class PlayerLV3 : Player
             //第一隻手指
             if (touch.phase == TouchPhase.Began)
             {
-                
-                    if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
+
+                if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
+                {
+                    obstacle2 = hit2.collider.gameObject;
+                    isSwing = true;
+                    isSwingJump = true;
+                    rigidbody2D.isKinematic = true;
+                    anim.SetBool("Swing", true);
+                    obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
+                    if (rigidbody2D.velocity.x >= 0)
                     {
-                        obstacle2 = hit2.collider.gameObject;
-                        isSwing = true;
-                        rigidbody2D.isKinematic = true;
-                        anim.SetBool("Swing", true);
+                        gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
+                        transform.localPosition = new Vector3(0, 0, 0);
                         obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                        if (rigidbody2D.velocity.x >= 0)
-                        {
-                            gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
-                            transform.localPosition = new Vector3(0, 0, 0);
-                            obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                            transform.localRotation = new Quaternion(0, 0, 0, 0);
-                        }
-                        else if (rigidbody2D.velocity.x < 0)
-                        {
-                            gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
-                            transform.localPosition = new Vector3(0, 0, 0);
-                            transform.localRotation = new Quaternion(0, 180, 0, 0);
-                            obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
-                        }
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
-                
+                    else if (rigidbody2D.velocity.x < 0)
+                    {
+                        gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
+                        transform.localPosition = new Vector3(0, 0, 0);
+                        transform.localRotation = new Quaternion(0, 180, 0, 0);
+                        obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
+                    }
+                }
+
             }
 
             if (touch.phase == TouchPhase.Ended)
             {
                 if (isSwing)
                 {
+                    isSwingJump = false;
                     transform.parent = null;
                     rigidbody2D.isKinematic = false;
                     if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
@@ -91,6 +93,7 @@ public class PlayerLV3 : Player
                 }
                 else if (isSwing2)
                 {
+                    isSwingJump2 = false;
                     transform.parent = null;
                     rigidbody2D.isKinematic = false;
                     if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
@@ -124,37 +127,39 @@ public class PlayerLV3 : Player
 
             if (touch1.phase == TouchPhase.Began)
             {
-                
-                    if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
+
+                if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
+                {
+                    obstacle2 = hit2.collider.gameObject;
+                    isSwingJump2 = true;
+                    isSwing2 = true;
+                    rigidbody2D.isKinematic = true;
+                    anim.SetBool("Swing", true);
+                    obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
+                    if (rigidbody2D.velocity.x >= 0)
                     {
-                        obstacle2 = hit2.collider.gameObject;
-                        isSwing2 = true;
-                        rigidbody2D.isKinematic = true;
-                        anim.SetBool("Swing", true);
+                        gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
+                        transform.localPosition = new Vector3(0, 0, 0);
                         obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                        if (rigidbody2D.velocity.x >= 0)
-                        {
-                            gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
-                            transform.localPosition = new Vector3(0, 0, 0);
-                            obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                            transform.localRotation = new Quaternion(0, 0, 0, 0);
-                        }
-                        else if (rigidbody2D.velocity.x < 0)
-                        {
-                            gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
-                            transform.localPosition = new Vector3(0, 0, 0);
-                            transform.localRotation = new Quaternion(0, 180, 0, 0);
-                            obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
-                        }
-                        OneTouchX = OneTouchX2 = 0;
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
-                
+                    else if (rigidbody2D.velocity.x < 0)
+                    {
+                        gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
+                        transform.localPosition = new Vector3(0, 0, 0);
+                        transform.localRotation = new Quaternion(0, 180, 0, 0);
+                        obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
+                    }
+                    OneTouchX = OneTouchX2 = 0;
+                }
+
             }
 
             if (touch1.phase == TouchPhase.Ended)
             {
                 if (isSwing2)
                 {
+                    isSwingJump2 = false;
                     transform.parent = null;
                     rigidbody2D.isKinematic = false;
                     if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
@@ -186,6 +191,7 @@ public class PlayerLV3 : Player
                     if (hit2.collider != null && (hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
                     {
                         obstacle2 = hit2.collider.gameObject;
+                        isSwingJump = true;
                         isSwing = true;
                         rigidbody2D.isKinematic = true;
                         anim.SetBool("Swing", true);
@@ -212,6 +218,7 @@ public class PlayerLV3 : Player
             {
                 if (isSwing)
                 {
+                    isSwingJump = false;
                     transform.parent = null;
                     rigidbody2D.isKinematic = false;
                     if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)

@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public float StopSlideTime;//停止滑行時間
 
+    public bool isCanMove;
     public bool isNotStop;
     public bool isNotStop2;
 
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
     public bool isSlide;
     public bool isColliderEnemy;
 
+    protected float SlideTime;
+
     public float footOffset = 0;
     public float groundDistance = 0.5f;
     public float playerWidth = 0.24f;
@@ -67,6 +70,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isCanMove = true;
         player = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -76,8 +80,11 @@ public class Player : MonoBehaviour
     protected virtual void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        if (isCanMove)
+        {
+            MobileTouch();//判斷手指滑動狀態
+        }
         PlayerAnimation();//角色動畫
-        MobileTouch();//判斷手指滑動狀態
         GroundCheck();//判斷是否在地面上
         obstacleCheck();//判斷是否碰到障礙物
 
@@ -290,6 +297,19 @@ public class Player : MonoBehaviour
                             obstacle = null;
                         }
                     }
+                    else if (hit2.collider != null && hit2.collider.gameObject.tag == "smallobstacle")
+                    {
+                        anim.SetBool("SquatPush", true);
+                        Obstacle();
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                        if (rigidbody2D.velocity.x < 0)
+                        {
+                            anim.SetBool("SquatPush", false);
+                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                            obstacle = null;
+                        }
+                    }
                 }
             }
 
@@ -323,19 +343,27 @@ public class Player : MonoBehaviour
             }
         }
 
-        if ((TwoTouchY > TwoTouchY2 + 50|| ThreeTouchY > ThreeTouchY2 + 50) && rigidbody2D.velocity.x != 0)
+        if ((TwoTouchY > TwoTouchY2 + 200|| OneTouchY > OneTouchY2 + 200|| ThreeTouchY > ThreeTouchY2 + 200) && rigidbody2D.velocity.x != 0)
         {
             isSlide = true;
         }
 
         if (isSlide)
         {
+            SlideTime += Time.deltaTime;
             anim.SetBool("Slide", true);
             boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
             boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
+            if (SlideTime >= 1)
+            {
+                isSlide = false;
+                OneTouchY = OneTouchY2;
+                TwoTouchY = TwoTouchY2;
+            }
         }
         else if(!isSlide)
         {
+            SlideTime = 0;
             anim.SetBool("Slide", false);
             boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
             boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
@@ -441,7 +469,7 @@ public class Player : MonoBehaviour
 
     public void Obstacle()
     {
-        if (hit2.collider.gameObject.tag == "obstacle")
+        if (hit2.collider.gameObject.tag == "obstacle"|| hit2.collider.gameObject.tag == "smallobstacle")
         {
             obstacle = hit2.collider.gameObject;
             obstacle.GetComponent<Rigidbody2D>().gravityScale = 3;

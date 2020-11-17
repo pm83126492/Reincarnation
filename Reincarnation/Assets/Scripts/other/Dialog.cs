@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Dialog : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class Dialog : MonoBehaviour
         else
         {
             text.text = "";
+            SceneManager.LoadScene("StartUI");
         }
     }
 
