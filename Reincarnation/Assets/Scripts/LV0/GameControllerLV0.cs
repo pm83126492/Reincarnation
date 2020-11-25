@@ -8,10 +8,13 @@ public class GameControllerLV0 : MonoBehaviour
 {
     public Canvas DoorCanvas;
     public Canvas TeachUI;
+    public Canvas SkipUI;
+    public Canvas GetStickUI;
 
     public CanvasGroup DoorCanvasGroup;
     public CanvasGroup DoorCicleFlowerCanvasGroup;
 
+    bool Skip;
     public bool IsWin;
     public bool IsWin02;
     public bool isFlashRed;
@@ -57,6 +60,7 @@ public class GameControllerLV0 : MonoBehaviour
     public GameObject UseObjUI;
     public GameObject EnemyUI;
     public GameObject DrawUI;
+    public GameObject TeachObject;
 
     public BoxCollider2D DoorCollider, UIInvisibleWall;
     public BoxCollider2D DoorWinCollider;
@@ -74,6 +78,7 @@ public class GameControllerLV0 : MonoBehaviour
         UseObj,
         EnemyAppearUI,
         DrawAppearUI,
+        FinishDrawUI,
         StartGame,
         DoorLightFadeIn,
         DoorCanAnim,
@@ -89,10 +94,10 @@ public class GameControllerLV0 : MonoBehaviour
         bloom.SetActive(false);
         enemyAI.enabled = false;
         player.enabled = false;
-        StartCoroutine(TurnRightMoveUI());
         Door.SetActive(true);
         DoorFlower.SetActive(true);
         DoorOpen.SetActive(false);
+        StartCoroutine(StartGame());
         GameState = state.NONE;
         IsWin = IsWin02 = isUseObjUI = isEnemyAppearUI = false;
         DoorCanvasGroup.alpha = 0;
@@ -249,12 +254,21 @@ public class GameControllerLV0 : MonoBehaviour
                 {
                     TeachUI.enabled = true;
                     DrawUI.SetActive(true);
-                    GameState = state.NONE;
+                    GameState = state.FinishDrawUI;
                     Time.timeScale = 0;
                 }
                 break;
 
-            
+            case state.FinishDrawUI:
+                if (drawEnemy.isEnemyDie&&drawEnemy.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX==0.5f)
+                {
+                    Time.timeScale = 0;
+                    GetStickUI.enabled = true;
+                    GameState = state.NONE;
+                }
+                break;
+
+
 
             //小圖門花紋發光
             case state.DoorLightFadeIn:
@@ -281,6 +295,7 @@ public class GameControllerLV0 : MonoBehaviour
                 DoorFlowerDissolveMaterial.SetFloat("_DissolveAmount", Mathf.Clamp(DissolveTimer / OneDuration, 0, 1.1f));
                 DoorCicleFlowerCanvasGroup.alpha = 1 - DissolveTimer / OneDuration;
                 Camera.main.orthographic = true;
+                PlayerAnim.SetBool("Staff", false);
                 player.enabled = false;
                 break;
 
@@ -288,7 +303,6 @@ public class GameControllerLV0 : MonoBehaviour
             case state.DoorWin:
                 CrackHDRTimer += Time.deltaTime;
                 DoorCrackHDR.SetFloat("_ColorAmount", Mathf.Clamp(CrackHDRTimer / TwoDuration, 0, 5));
-                PlayerAnim.SetBool("Staff", false);
                 bloom.SetActive(false);
                 if (DoorCrackHDR.GetFloat("_ColorAmount") >= 1)
                 {
@@ -381,7 +395,7 @@ public class GameControllerLV0 : MonoBehaviour
 
     IEnumerator TurnRightMoveUI()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(1);
         GameState = state.RightMove;
     }
 
@@ -401,6 +415,13 @@ public class GameControllerLV0 : MonoBehaviour
     {
         yield return new WaitForSeconds(4);
         GameState = state.SlideMove;
+    }
+
+    IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(2f);
+        SkipUI.enabled = true;
+        Time.timeScale = 0;
     }
 
     IEnumerator PauseGame()
@@ -440,21 +461,43 @@ public class GameControllerLV0 : MonoBehaviour
         Time.timeScale = 1;
         TeachUI.enabled = false;
         EnemyUI.SetActive(false);
-        if (GameState == state.NONE)
+        if (GameState == state.FinishDrawUI)
         {
             drawEnemy.DrawObject.SetActive(true);
         }
     }
-   
-   /* void EnemyComingFlashing(int Number,float Seconds)
+
+    public void SkipButton()
     {
-        StartCoroutine(Flashing(Number, Seconds));
+        TeachObject.SetActive(false);
+        PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
+        SkipUI.enabled = false;
+        GetStickUI.enabled = true;
     }
-    IEnumerator Flashing(int Number, float Seconds)
+
+    public void CloseNoStickUI()
     {
-        for (int i=0; i< Number*2; i++)
-        {
-            yield return new WaitForSeconds(Seconds);
-        }
-    }*/
+        Time.timeScale = 1;
+        GetStickUI.enabled = false;
+        player.enabled = true;
+    }
+
+    public void NoSkipButton()
+    {
+        Time.timeScale = 1;
+        StartCoroutine(TurnRightMoveUI());
+        SkipUI.enabled = false;
+    }
+
+    /* void EnemyComingFlashing(int Number,float Seconds)
+     {
+         StartCoroutine(Flashing(Number, Seconds));
+     }
+     IEnumerator Flashing(int Number, float Seconds)
+     {
+         for (int i=0; i< Number*2; i++)
+         {
+             yield return new WaitForSeconds(Seconds);
+         }
+     }*/
 }

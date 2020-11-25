@@ -132,7 +132,7 @@ public class DrawEnemy : MonoBehaviour
             player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
             if (SceneManager.GetActiveScene().buildIndex != 0)
             {
-                DrawObject.SetActive(true);
+               // DrawObject.SetActive(true);
             }
         }
 

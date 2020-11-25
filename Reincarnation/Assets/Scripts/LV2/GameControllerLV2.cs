@@ -87,6 +87,7 @@ public class GameControllerLV2 : MonoBehaviour
         if(smokeParticle01.isIceSmoke|| smokeParticle02.isIceSmoke || smokeParticle03.isIceSmoke)
         {
             PlayerAnim.SetTrigger("IceSmokeDie");
+            player.rigidbody2D.sharedMaterial = null;
             player.enabled = false;
         }
     }

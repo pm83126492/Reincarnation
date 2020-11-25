@@ -6,13 +6,19 @@ public class PlayerLV2 : Player
 {
 
     public GameObject organIce;
-    //public GameObject obstacle;
     public GameObject OrganCircle;
 
     public Transform OrganPosition;
 
     bool isTouchOrgan;
     public bool CanChangeScene;
+
+
+    protected override void Start()
+    {
+        base.Start();
+        rigidbody2D.sharedMaterial = WallPhysics;
+    }
 
     protected override void MobileTouch()
     {
@@ -78,7 +84,7 @@ public class PlayerLV2 : Player
                     {
                         anim.SetBool("Push", true);
                         Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                         if (rigidbody2D.velocity.x < 0)
                         {
                             anim.SetBool("Push", false);
@@ -91,7 +97,7 @@ public class PlayerLV2 : Player
                     {
                         anim.SetBool("SquatPush", true);
                         Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                         if (rigidbody2D.velocity.x < 0)
                         {
                             anim.SetBool("SquatPush", false);
@@ -104,7 +110,7 @@ public class PlayerLV2 : Player
                     {
                         anim.SetBool("SquatPush", true);
                         Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 5;
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                         if (rigidbody2D.velocity.x > 0)
                         {
                             anim.SetBool("SquatPush", false);
@@ -138,10 +144,10 @@ public class PlayerLV2 : Player
             }
             if (isObstacle)
             {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
+                /*if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
                 {
                     Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 7;
                     if (rigidbody2D.velocity.x < 0)
                     {
                         anim.SetBool("Push", false);
@@ -149,11 +155,11 @@ public class PlayerLV2 : Player
                         obstacle.GetComponent<FixedJoint2D>().enabled = false;
                         obstacle = null;
                     }
-                }
-                else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
+                }*/
+                if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
                 {
                     Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 3;
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                     if (rigidbody2D.velocity.x < 0)
                     {
                         anim.SetBool("SquatPush", false);
@@ -166,7 +172,7 @@ public class PlayerLV2 : Player
                 else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
                 {
                     Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 5;
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                     if (rigidbody2D.velocity.x > 0)
                     {
                         anim.SetBool("SquatPush", false);
@@ -246,6 +252,7 @@ public class PlayerLV2 : Player
             GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
             GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
             GetComponent<PlayerLV2>().enabled = false;
+            rigidbody2D.sharedMaterial = null;
             anim.SetTrigger("IceOrganDie");
         }
     }

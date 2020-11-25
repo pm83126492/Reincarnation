@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public PhysicsMaterial2D WallPhysics;
     public Rigidbody2D rigidbody2D;
     protected BoxCollider2D boxCollider2D;
     protected Transform player;
     public Animator anim;
     public float runSpeed = 250f;
     public float JumpForce = 13f;
+    public float ObjectsGravity=4f;
     private float horizontalMove;
 
     public float StopSlideTime;//停止滑行時間
@@ -68,7 +70,7 @@ public class Player : MonoBehaviour
 
     public GameObject obstacle;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         isCanMove = true;
         player = GetComponent<Transform>();
@@ -114,7 +116,7 @@ public class Player : MonoBehaviour
                 if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
                 {
                     Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 3;
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                     if (rigidbody2D.velocity.x < 0)
                     {
                         anim.SetBool("Push", false);
@@ -288,7 +290,7 @@ public class Player : MonoBehaviour
                     {
                         anim.SetBool("Push", true);
                         Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                         if (rigidbody2D.velocity.x < 0)
                         {
                             anim.SetBool("Push", false);
@@ -301,7 +303,7 @@ public class Player : MonoBehaviour
                     {
                         anim.SetBool("SquatPush", true);
                         Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 4;
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                         if (rigidbody2D.velocity.x < 0)
                         {
                             anim.SetBool("SquatPush", false);
@@ -472,7 +474,7 @@ public class Player : MonoBehaviour
         if (hit2.collider.gameObject.tag == "obstacle"|| hit2.collider.gameObject.tag == "smallobstacle")
         {
             obstacle = hit2.collider.gameObject;
-            obstacle.GetComponent<Rigidbody2D>().gravityScale = 3;
+           // obstacle.GetComponent<Rigidbody2D>().gravityScale = 5;
         }
         else
         {
