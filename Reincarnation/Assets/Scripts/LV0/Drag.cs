@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Drag : MonoBehaviour
 {
-    float deltaX, deltaY;
-    bool moveAllowed = false;
-    bool thisColTouched = false;
-    Rigidbody2D rb;
+    protected float deltaX, deltaY;
+    protected bool moveAllowed = false;
+    protected bool thisColTouched = false;
+    protected Rigidbody2D rb;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         Physics2D.IgnoreLayerCollision(9, 5);
         Physics2D.IgnoreLayerCollision(8, 5);
@@ -28,6 +28,7 @@ public class Drag : MonoBehaviour
                 case TouchPhase.Began:
                     if (GetComponent<BoxCollider2D>() == Physics2D.OverlapPoint(touchPos))
                     {
+                        this.transform.SetAsLastSibling();
                         thisColTouched = true;
                         moveAllowed = true;
                         rb.isKinematic = false;

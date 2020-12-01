@@ -14,6 +14,8 @@ public class GameControllerLV0 : MonoBehaviour
     public CanvasGroup DoorCanvasGroup;
     public CanvasGroup DoorCicleFlowerCanvasGroup;
 
+    public ParticleSystem DoorEffect;
+
     bool Skip;
     public bool IsWin;
     public bool IsWin02;
@@ -44,6 +46,7 @@ public class GameControllerLV0 : MonoBehaviour
     float CineTime;
 
     public Animation anim;
+    public Animation DoorUIanim;
     public Animation Dooranim;
     public Animator PlayerAnim;
     public Animator BlockFadeAnim;
@@ -61,6 +64,9 @@ public class GameControllerLV0 : MonoBehaviour
     public GameObject EnemyUI;
     public GameObject DrawUI;
     public GameObject TeachObject;
+    public GameObject Door_CorkRed_Under;
+    public GameObject[] Door_LR;
+    public GameObject[] Doorlock_LR;
 
     public BoxCollider2D DoorCollider, UIInvisibleWall;
     public BoxCollider2D DoorWinCollider;
@@ -153,7 +159,7 @@ public class GameControllerLV0 : MonoBehaviour
             anim.Play();
             GameState = state.DoorCanAnim;
             StartCoroutine(BoolDoorFlowerDissolve());
-            DoorCircleLightMaterial.SetColor("_OutlineColor", new Vector4(255, 100, 0, 255) * 0.005f);
+            DoorCircleLightMaterial.SetColor("_OutlineColor", new Vector4(255, 100, 0, 255) * 0.004f);
             LightTimer = 0;
         }
     }
@@ -285,6 +291,7 @@ public class GameControllerLV0 : MonoBehaviour
             //解謎門動畫    
             case state.DoorCanAnim:
                 bloom.SetActive(true);
+                PlayerAnim.SetBool("Staff", false);
                 LightTimer += Time.deltaTime;
                 DoorCircleLightMaterial.SetFloat("_OutlineThickness", Mathf.Clamp(LightTimer / OneDuration, 0, 2));
                 break;
@@ -295,27 +302,51 @@ public class GameControllerLV0 : MonoBehaviour
                 DoorFlowerDissolveMaterial.SetFloat("_DissolveAmount", Mathf.Clamp(DissolveTimer / OneDuration, 0, 1.1f));
                 DoorCicleFlowerCanvasGroup.alpha = 1 - DissolveTimer / OneDuration;
                 Camera.main.orthographic = true;
-                PlayerAnim.SetBool("Staff", false);
                 player.enabled = false;
                 break;
 
             //解謎成功
             case state.DoorWin:
+                DoorCrackHDR.SetFloat("_ColorAmount", 1.5f);
+                DoorUIanim.Play();
+                StartCoroutine(DoorOpenAnim());
+                StartCoroutine(EnableDoor());
+                ColorAmount = DoorCrackHDR.GetFloat("_ColorAmount");
+                Door_CorkRed_Under.transform.parent = Door_LR[0].transform;
+                Doorlock_LR[0].transform.parent = Door_LR[0].transform;
+                Doorlock_LR[1].transform.parent = Door_LR[1].transform;
+                /*
                 CrackHDRTimer += Time.deltaTime;
-                DoorCrackHDR.SetFloat("_ColorAmount", Mathf.Clamp(CrackHDRTimer / TwoDuration, 0, 5));
-                bloom.SetActive(false);
-                if (DoorCrackHDR.GetFloat("_ColorAmount") >= 1)
+                //Camera.main.orthographic = false;
+                // DoorCrackHDR.SetFloat("_ColorAmount", Mathf.Clamp(CrackHDRTimer / TwoDuration, 0, 5));
+                DoorEffect.Play();
+
+                if (CrackHDRTimer >= 3)
+                {
+                    IsWin = IsWin02 = false;
+                    StartCoroutine(EnableDoor());
+                   // ColorAmount = DoorCrackHDR.GetFloat("_ColorAmount");
+                }*/
+
+                /*
+                CrackHDRTimer += Time.deltaTime;
+                DoorCrackHDR.SetFloat("_ColorAmount", Mathf.Clamp(CrackHDRTimer / 2, 0, 10));
+                PlayerAnim.SetBool("Staff", false);
+                if (DoorCrackHDR.GetFloat("_ColorAmount") >= 1.5f)
                 {
                     IsWin = IsWin02 = false;
                     StartCoroutine(EnableDoor());
                     ColorAmount = DoorCrackHDR.GetFloat("_ColorAmount");
-                }
+                }*/
                 break;
 
             //關掉解謎門
             case state.DoorOver:
+                //DoorCrackHDR.SetFloat("_ColorAmount", 0f);
+                Camera.main.orthographic = false;
+                //bloom.SetActive(false);
                 CrackHDRTimer += Time.deltaTime;
-                DoorCrackHDR.SetFloat("_ColorAmount", ColorAmount - CrackHDRTimer / OneDuration);
+                //DoorCrackHDR.SetFloat("_ColorAmount", ColorAmount - CrackHDRTimer / OneDuration);
                 CanvasGroupDissloveTimer += Time.deltaTime;
                 DoorCanvasGroup.alpha = 1 - CanvasGroupDissloveTimer / TwoDuration;
                 DoorFlowerLight.SetFloat("_Amount", 0);
@@ -323,23 +354,26 @@ public class GameControllerLV0 : MonoBehaviour
                 Door.SetActive(false);
                 DoorFlower.SetActive(false);
                 DoorOpen.SetActive(true);
-                Camera.main.orthographic = false;
                 player.enabled = true;
                 DoorWinCollider.enabled = true;
-                StartCoroutine(DoorOpenAnim());
+                if (DoorCanvasGroup.alpha <= 0)
+                {
+                    bloom.SetActive(false);
+                    GameState = state.NONE;
+                }
                 break;
         }
     }
     IEnumerator DoorOpenAnim()
     {
         yield return new WaitForSeconds(2f);
-        GameState = state.NONE;
+        //GameState = state.NONE;
         Dooranim.Play();
     }
 
     IEnumerator EnableDoor()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         DoorCollider.enabled=false;
         CrackHDRTimer = 0;
         GameState = state.DoorOver;

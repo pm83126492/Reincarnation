@@ -203,8 +203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa2b0252bb7900408d2bb63a32d7219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WallPhysics: {fileID: 0}
+  rigidbody2D: {fileID: 0}
+  anim: {fileID: 0}
   runSpeed: 250
   JumpForce: 13
+  ObjectsGravity: 4
+  StopSlideTime: 0
+  isCanMove: 0
   isNotStop: 0
   isNotStop2: 0
   OneTouchX: 0
@@ -230,7 +236,9 @@ MonoBehaviour:
   isGround: 1
   isObstacle: 1
   isTouch2: 0
+  isTouch3: 0
   isSlide: 0
+  isColliderEnemy: 0
   footOffset: 0
   groundDistance: 0.5
   playerWidth: 0.24
@@ -243,8 +251,8 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
-  organIce: {fileID: 0}
   obstacle: {fileID: 0}
+  organIce: {fileID: 0}
   OrganCircle: {fileID: 0}
   OrganPosition: {fileID: 0}
   CanChangeScene: 0

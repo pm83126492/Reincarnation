@@ -16,6 +16,7 @@ public class GameControllerLV03 : MonoBehaviour
     public SpriteRenderer criminal01, criminal02, criminal03, criminal04;
     public Sprite[] criminal_hand;
     public PlayerLV3 playerLV3;
+    public ParticleSystem[] BloodEffect;
     bool isDown;
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class GameControllerLV03 : MonoBehaviour
             virtualCamera.Follow = null;
             //virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2;
         }
-        if (player.transform.position.y <= -30)
+        if (player.transform.position.y <= -70)
         {
             BlackAnim.SetTrigger("FadeOut");
         }
@@ -68,26 +69,31 @@ public class GameControllerLV03 : MonoBehaviour
     IEnumerator BreakHandTime()
     {
         yield return new WaitForSeconds(5f);
+        playerLV3.enabled = false;
         if (playerLV3.hit2.collider.gameObject.tag == "Swing")
         {
+            BloodEffect[0].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[0];
             criminalBody01.SetActive(true);
             criminal01.enabled = false;
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing2")
         {
+            BloodEffect[1].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[1];
             criminalBody02.SetActive(true);
             criminal02.enabled = false;
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing3")
         {
+            BloodEffect[2].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[2];
             criminalBody03.SetActive(true);
             criminal03.enabled = false;
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing4")
         {
+            BloodEffect[3].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[3];
             criminalBody04.SetActive(true);
             criminal04.enabled = false;
