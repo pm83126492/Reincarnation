@@ -44,6 +44,7 @@ public class PlayerLV3 : Player
                     isSwingJump = true;
                     rigidbody2D.isKinematic = true;
                     anim.SetBool("Swing", true);
+                    anim.Play("no-stick_grab-swing", 0, 0f);
                     obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
                     if (rigidbody2D.velocity.x >= 0)
                     {
@@ -282,6 +283,7 @@ public class PlayerLV3 : Player
         {
             if (isSwingJump)
             {
+                anim.SetBool("Swing", false);
                 isSwingJump = false;
                 transform.parent = null;
                 rigidbody2D.isKinematic = false;
