@@ -13,7 +13,7 @@ public class PlayerLV2 : Player
     bool isTouchOrgan;
     public bool CanChangeScene;
 
-
+    public Rope rope;
     protected override void Start()
     {
         base.Start();
@@ -188,6 +188,7 @@ public class PlayerLV2 : Player
         {
             if (organIce != null)
             {
+                rope.bendLimit = 30;
                 anim.enabled = true;
                 anim.SetBool("Roll", false);
                 organIce.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -224,6 +225,7 @@ public class PlayerLV2 : Player
     //起重冰事件
     void Organ()
     {
+        rope.bendLimit = 0;
         gameObject.transform.position = OrganPosition.position;
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         if (organIce.transform.position.y < 12)
