@@ -9,7 +9,6 @@ public class GameControllerLV2 : MonoBehaviour
     public GameObject IceOrgan, IceButtonBox, IcePlate,Player,IceBig;
     public ParticleSystem SmokeIce01, SmokeIce02, SmokeIce03;
     public Transform CanButtonPoint, CanButtonPoint02,IcePlateStop;
-    public CinemachineVirtualCamera virtualCamera;
     public Animator BlackAnim,PlayerAnim;
     public SmokeParticle smokeParticle01, smokeParticle02, smokeParticle03;
     public PlayerLV2 player;
@@ -35,7 +34,6 @@ public class GameControllerLV2 : MonoBehaviour
     void Update()
     {
         CanGoLV3();
-        CameraNotFollow();
         LastIceMove();
         Lose();
 
@@ -69,11 +67,6 @@ public class GameControllerLV2 : MonoBehaviour
 
     void Lose()
     {
-        if (Player.transform.position.y <= -4)
-        {
-            virtualCamera.Follow = null;
-        }
-
         if (Player.transform.position.y <= -150|| player.CanChangeScene)
         {
             BlackAnim.SetTrigger("FadeOut");
@@ -105,14 +98,6 @@ public class GameControllerLV2 : MonoBehaviour
             {
                 IcePlate.transform.Translate(-1 * Time.deltaTime, 0, 0);
             }
-        }
-    }
-
-    void CameraNotFollow()
-    {
-        if (player.transform.position.x >= 119)
-        {
-            virtualCamera.Follow = null;
         }
     }
 

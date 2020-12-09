@@ -32,10 +32,9 @@ public class GameControllerLV03 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y <= -18|| player.transform.position.x >= 35)
+        if (player.transform.position.y <= -18)
         {
-            virtualCamera.Follow = null;
-            //virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2;
+            playerLV3.enabled = false;
         }
         if (player.transform.position.y <= -70)
         {

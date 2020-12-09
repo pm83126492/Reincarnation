@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public class GameControllerLv1 : MonoBehaviour
 {
     public CanvasGroup MirrorCanvasGroup;
     public Player player;
     float CanvasGroupTimer;
+
+    public UniversalRenderPipelineAsset cameraData;
+    public RenderPipelineAsset renderPipeline;
     public enum state
     {
         NONE,
@@ -17,11 +22,15 @@ public class GameControllerLv1 : MonoBehaviour
     void Start()
     {
         MirrorCanvasGroup.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
+       
+
         switch (GameState)
         {
             case state.MIRROR:

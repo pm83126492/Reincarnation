@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-[CustomEditor(typeof(Rope))]
+//[CustomEditor(typeof(Rope))]
 public class RopeEditor : Editor
 {
     Texture nodeTexture;

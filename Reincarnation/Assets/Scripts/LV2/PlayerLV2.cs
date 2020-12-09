@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerLV2 : Player
 {
-
     public GameObject organIce;
     public GameObject OrganCircle;
 
     public Transform OrganPosition;
 
-    bool isTouchOrgan;
+    public bool isTouchOrgan;
     public bool CanChangeScene;
 
     public Rope rope;
@@ -51,7 +50,7 @@ public class PlayerLV2 : Player
             }
             if (touch.phase == TouchPhase.Stationary && OneTouchX == OneTouchX2)
             {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle&&rigidbody2D.velocity.x==0)
+                if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle)
                 {
                     isTouchOrgan = true;
                 }
@@ -188,7 +187,6 @@ public class PlayerLV2 : Player
         {
             if (organIce != null)
             {
-                rope.bendLimit = 30;
                 anim.enabled = true;
                 anim.SetBool("Roll", false);
                 organIce.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -225,7 +223,7 @@ public class PlayerLV2 : Player
     //起重冰事件
     void Organ()
     {
-        rope.bendLimit = 0;
+        rope.ChangeRopeBendLimit(0);
         gameObject.transform.position = OrganPosition.position;
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         if (organIce.transform.position.y < 12)
