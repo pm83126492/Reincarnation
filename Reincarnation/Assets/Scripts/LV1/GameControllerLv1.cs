@@ -22,14 +22,12 @@ public class GameControllerLv1 : MonoBehaviour
     void Start()
     {
         MirrorCanvasGroup.gameObject.SetActive(false);
-
+        Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
-       
+    {     
 
         switch (GameState)
         {
