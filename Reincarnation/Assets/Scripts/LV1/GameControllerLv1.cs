@@ -42,13 +42,4 @@ public class GameControllerLv1 : MonoBehaviour
                 break;
         }
     }
-
-    public void MirrorCanOpen()
-    {
-        if (player.isObstacle == true)
-        {
-            MirrorCanvasGroup.gameObject.SetActive(true);
-            GameState = state.MIRROR;
-        }
-    }
 }
