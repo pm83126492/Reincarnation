@@ -98,12 +98,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
+            isSlide = true;
             anim.SetBool("Slide", true);
             boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
             boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
         }
         else if (Input.GetKeyUp(KeyCode.S))
         {
+            isSlide = false;
             anim.SetBool("Slide", false);
             boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
             boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
@@ -126,6 +128,19 @@ public class Player : MonoBehaviour
                     }
                     anim.SetBool("Push", true);
                 }
+                else if (hit2.collider != null && hit2.collider.gameObject.tag == "smallobstacle")
+                {
+                    anim.SetBool("SquatPush", true);
+                    Obstacle();
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                    if (rigidbody2D.velocity.x < 0)
+                    {
+                        anim.SetBool("SquatPush", false);
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                        obstacle = null;
+                    }
+                }
             }
         }
         else if (Input.GetKeyUp(KeyCode.E))
@@ -133,8 +148,9 @@ public class Player : MonoBehaviour
             if (obstacle != null)
             {
                 anim.SetBool("Push", false);
+                anim.SetBool("SquatPush", false);
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                //obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                obstacle.GetComponent<FixedJoint2D>().enabled = false;
                 obstacle = null;
             }
         }

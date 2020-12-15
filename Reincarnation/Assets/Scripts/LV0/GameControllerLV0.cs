@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using UnityEngine.Playables;
 
 public class GameControllerLV0 : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameControllerLV0 : MonoBehaviour
     public ParticleSystem DoorEffect;
 
     bool Skip;
+    bool isStop;
     public bool IsWin;
     public bool IsWin02;
     public bool isFlashRed;
@@ -26,7 +28,7 @@ public class GameControllerLV0 : MonoBehaviour
 
     public Player player;
     public BlackFade blackFade;
-
+    public PlayableDirector playableDirector;
 
     public Material DoorFlowerLight;
     public Material DoorCircleLightMaterial;
@@ -44,6 +46,7 @@ public class GameControllerLV0 : MonoBehaviour
     private float TwoDuration = 2f;
     private float CanNotMoveTime;
     float CineTime;
+    float SlideTime;
 
     public Animation anim;
     public Animation DoorUIanim;
@@ -76,11 +79,11 @@ public class GameControllerLV0 : MonoBehaviour
     public enum state
     {
         NONE,
-        STOP,
         RightMove,
         LeftMove,
         JumpMove,
         SlideMove,
+        PleaseObj,
         UseObj,
         EnemyAppearUI,
         DrawAppearUI,
@@ -91,6 +94,8 @@ public class GameControllerLV0 : MonoBehaviour
         DoorDissolve,
         DoorWin,
         DoorOver,
+        STOP,
+        STOP2,
     }
     public state GameState;
     // Start is called before the first frame update
@@ -120,6 +125,7 @@ public class GameControllerLV0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayableTime();
         //關卡門狀態機
         DoorState();
 
@@ -134,7 +140,7 @@ public class GameControllerLV0 : MonoBehaviour
             SceneManager.LoadScene("LV2");
         }
 
-        UIEvent();
+       // UIEvent();
 
         if (drawEnemy.isEnemyDie&&drawEnemy.virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX==0.5f)
         {
@@ -174,6 +180,7 @@ public class GameControllerLV0 : MonoBehaviour
     {
         switch (GameState)
         {
+            /*
             case state.STOP:
                 TeachUIStopTime += Time.deltaTime;
                 if (TeachUIStopTime >= 2f)
@@ -273,8 +280,88 @@ public class GameControllerLV0 : MonoBehaviour
                     GameState = state.NONE;
                 }
                 break;
+                */
+            case state.NONE:
+                player.enabled = true;
+                break;
 
+            case state.STOP:
+                player.anim.SetFloat("WalkSpeed", 0);
+                player.anim.SetBool("Slide", false);
+                player.anim.SetBool("SquatPush", false);
+                player.obstacle = null;
+                player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
+                player.enabled = false;               
+                break;
 
+            //RightMove
+            case state.RightMove:
+                player.enabled = true;
+                if(player.hit2.collider!=null&&player.hit2.collider.gameObject.tag == "arrow")
+                {
+                    playableDirector.Play();
+                    GameState = state.STOP;
+                    // StartCoroutine(TurnLeftMoveUI());
+                }
+                break;
+
+            //LeftMove
+            case state.LeftMove:
+                player.enabled = true;
+                if (player.hit2.collider != null && player.hit2.collider.gameObject.tag == "arrowLeft")
+                {
+                    playableDirector.Play();
+                   // StartCoroutine(TurnJumpMoveUI());
+                    GameState = state.STOP;
+                }
+                break;
+
+            //JumpMove
+            case state.JumpMove:
+                player.enabled = true;
+                if (player.transform.position.y > 0)
+                {
+                    playableDirector.Play();
+                    StartCoroutine(TurnSlideMoveUI());
+                    GameState = state.STOP;
+                }
+                break;
+
+            //SlideMove
+            case state.SlideMove:
+                player.enabled = true;
+                if (player.isSlide ==true)
+                {
+                    SlideTime += Time.deltaTime;
+                    if (SlideTime > 0.7f)
+                    {
+                        playableDirector.Play();
+                        StartCoroutine(TurnPleaseObjUI());
+                        GameState = state.STOP;
+                    }
+                }
+                break;
+
+            //PleaseObj
+            case state.PleaseObj:
+                player.enabled = true;
+                if (player.hit2.collider != null && player.hit2.collider.gameObject.tag == "smallobstacle")
+                {
+                    playableDirector.Play();
+                    StartCoroutine(TurnUseObjUI());
+                    GameState = state.STOP;
+                }
+                break;
+
+            //UseObj
+            case state.UseObj:
+                player.enabled = true;
+                if (player.obstacle!=null&&player.obstacle.transform.position.x>-5f)
+                {
+                    playableDirector.Play();
+                    GameState = state.STOP;
+                }
+                break;
 
             //小圖門花紋發光
             case state.DoorLightFadeIn:
@@ -429,26 +516,45 @@ public class GameControllerLV0 : MonoBehaviour
 
     IEnumerator TurnRightMoveUI()
     {
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5.5f);
+        playableDirector.Pause();
         GameState = state.RightMove;
     }
 
     IEnumerator TurnLeftMoveUI()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5.5f);
+        playableDirector.Pause();
         GameState = state.LeftMove;
     }
 
     IEnumerator TurnJumpMoveUI()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5f);
+        playableDirector.Pause();
         GameState = state.JumpMove;
     }
 
     IEnumerator TurnSlideMoveUI()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(8f);
+        playableDirector.Pause();
         GameState = state.SlideMove;
+    }
+
+    IEnumerator TurnPleaseObjUI()
+    {
+        yield return new WaitForSeconds(1f);
+        playableDirector.Pause();
+        GameState = state.PleaseObj;
+    }
+
+    IEnumerator TurnUseObjUI()
+    {
+        yield return new WaitForSeconds(5f);
+        playableDirector.Pause();
+        GameState = state.UseObj;
     }
 
     IEnumerator StartGame()
@@ -465,6 +571,40 @@ public class GameControllerLV0 : MonoBehaviour
         TeachUI.enabled = true;
         EnemyUI.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    void PlayableTime()
+    {
+        if (float.Parse(playableDirector.time.ToString("0.0"))==5.5f)
+        {
+            playableDirector.Pause();
+            GameState = state.RightMove;
+        }
+        else if(float.Parse(playableDirector.time.ToString("0.0")) == 11f)
+        {
+            playableDirector.Pause();
+            GameState = state.LeftMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 16f)
+        {
+            playableDirector.Pause();
+            GameState = state.JumpMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 24f)
+        {
+            playableDirector.Pause();
+            GameState = state.SlideMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 25f)
+        {
+            playableDirector.Pause();
+            GameState = state.PleaseObj;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 30f)
+        {
+            playableDirector.Pause();
+            GameState = state.UseObj;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -519,7 +659,10 @@ public class GameControllerLV0 : MonoBehaviour
     public void NoSkipButton()
     {
         Time.timeScale = 1;
-        StartCoroutine(TurnRightMoveUI());
+        TeachUI.enabled = true;
+        playableDirector.Play();
+        GameState = state.STOP;
+        //StartCoroutine(TurnRightMoveUI());
         SkipUI.enabled = false;
     }
 

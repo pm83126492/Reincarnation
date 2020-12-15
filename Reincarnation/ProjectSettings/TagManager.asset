@@ -23,6 +23,8 @@ TagManager:
   - Enemy
   - EnemyAppearCollider
   - smallobstacle
+  - arrow
+  - arrowLeft
   layers:
   - Default
   - TransparentFX
