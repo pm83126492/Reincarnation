@@ -101,10 +101,9 @@
         }
 #endif
 
-        protected void SetupRefractionMask()
+        protected void SetupRefractionMask(Vector3 position)
         {
-            var transform = _mainModule.Transform;
-            _refractionMask.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            _refractionMask.transform.SetPositionAndRotation(position, _mainModule.Rotation);
             _refractionMask.SetupRenderingProperties(_materialModule.RenderQueue, _sortingLayerID, _sortingOrder);
         }
 

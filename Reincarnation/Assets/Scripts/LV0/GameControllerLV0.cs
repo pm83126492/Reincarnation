@@ -643,6 +643,7 @@ public class GameControllerLV0 : MonoBehaviour
 
     public void SkipButton()
     {
+        Time.timeScale = 1;
         TeachObject.SetActive(false);
         PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
         SkipUI.enabled = false;

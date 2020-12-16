@@ -140,8 +140,14 @@
             bool isUsingOpaqueRenderQueue = _materialModule.RenderQueue == 2000;
 
             if ((renderRefraction || fakePerspective) && !isUsingOpaqueRenderQueue)
-                SetupRefractionMask();
+            {
+                var refractionRenderingProperties = renderRefraction ? _wholeWaterVisibleArea.RefractionProperties : _surfaceVisibleArea.RefractionProperties;
 
+                Vector3 maskPosition = refractionRenderingProperties.Position;
+                maskPosition.z += refractionRenderingProperties.NearClipPlane + 0.001f;
+
+                SetupRefractionMask(maskPosition);
+            }
 #if GAME_2D_WATER_KIT_LWRP || GAME_2D_WATER_KIT_URP
             _renderingContext = context;
 #endif

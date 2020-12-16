@@ -91,7 +91,10 @@
 
             if (!isUsingOpaqueRenderQueue)
             {
-                SetupRefractionMask();
+                var refractionRenderingPorperties = _visibleArea.RefractionProperties;
+                Vector3 maskPosition = refractionRenderingPorperties.Position;
+                maskPosition.z += refractionRenderingPorperties.NearClipPlane + 0.001f;
+                SetupRefractionMask(maskPosition);
                 SetRefractionMaskLayer(Refraction.GetValidRefractionMaskLayer());
             }
 

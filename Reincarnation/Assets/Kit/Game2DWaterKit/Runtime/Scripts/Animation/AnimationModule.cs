@@ -16,6 +16,8 @@
         private float _animationDuration;
         private float _animationElapsedTime;
 
+        public bool IsAnimating { get { return _isAnimatingSize; } }
+
         #region Methods
 
         protected void AnimateSize(Vector2 targetSize, float duration, WaterAnimationConstraint constraint, WaterAnimationWrapMode wrapMode = WaterAnimationWrapMode.Once)
@@ -32,6 +34,11 @@
             _animationWrapMode = wrapMode;
             _animationElapsedTime = 0f;
             _isAnimatingSize = true;
+        }
+
+        public void StopAnimation()
+        {
+            _isAnimatingSize = false;
         }
 
         internal virtual void Update()

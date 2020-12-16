@@ -121,7 +121,7 @@
                     return;
             }
 
-            var boundingBoxCenter = (boundingBoxMin + boundingBoxMax) * 0.5f;
+            Vector3 boundingBoxCenter = new Vector3((boundingBoxMin.x + boundingBoxMax.x) * 0.5f, (boundingBoxMin.y + boundingBoxMax.y) * 0.5f, renderingCameraFrustum.Position.z);
             float halfFrustumWidth = frustumWidth * 0.5f;
             float halfFrustumHeight = frustumHeight * 0.5f;
 
@@ -132,7 +132,7 @@
                 RefractionProperties.Position = _mainModule.TransformPointLocalToWorld(boundingBoxCenter);
                 RefractionProperties.Rotation = rotation;
                 RefractionProperties.ProjectionMatrix = Matrix4x4.Ortho(-halfFrustumWidth, halfFrustumWidth, -halfFrustumHeight, halfFrustumHeight, NEAR_CLIP_PLANE_OFFSET, zFar);
-                RefractionProperties.NearClipPlane = NEAR_CLIP_PLANE_OFFSET;
+                RefractionProperties.NearClipPlane = renderingCameraFrustum.CurrentCamera.nearClipPlane;
             }
 
             if (renderReflection)
@@ -174,14 +174,13 @@
             }
 
             Vector3 lCurrentRenderingCameraPosition = renderingCameraFrustum.Position;
-            lCurrentRenderingCameraPosition.z = 0f;
 
             if (renderRefraction)
             {
                 RefractionProperties.Position = _mainModule.TransformPointLocalToWorld(lCurrentRenderingCameraPosition);
                 RefractionProperties.Rotation = Quaternion.Euler(0f, 0f, renderingCameraFrustum.Rotation.z + _mainModule.ZRotation);
                 RefractionProperties.ProjectionMatrix = Matrix4x4.Ortho(-halfFrustumWidth, halfFrustumWidth, -halfFrustumHeight, halfFrustumHeight, NEAR_CLIP_PLANE_OFFSET, zFar);
-                RefractionProperties.NearClipPlane = NEAR_CLIP_PLANE_OFFSET;
+                RefractionProperties.NearClipPlane = currentCamera.nearClipPlane;
             }
 
             if (renderReflection)
