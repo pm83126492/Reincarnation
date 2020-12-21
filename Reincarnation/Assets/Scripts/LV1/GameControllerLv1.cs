@@ -14,6 +14,8 @@ public class GameControllerLv1 : MonoBehaviour
 
     public UniversalRenderPipelineAsset cameraData;
     public RenderPipelineAsset renderPipeline;
+
+    public AudioSource audioSource;
     public enum state
     {
         NONE,
@@ -27,6 +29,7 @@ public class GameControllerLv1 : MonoBehaviour
     {
         MirrorCanvasGroup.gameObject.SetActive(false);
         Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,15 +46,17 @@ public class GameControllerLv1 : MonoBehaviour
                 {
                     Camera.main.orthographic = true;
                     player.transform.position = MidPoint.position;
+                    audioSource.Play();
                     GameState = state.PUZZLE;
                 }
                 break;
 
             case state.PUZZLE:
-                if (Drag2.MirrorCrackNumber == 13)
+                if (Drag2.MirrorCrackNumber == 1)
                 {
                     mirrorTouch.playableDirector.Play();
                     Camera.main.orthographic = false;
+                    audioSource.Stop();
                     GameState = state.END;
                 }
                 break;

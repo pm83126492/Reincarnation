@@ -813,7 +813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111237412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.51, y: -0.2500677, z: -29}
+  m_LocalPosition: {x: -20.8, y: -0.2500677, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1546453066}
@@ -2298,7 +2298,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u8ACB\u89F8\u78B0\u77F3\u982D"
+  m_Text: "\u8ACB\u79FB\u52D5\u5230\u77F3\u982D\u8655"
 --- !u!222 &373283521
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13949,6 +13949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756110424}
   - component: {fileID: 756110423}
+  - component: {fileID: 756110425}
   m_Layer: 0
   m_Name: Underworld - Myuu
   m_TagString: Untagged
@@ -14066,6 +14067,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &756110425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756110422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b6a97733d1d574d8af7cbea002b14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &768225391
 GameObject:
   m_ObjectHideFlags: 0
@@ -20439,7 +20452,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.51, y: -0.2500677, z: -28.99637}
+  m_LocalPosition: {x: -19.93721, y: -0.2500677, z: -28.99637}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36359,7 +36372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261417536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 3.3, z: 135.9}
+  m_LocalPosition: {x: -9.8, y: 18.2, z: 135.9}
   m_LocalScale: {x: 3.7743, y: 3.7743, z: 3.7743}
   m_Children: []
   m_Father: {fileID: 492431120}
@@ -36403,8 +36416,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -49
-  m_Sprite: {fileID: 21300000, guid: 82c8a4cc6e7dd3440ae871604e942d67, type: 3}
+  m_SortingOrder: -48
+  m_Sprite: {fileID: 21300000, guid: 1bcfe9382292fd046aff27580622981a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -47223,7 +47236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531614763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.51, y: -2.5, z: 0}
+  m_LocalPosition: {x: -20.8, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 302614537}
@@ -47353,11 +47366,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FootAudio:
-  - {fileID: 8300000, guid: 0609acde86b59a2458aaf135531f8756, type: 3}
-  - {fileID: 8300000, guid: e988fcf175fd1874db4f82c3b2d75db3, type: 3}
-  - {fileID: 8300000, guid: b3e9cdac26b78934197456d8199e30bc, type: 3}
-  - {fileID: 8300000, guid: 8c9f76b14113ab640ab4b94535ad82e3, type: 3}
-  JumpAudio: {fileID: 0}
+  - {fileID: 8300000, guid: 1b7cf8195904c7c4b8417d35e60f48c6, type: 3}
+  - {fileID: 8300000, guid: 46147b6b60b4969448a7d4ee27fa38cb, type: 3}
+  - {fileID: 8300000, guid: 97415ba3769d5e241893c36ee4e8f809, type: 3}
+  - {fileID: 8300000, guid: 19c807559c071cd48849b34bc6f1a9ac, type: 3}
+  - {fileID: 8300000, guid: 54b2c87e2f23a494ebb1adcdb67cb48b, type: 3}
+  - {fileID: 8300000, guid: b48b37adb51d84a4a852d664800c9d90, type: 3}
+  - {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  - {fileID: 8300000, guid: 05d302535ad9c974483f2b0ed3974492, type: 3}
+  - {fileID: 8300000, guid: 36b2f40451416bd4b8afb6be73ad6629, type: 3}
+  - {fileID: 8300000, guid: 20b727d3384910a46b761dce3750b9fe, type: 3}
+  - {fileID: 8300000, guid: fc9533670a0870e40a46ad967ea715e1, type: 3}
+  - {fileID: 8300000, guid: ce0193ad12fd1544d9f4cf552bcdcf59, type: 3}
+  - {fileID: 8300000, guid: 692dad7526ddbf7428625887835a57a9, type: 3}
+  - {fileID: 8300000, guid: 848c86e0eca114642961a5fe028db648, type: 3}
+  JumpAudio: {fileID: 8300000, guid: 336e7676618221b4eba33d8aeb406959, type: 3}
 --- !u!82 &1531614774
 AudioSource:
   m_ObjectHideFlags: 0
@@ -47370,7 +47393,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -56791,7 +56814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025117611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.41, y: 2.03, z: 0.35}
+  m_LocalPosition: {x: -13.41, y: 5.29, z: 0.35}
   m_LocalScale: {x: 1.0554123, y: 0.983133, z: 0.983133}
   m_Children: []
   m_Father: {fileID: 492431120}

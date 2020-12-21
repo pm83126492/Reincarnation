@@ -1,6 +1,4 @@
-Base path: 'C:/Program Files/Unity/Hub/Editor/2019.4.9f1/Editor/Data', plugins path 'C:/Program Files/Unity/Hub/Editor/2019.4.9f1/Editor/Data/PlaybackEngines'
+Base path: 'C:/Program Files (x86)/Unity 2019.4.9f/Editor/Data', plugins path 'C:/Program Files (x86)/Unity 2019.4.9f/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
 Cmd: compileSnippet
-  api=4 type=0 insize=2366 outsize=1930 kw=Water2D_FakePerspective Water2D_Refraction Water2D_Surface Water2D_SurfaceHasAbsoluteThickness Water2D_SurfaceColorGradient Water2D_SurfaceTexture Water2D_SurfaceTextureScroll Water2D_SurfaceTextureStretch Water2D_SurfaceNoise Water2D_ColorGradient Water2D_SurfaceLevelEdgeLine pd=UNITY_NO_DXT5nm UNITY_ENABLE_REFLECTION_BUFFERS UNITY_NO_CUBEMAP_ARRAY UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHTMAP_DLDR_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=2366 outsize=1238 kw=Water2D_Refraction Water2D_Reflection Water2D_ReflectionFadeLinear Water2D_ColorGradient pd=UNITY_NO_DXT5nm UNITY_ENABLE_REFLECTION_BUFFERS UNITY_NO_CUBEMAP_ARRAY UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHTMAP_DLDR_ENCODING ok=1
+  api=4 type=0 insize=2366 outsize=1306 kw=Water2D_Reflection Water2D_ReflectionFadeLinear pd=UNITY_NO_DXT5nm UNITY_ENABLE_REFLECTION_BUFFERS UNITY_NO_CUBEMAP_ARRAY UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHTMAP_DLDR_ENCODING ok=1

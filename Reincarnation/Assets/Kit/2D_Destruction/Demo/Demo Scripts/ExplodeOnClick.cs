@@ -10,7 +10,7 @@ public class ExplodeOnClick : MonoBehaviour {
 	{
 		_explodable = GetComponent<Explodable>();
 	}
-	void OnMouseDown()
+    public void Explosion()
 	{
 		_explodable.explode();
 		ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();

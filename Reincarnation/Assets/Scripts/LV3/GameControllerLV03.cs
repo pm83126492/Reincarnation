@@ -18,6 +18,9 @@ public class GameControllerLV03 : MonoBehaviour
     public PlayerLV3 playerLV3;
     public ParticleSystem[] BloodEffect;
     bool isDown;
+
+    public AudioSource audioSource;
+    public AudioClip[] criminaAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,14 +77,18 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[0].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[0];
             criminalBody01.SetActive(true);
+            criminalBody01.GetComponent<AudioSource>().PlayOneShot(criminaAudio[0]);
             criminal01.enabled = false;
+            StopAllCoroutines();
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing2")
         {
             BloodEffect[1].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[1];
             criminalBody02.SetActive(true);
+            criminalBody02.GetComponent<AudioSource>().PlayOneShot(criminaAudio[1]);
             criminal02.enabled = false;
+            StopAllCoroutines();
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing3")
         {
