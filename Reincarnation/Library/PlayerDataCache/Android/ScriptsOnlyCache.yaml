@@ -73,9 +73,7 @@ ScriptsOnlyBuild:
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.Timeline.Editor.dll:
-    - UnityEditor.Timeline.EditorClip
     - UnityEditor.Timeline.SequenceHierarchy
-    - UnityEditor.Timeline.TimelineAssetViewModel
     - UnityEditor.Timeline.TimelineWindow
     Unity.Timeline.dll:
     - UnityEngine.Timeline.ActivationPlayableAsset
@@ -83,11 +81,9 @@ ScriptsOnlyBuild:
     - UnityEngine.Timeline.AnimationTrack
     - UnityEngine.Timeline.AudioPlayableAsset
     - UnityEngine.Timeline.AudioTrack
-    - UnityEngine.Timeline.ControlTrack
     - UnityEngine.Timeline.GroupTrack
     - UnityEngine.Timeline.MarkerTrack
     - UnityEngine.Timeline.PlayableTrack
-    - UnityEngine.Timeline.SignalTrack
     - UnityEngine.Timeline.TimelineAsset
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
@@ -348,7 +344,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16452}
     - Class: 114
-      Script: {instanceID: 49320}
+      Script: {instanceID: 21572}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
