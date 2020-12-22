@@ -254,6 +254,7 @@ public class GameControllerLV0 : MonoBehaviour
                     MobileTouch();
                 }
                 break;
+                */
 
             case state.EnemyAppearUI:
                 StartCoroutine(PauseGame());
@@ -261,7 +262,7 @@ public class GameControllerLV0 : MonoBehaviour
                 player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
                 GameState = state.DrawAppearUI;
                 break;
-
+                
             case state.DrawAppearUI:
                 if (drawEnemy.SignCanvasGroup.alpha == 1)
                 {
@@ -280,7 +281,7 @@ public class GameControllerLV0 : MonoBehaviour
                     GameState = state.NONE;
                 }
                 break;
-                */
+                
             case state.NONE:
                 player.enabled = true;
                 break;
@@ -322,7 +323,7 @@ public class GameControllerLV0 : MonoBehaviour
                 if (player.transform.position.y > 0)
                 {
                     playableDirector.Play();
-                    StartCoroutine(TurnSlideMoveUI());
+                    //StartCoroutine(TurnSlideMoveUI());
                     GameState = state.STOP;
                 }
                 break;
@@ -336,7 +337,7 @@ public class GameControllerLV0 : MonoBehaviour
                     if (SlideTime > 0.7f)
                     {
                         playableDirector.Play();
-                        StartCoroutine(TurnPleaseObjUI());
+                        //StartCoroutine(TurnPleaseObjUI());
                         GameState = state.STOP;
                     }
                 }
@@ -348,7 +349,7 @@ public class GameControllerLV0 : MonoBehaviour
                 if (player.hit2.collider != null && player.hit2.collider.gameObject.tag == "smallobstacle")
                 {
                     playableDirector.Play();
-                    StartCoroutine(TurnUseObjUI());
+                    //StartCoroutine(TurnUseObjUI());
                     GameState = state.STOP;
                 }
                 break;
@@ -479,21 +480,21 @@ public class GameControllerLV0 : MonoBehaviour
                 {
                     TeachUI.enabled = false;
                     RightMoveUI.SetActive(false);
-                    StartCoroutine(TurnLeftMoveUI());
+                   // StartCoroutine(TurnLeftMoveUI());
                     GameState = state.STOP;
                 }
                 else if (GameState == state.LeftMove)
                 {
                     TeachUI.enabled = false;
                     LeftMoveUI.SetActive(false);
-                    StartCoroutine(TurnJumpMoveUI());
+                    //StartCoroutine(TurnJumpMoveUI());
                     GameState = state.STOP;
                 }
                 else if (GameState == state.JumpMove)
                 {
                     TeachUI.enabled = false;
                     JumpMoveUI.SetActive(false);
-                    StartCoroutine(TurnSlideMoveUI());
+                    //StartCoroutine(TurnSlideMoveUI());
                     GameState = state.STOP;
                 }
                 else if (GameState == state.SlideMove)
@@ -514,7 +515,7 @@ public class GameControllerLV0 : MonoBehaviour
         }
     }
 
-    IEnumerator TurnRightMoveUI()
+    /*IEnumerator TurnRightMoveUI()
     {
         //yield return new WaitForSeconds(1);
         yield return new WaitForSeconds(5.5f);
@@ -555,7 +556,7 @@ public class GameControllerLV0 : MonoBehaviour
         yield return new WaitForSeconds(5f);
         playableDirector.Pause();
         GameState = state.UseObj;
-    }
+    }*/
 
     IEnumerator StartGame()
     {
@@ -625,8 +626,8 @@ public class GameControllerLV0 : MonoBehaviour
 
         else if (player.isObstacle == true && !isEnemyAppearUI&& player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
         {
-            GameState = state.EnemyAppearUI;
-            isEnemyAppearUI = true;
+            //GameState = state.EnemyAppearUI;
+            //isEnemyAppearUI = true;
         }
     }
 

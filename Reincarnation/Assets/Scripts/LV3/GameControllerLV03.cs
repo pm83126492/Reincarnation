@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using UnityEngine.Rendering.Universal;
 
 public class GameControllerLV03 : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameControllerLV03 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       // Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0;
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {

@@ -262,13 +262,17 @@ public class Player : MonoBehaviour
             //第二隻手指移動中
             if (touch2.phase == TouchPhase.Moved)
             {
-                TwoTouchX2 = touch2.position.x;
+               // TwoTouchX2 = touch2.position.x;
                 if (!isJumpButton2)
                 {
                     TwoTouchY2 = touch2.position.y;
                     if (TwoTouchY + 100 < TwoTouchY2)
                     {
                         isJumpButton2 = true;
+                    }
+                    else
+                    {
+                        TwoTouchX2 = touch2.position.x;
                     }
                 }
             }
@@ -407,14 +411,14 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(0 * Time.deltaTime, rigidbody2D.velocity.y);
         }
         //右移動
-        if ((OneTouchX2 > OneTouchX + 25) || (TwoTouchX2 > TwoTouchX + 25) || Input.GetKey(KeyCode.D))
+        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50) || Input.GetKey(KeyCode.D))
         {
             
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
             transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         //左移動
-        if (OneTouchX2 + 25 < OneTouchX || TwoTouchX2 + 25 < TwoTouchX || Input.GetKey(KeyCode.A))
+        if (OneTouchX2 + 50 < OneTouchX || TwoTouchX2 + 50 < TwoTouchX || Input.GetKey(KeyCode.A))
         {
             
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);

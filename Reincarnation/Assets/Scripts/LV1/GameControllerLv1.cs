@@ -52,7 +52,7 @@ public class GameControllerLv1 : MonoBehaviour
                 break;
 
             case state.PUZZLE:
-                if (Drag2.MirrorCrackNumber == 1)
+                if (Drag2.MirrorCrackNumber == 13)
                 {
                     mirrorTouch.playableDirector.Play();
                     Camera.main.orthographic = false;

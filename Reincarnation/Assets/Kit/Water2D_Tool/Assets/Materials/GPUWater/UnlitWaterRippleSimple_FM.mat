@@ -75,12 +75,12 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WaterHeight: 6
+    - _WaterHeight: 26.943195
     - _WaterLineHeight: 0.05
     - _WaveHeightScale: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.3647059, g: 0.63529414, b: 0.77254903, a: 0.3019608}
+    - _BaseColor: {r: 1, g: 0.042452812, b: 0.08659222, a: 0.3019608}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _WaterLineColor: {r: 1, g: 1, b: 1, a: 1}

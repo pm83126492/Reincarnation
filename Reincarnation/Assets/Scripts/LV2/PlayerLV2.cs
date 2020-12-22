@@ -123,7 +123,7 @@ public class PlayerLV2 : Player
 
         }
 
-        if (OneTouchX != OneTouchX2 || TwoTouchX != TwoTouchX2)
+        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50))
         {
             isTouchOrgan = false;
         }
@@ -212,7 +212,7 @@ public class PlayerLV2 : Player
             Organ();
         }
 
-        if ((OneTouchX2 > OneTouchX + 25) || (TwoTouchX2 > TwoTouchX + 25) || Input.GetKey(KeyCode.D) || OneTouchX2 + 25 < OneTouchX || TwoTouchX2 + 25 < TwoTouchX || Input.GetKey(KeyCode.A))
+        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50) || Input.GetKey(KeyCode.D) || OneTouchX2 + 50 < OneTouchX || TwoTouchX2 + 50 < TwoTouchX || Input.GetKey(KeyCode.A))
         {
             anim.enabled = true;
             anim.SetBool("Roll", false);
