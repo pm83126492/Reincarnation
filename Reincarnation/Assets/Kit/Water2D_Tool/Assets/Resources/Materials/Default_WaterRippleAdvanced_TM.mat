@@ -57,6 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - TopHandle: 0
+    - _ApplyOffset: 0
     - _BottomPos: -2
     - _CubeMapLevel: 0.2
     - _Culling: 0
