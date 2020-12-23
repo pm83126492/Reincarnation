@@ -25,6 +25,7 @@ public class MirrorTouch : MonoBehaviour
         if (gameController.player.isObstacle == true)
         {
             playableDirector.Play();
+            GetComponent<BoxCollider2D>().enabled = false;
            // StartCoroutine(EffectPlay());
         }
     }

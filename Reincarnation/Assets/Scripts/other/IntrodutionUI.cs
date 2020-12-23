@@ -8,6 +8,7 @@ public class IntrodutionUI : MonoBehaviour
     public CanvasGroup canvasGroup;
     float time;
     bool isDisappear;
+    bool isTouch;
     public Player player;
     public static bool isNotOnce;
     public static int SceneNubmer;
@@ -28,7 +29,7 @@ public class IntrodutionUI : MonoBehaviour
 
     private void Update()
     {
-        if (isDisappear)
+        if (isTouch)
         {
             player.enabled = true;
             time += Time.deltaTime;
@@ -38,6 +39,14 @@ public class IntrodutionUI : MonoBehaviour
                 canvasGroup.gameObject.SetActive(false);
             }
             isNotOnce = true;
+        }
+    }
+
+    public void OnTouch()
+    {
+        if (isDisappear == true)
+        {
+            isTouch = true;
         }
     }
 

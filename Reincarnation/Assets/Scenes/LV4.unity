@@ -7018,13 +7018,13 @@ MonoBehaviour:
   bottomEdge: {fileID: 0}
   leftEdge: {fileID: 0}
   rightEdge: {fileID: 0}
-  particleS: {fileID: 100000, guid: e3f2255ab34302144aa934349ce2b3f9, type: 3}
+  particleS: {fileID: 0}
   constantWaterArea: 0
   waterDisplacement: 0
   animateWaterArea: 0
   waveSpeed: 8
   velocityFilter: -2
-  waterDensity: 1
+  waterDensity: 0.7
   polygonCorners: 8
   maxDrag: 500
   maxLift: 200
@@ -7049,7 +7049,7 @@ MonoBehaviour:
   playerBoundingBoxCenter: {x: 0, y: 0}
   playerBuoyantForceScale: 3
   showPolygon: 0
-  showForces: 0
+  showForces: 1
   neighborVertVelocityScale: 0.5
   sineWaveVelocityScale: 0.05
   overlapSphereRadius: 0.05
@@ -7567,13 +7567,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3701154132634879117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a498b807fdb74541aa03c0aca6da103, type: 3}
+  m_Script: {fileID: 11500000, guid: a6f71798c5a98a24e93247c3cd2ef016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   WallPhysics: {fileID: 0}
   rigidbody2D: {fileID: 0}
   anim: {fileID: 0}
-  runSpeed: 200
+  runSpeed: 250
   JumpForce: 13
   ObjectsGravity: 4
   StopSlideTime: 0
@@ -7610,14 +7610,14 @@ MonoBehaviour:
   groundDistance: 0.5
   playerWidth: 0.24
   forwardOffset: 0.6
-  forwardDistance: 1.6
-  forwardWidth: -0.9
+  forwardDistance: 1.2
+  forwardWidth: -0.53
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4368
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 4096
   obstacle: {fileID: 0}
 --- !u!50 &3701154132634879122
 Rigidbody2D:

@@ -35,7 +35,7 @@ public class GameControllerLv1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(Drag2.MirrorCrackNumber);
+        Debug.Log(Drag2.MirrorCrackNumber);
         switch (GameState)
         {
             case state.MIRROR:

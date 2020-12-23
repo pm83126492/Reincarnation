@@ -10,6 +10,8 @@ public class Dialog : MonoBehaviour
     public string[] sentences;
     private int index;
     public float typingSpeed;
+
+    bool isNext;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class Dialog : MonoBehaviour
 
     public void NextSentence()
     {
+        isNext = false;
         if (index < sentences.Length - 1)
         {
             index++;
@@ -42,7 +45,12 @@ public class Dialog : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (text.text == sentences[index]) 
+        {
+            isNext = true;
+        }
+
+        if (Input.GetMouseButtonDown(0)&&isNext)
         {
             NextSentence();
         }
