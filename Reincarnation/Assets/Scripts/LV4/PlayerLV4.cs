@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLV4 : Player
 {
-    // Start is called before the first frame update
+    public GameObject WaterPS;
     protected override void Start()
     {
         base.Start();
@@ -20,4 +20,11 @@ public class PlayerLV4 : Player
         base.Update();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            Instantiate(WaterPS, transform.position, transform.rotation);
+        }
+    }
 }

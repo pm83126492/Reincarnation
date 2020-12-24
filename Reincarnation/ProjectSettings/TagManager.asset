@@ -25,6 +25,7 @@ TagManager:
   - smallobstacle
   - arrow
   - arrowLeft
+  - Water
   layers:
   - Default
   - TransparentFX

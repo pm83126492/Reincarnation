@@ -103,7 +103,7 @@ Material:
     - _UnderWaterOpacity: 0.4
     - _WaterDepth: 0.15
     - _WaveHeight: 1
-    - _WaveHeightScale: 1
+    - _WaveHeightScale: 0
     - _ZWrite: 1
     m_Colors:
     - _BumpDirection: {r: 1, g: 30, b: 20, a: -20}
