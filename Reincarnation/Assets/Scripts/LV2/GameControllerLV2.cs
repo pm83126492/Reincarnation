@@ -14,11 +14,13 @@ public class GameControllerLV2 : MonoBehaviour
     public PlayerLV2 player;
     public BlackFade blackFade;
     public Collider2D collider2d;
+    public CinemachineVirtualCamera virtualCamera;
     bool isWin;
 
     // Start is called before the first frame update
     void Start()
     {
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
             IntrodutionUI.isNotOnce = false;
@@ -72,6 +74,11 @@ public class GameControllerLV2 : MonoBehaviour
             BlackAnim.SetTrigger("FadeOut");
         }
 
+        if(Player.transform.position.y <= -6)
+        {
+            virtualCamera.Follow = null;
+        }
+
         if (blackFade.CanChangeScene&&!isWin)
         {
             SceneManager.LoadScene("LV2");
@@ -80,6 +87,7 @@ public class GameControllerLV2 : MonoBehaviour
         if(smokeParticle01.isIceSmoke|| smokeParticle02.isIceSmoke || smokeParticle03.isIceSmoke)
         {
             PlayerAnim.SetTrigger("IceSmokeDie");
+            StartCoroutine(IceSmokeDie());
             player.rigidbody2D.sharedMaterial = null;
             player.enabled = false;
         }
@@ -113,5 +121,11 @@ public class GameControllerLV2 : MonoBehaviour
         {
             SceneManager.LoadScene("LV3");
         }
+    }
+
+    IEnumerator IceSmokeDie()
+    {
+        yield return new WaitForSeconds(3f);
+        BlackAnim.SetTrigger("FadeOut");
     }
 }

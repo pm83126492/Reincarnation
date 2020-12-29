@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-//[CustomEditor(typeof(Rope))]
+[CustomEditor(typeof(Rope))]
 public class RopeEditor : Editor
 {
     Texture nodeTexture;
@@ -11,8 +11,6 @@ public class RopeEditor : Editor
     List<int> alignedPoints=new List<int>();
 
     Vector3 ropePosition;
-
-    int benTest;
     void OnEnable()
     {
         nodeTexture = Resources.Load<Texture>("Handle");
@@ -531,13 +529,10 @@ public class RopeEditor : Editor
             if(rope.useBendLimit)
             {
                 int bendLimit = EditorGUILayout.IntSlider("Bend Limits",rope.bendLimit, 0, 180);
-                if (bendLimit != benTest)
+                if(bendLimit!=rope.bendLimit)
                 {
-                    Debug.Log(bendLimit);
-                    Debug.Log(rope.bendLimit);
                     rope.bendLimit = bendLimit;
                     UpdateRope(rope);
-                    benTest = rope.bendLimit;
                 }
             }
             EditorGUILayout.EndToggleGroup();

@@ -80,6 +80,7 @@ public class DrawEnemy : MonoBehaviour
             {
                 isFlashRed = false;
             }
+
             if (!isFlashRed)
             {
                 RedTime += Time.deltaTime;

@@ -13,8 +13,7 @@ public class StartUI : MonoBehaviour
     public void StartGame()
     {
         HaloBG[0].enabled = true;
-        FindObjectOfType<Loading>().LoadScene(sceneToLoad);
-        //SceneManager.LoadScene("LV0");
+        StartCoroutine(ChangeScene());
     }
 
     public void ExitGame()
@@ -23,4 +22,9 @@ public class StartUI : MonoBehaviour
         Application.Quit();
     }
 
+    IEnumerator ChangeScene()
+    {
+        yield return new WaitForSeconds(0.5f);
+        FindObjectOfType<Loading>().LoadScene(sceneToLoad);
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public MeshRenderer PlayerRenderer;
     public PhysicsMaterial2D WallPhysics;
     public Rigidbody2D rigidbody2D;
     protected BoxCollider2D boxCollider2D;
@@ -78,38 +79,42 @@ public class Player : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         Input.multiTouchEnabled = true;
+        PlayerRenderer = GetComponent<MeshRenderer>();
+       // PlayerRenderer.material.shader = OutlineShader;
     }
     protected virtual void Update()
     {
+        //PlayerRenderer.material.shader = OutlineShader;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         if (isCanMove)
         {
             MobileTouch();//判斷手指滑動狀態
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
+            {
+                anim.SetTrigger("Jump");
+                rigidbody2D.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                isSlide = true;
+                anim.SetBool("Slide", true);
+                boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
+                boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
+            }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                isSlide = false;
+                anim.SetBool("Slide", false);
+                boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
+                boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
+            }
         }
         PlayerAnimation();//角色動畫
         GroundCheck();//判斷是否在地面上
         obstacleCheck();//判斷是否碰到障礙物
 
-        if (Input.GetKeyDown(KeyCode.Space)&&isGround)
-        {
-            anim.SetTrigger("Jump");
-            rigidbody2D.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            isSlide = true;
-            anim.SetBool("Slide", true);
-            boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
-            boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            isSlide = false;
-            anim.SetBool("Slide", false);
-            boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
-            boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
-        }
+        
 
         if (Input.GetKey(KeyCode.E))
         {
@@ -176,7 +181,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Movement();//角色移動
+        if (isCanMove)
+        {
+            Movement();//角色移動
+        }
     }
     protected virtual void PlayerAnimation()
     {

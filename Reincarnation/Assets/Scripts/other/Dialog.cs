@@ -12,9 +12,13 @@ public class Dialog : MonoBehaviour
     public float typingSpeed;
 
     bool isNext;
+    bool isAudio;
+
+    private AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         StartCoroutine(Type());
     }
 
@@ -30,7 +34,14 @@ public class Dialog : MonoBehaviour
     public void NextSentence()
     {
         isNext = false;
-        if (index < sentences.Length - 1)
+        if (index == 2&&!isAudio)
+        {
+            audio.Play();
+            text.text = "";
+            isAudio = true;
+            StartCoroutine(MomText());
+        }
+        else if (index < sentences.Length - 1)
         {
             index++;
             text.text = "";
@@ -54,5 +65,13 @@ public class Dialog : MonoBehaviour
         {
             NextSentence();
         }
+    }
+
+    IEnumerator MomText()
+    {
+        yield return new WaitForSeconds(13f);
+        index++;
+        text.text = "";
+        StartCoroutine(Type());
     }
 }

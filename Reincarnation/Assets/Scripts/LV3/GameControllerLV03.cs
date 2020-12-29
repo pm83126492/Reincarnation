@@ -19,6 +19,7 @@ public class GameControllerLV03 : MonoBehaviour
     public PlayerLV3 playerLV3;
     public ParticleSystem[] BloodEffect;
     bool isDown;
+    bool isWin;
 
     public AudioSource audioSource;
     public AudioClip[] criminaAudio;
@@ -27,6 +28,7 @@ public class GameControllerLV03 : MonoBehaviour
     {
        // Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
             IntrodutionUI.isNotOnce = false;
@@ -39,6 +41,7 @@ public class GameControllerLV03 : MonoBehaviour
     {
         if (player.transform.position.y <= -18)
         {
+            virtualCamera.Follow = null;
             playerLV3.enabled = false;
         }
         if (player.transform.position.y <= -70)
@@ -56,6 +59,8 @@ public class GameControllerLV03 : MonoBehaviour
         }
 
         BreakHand();
+
+        CanGoLV4();
     }
 
     void BreakHand()
@@ -69,6 +74,21 @@ public class GameControllerLV03 : MonoBehaviour
             StopAllCoroutines();
         }
     }
+
+    void CanGoLV4()
+    {
+        if (player.transform.position.x >= 42)
+        {
+            isWin = true;
+            BlackAnim.SetTrigger("FadeOut");
+        }
+
+        if (blackFade.CanChangeScene && isWin)
+        {
+            SceneManager.LoadScene("LV4");
+        }
+    }
+
 
     IEnumerator BreakHandTime()
     {

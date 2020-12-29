@@ -12,7 +12,9 @@ public class MirrorTouch : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip BrokeGlassAudio;
+    public AudioClip ScreamAudio;
     bool isParse;
+    public GameObject MirrorCam,Spell,BloodText;
 
     private void Start()
     {
@@ -24,9 +26,11 @@ public class MirrorTouch : MonoBehaviour
         // CameraShakeAnim.enabled = true;
         if (gameController.player.isObstacle == true)
         {
-            playableDirector.Play();
+            audioSource.PlayOneShot(ScreamAudio);
+            Time.timeScale = 3f;
+            MirrorCam.SetActive(true);
             GetComponent<BoxCollider2D>().enabled = false;
-           // StartCoroutine(EffectPlay());
+            StartCoroutine(Play());
         }
     }
 
@@ -34,6 +38,7 @@ public class MirrorTouch : MonoBehaviour
     {
         if (float.Parse(playableDirector.time.ToString("0.0")) == 3f&& !isParse)
         {
+            Spell.SetActive(false);
             audioSource.PlayOneShot(BrokeGlassAudio);
             playableDirector.Pause();
             _explodable.Explosion();
@@ -43,12 +48,27 @@ public class MirrorTouch : MonoBehaviour
         
     }
 
+    IEnumerator Play()
+    {
+        yield return new WaitForSeconds(2f);
+        //cam01.SetActive(false);
+        // cam02.SetActive(true);
+        // yield return new WaitForSeconds(1.5f);
+        // cam02.SetActive(false);
+        Time.timeScale = 1;
+
+        BloodText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        MirrorCam.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        playableDirector.Play();
+    }
+
     IEnumerator EffectPlay()
     {
         yield return new WaitForSeconds(3f);
    
          gameController.MirrorCanvasGroup.gameObject.SetActive(true);
          gameController.GameState = GameControllerLv1.state.MIRROR;
-
     }
 }
