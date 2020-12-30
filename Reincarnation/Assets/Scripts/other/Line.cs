@@ -8,6 +8,7 @@ public class Line : MonoBehaviour
     public List<Vector2> fingerPositions;
     //public TrailRenderer trailRenderer;
     public GameObject drawPrefab;
+    public Transform LinePrefab;
     GameObject theTrail;
     private void Update()
     {
@@ -30,7 +31,8 @@ public class Line : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            theTrail.transform.parent = null;
+            //theTrail.transform.parent = null;
+            theTrail.transform.parent = LinePrefab;
             //edgeCollider.enabled = false;
         }
     }

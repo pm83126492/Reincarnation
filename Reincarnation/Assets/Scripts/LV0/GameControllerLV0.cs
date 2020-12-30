@@ -50,11 +50,6 @@ public class GameControllerLV0 : MonoBehaviour
     public GameObject Door;
     public GameObject DoorFlower;
     public GameObject DoorOpen;
-   // public GameObject RightMoveUI;
-    //public GameObject LeftMoveUI;
-    //public GameObject JumpMoveUI;
-   // public GameObject SlideMoveUI;
-   // public GameObject UseObjUI;
     public GameObject EnemyUI;
     public GameObject DrawUI;
     public GameObject TeachObject;
@@ -179,7 +174,7 @@ public class GameControllerLV0 : MonoBehaviour
                 break;
                 
             case state.DrawAppearUI:
-                if (ghostControllder.SignCanvasGroup.alpha >= 0.99f)
+                if (ghostControllder.SignCanvasGroup.alpha >= 0.98f)
                 {
                     DrawUI.SetActive(true);
                     GameState = state.FinishDrawUI;

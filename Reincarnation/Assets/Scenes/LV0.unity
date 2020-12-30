@@ -1044,6 +1044,7 @@ Transform:
   m_Children:
   - {fileID: 303953310}
   - {fileID: 674760053}
+  - {fileID: 462379204}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2054,6 +2055,7 @@ MonoBehaviour:
   fingerPositions: []
   drawPrefab: {fileID: 3754605719732816708, guid: a0bfe6be3822edb4ea0dcbc2081b3bad,
     type: 3}
+  LinePrefab: {fileID: 462379204}
 --- !u!4 &303953310
 Transform:
   m_ObjectHideFlags: 0
@@ -3022,6 +3024,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20.98357, y: 211.6725}
   m_EdgeRadius: 0
+--- !u!1 &462379203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 462379204}
+  m_Layer: 0
+  m_Name: LinePrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &462379204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462379203}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 100925795}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &471077207
 GameObject:
   m_ObjectHideFlags: 0
@@ -20218,7 +20250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &885367523
 Transform:
   m_ObjectHideFlags: 0
@@ -37498,7 +37530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1331964246
 Transform:
   m_ObjectHideFlags: 0
