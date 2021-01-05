@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public bool isCanMove;
     public bool isNotStop;
     public bool isNotStop2;
+    protected bool isInWater;//在水裡
 
     public float OneTouchX;
     public float OneTouchX2;
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
     {
         //PlayerRenderer.material.shader = OutlineShader;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        if (isCanMove)
+        if (isCanMove && !isInWater)
         {
             MobileTouch();//判斷手指滑動狀態
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
@@ -179,9 +180,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        if (isCanMove)
+        if (isCanMove&&!isInWater)
         {
             Movement();//角色移動
         }

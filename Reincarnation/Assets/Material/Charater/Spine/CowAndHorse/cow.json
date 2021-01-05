@@ -1,0 +1,52 @@
+{
+"skeleton": {
+	"hash": "05KHVUfc4DdQWwdGiwCz0ETjSnw",
+	"spine": "3.8.0",
+	"x": -67.29,
+	"y": -19.6,
+	"width": 404.66,
+	"height": 783.77,
+	"fps": 60,
+	"images": "./png/",
+	"audio": "D:/動畫/牛頭馬面"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "x": 58.05, "y": 414.63 }
+],
+"slots": [
+	{ "name": "cow_hand", "bone": "bone", "attachment": "cow_hand" },
+	{ "name": "cow_body", "bone": "root", "attachment": "cow_body" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"cow_body": {
+				"cow_body": { "x": 156.37, "y": 337.9, "width": 362, "height": 715 }
+			},
+			"cow_hand": {
+				"cow_hand": { "x": -59.84, "y": -36.96, "width": 131, "height": 773 }
+			}
+		}
+	}
+],
+"animations": {
+	"cow": {
+		"bones": {
+			"bone": {
+				"rotate": [
+					{},
+					{ "time": 0.4167, "angle": -11.47 },
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.4167, "x": -2.81, "y": 50.63 },
+					{ "time": 0.5 }
+				]
+			}
+		}
+	}
+}
+}

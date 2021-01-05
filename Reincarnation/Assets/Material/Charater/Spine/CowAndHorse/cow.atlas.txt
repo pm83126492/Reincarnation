@@ -1,0 +1,20 @@
+
+cow.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cow_body
+  rotate: false
+  xy: 2, 60
+  size: 362, 715
+  orig: 362, 715
+  offset: 0, 0
+  index: -1
+cow_hand
+  rotate: false
+  xy: 366, 2
+  size: 131, 773
+  orig: 131, 773
+  offset: 0, 0
+  index: -1

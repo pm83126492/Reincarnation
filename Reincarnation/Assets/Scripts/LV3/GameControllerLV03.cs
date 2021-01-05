@@ -117,14 +117,18 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[2].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[2];
             criminalBody03.SetActive(true);
+            criminalBody03.GetComponent<AudioSource>().PlayOneShot(criminaAudio[2]);
             criminal03.enabled = false;
+            StopAllCoroutines();
         }
         else if (playerLV3.hit2.collider.gameObject.tag == "Swing4")
         {
             BloodEffect[3].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[3];
             criminalBody04.SetActive(true);
+            criminalBody04.GetComponent<AudioSource>().PlayOneShot(criminaAudio[3]);
             criminal04.enabled = false;
+            StopAllCoroutines();
         }
         PlayerCirminalHand.SetActive(true);
         playerLV3.transform.parent = null;

@@ -26,6 +26,7 @@ TagManager:
   - arrow
   - arrowLeft
   - Water
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -42,7 +43,7 @@ TagManager:
   - Obstacle
   - BigIceFloor
   - Effect
-  - 
+  - PlayerWater
   - 
   - 
   - 

@@ -45,6 +45,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (path == null)
             return;
 
@@ -64,19 +65,19 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        Debug.Log(distance);
 
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
-        }
-
-        if (rb.velocity.x >= 0.01f)
-        {
-            transform.localRotation = new Quaternion(0, 180, 0, 0);
-        }
-        else if (rb.velocity.x <= -0.01f)
-        {
-            transform.localRotation = new Quaternion(0, 0, 0, 0);
+            if (rb.velocity.x >= 0.01f)
+            {
+                transform.localRotation = new Quaternion(0, 180, 0, 0);
+            }
+            else if (rb.velocity.x <= -0.01f)
+            {
+                transform.localRotation = new Quaternion(0, 0, 0, 0);
+            }
         }
     }
 }

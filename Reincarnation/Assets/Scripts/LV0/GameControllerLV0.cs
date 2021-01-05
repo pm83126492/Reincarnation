@@ -10,6 +10,7 @@ public class GameControllerLV0 : MonoBehaviour
     public Canvas DoorCanvas;
     public Canvas TeachUI;
     public Canvas SkipUI;
+    public Canvas GetStickUI;
 
     public CanvasGroup DoorCanvasGroup;
     public CanvasGroup DoorCicleFlowerCanvasGroup;
@@ -179,13 +180,15 @@ public class GameControllerLV0 : MonoBehaviour
                     DrawUI.SetActive(true);
                     GameState = state.FinishDrawUI;
                     Time.timeScale = 0;
+                    ghostControllder.audioSource.Pause();
                 }
                 break;
 
             case state.FinishDrawUI:
                 if (ghostControllder.GhostIsOut)
                 {
-                    PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
+                    player.isCanMove = false;
+                    StartCoroutine(OpenGetStickUI());
                     GameState = state.NONE;
                 }
                 break;
@@ -401,6 +404,7 @@ public class GameControllerLV0 : MonoBehaviour
         ghostControllder.GhostAI.enabled = true;
         EnemyUI.SetActive(true);
         Time.timeScale = 0;
+        ghostControllder.audioSource.Pause();
     }
 
     void PlayableTime()
@@ -462,9 +466,17 @@ public class GameControllerLV0 : MonoBehaviour
 
     public void SkipButton()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
         SkipUI.enabled = false;
+        GetStickUI.enabled = true;
+        //player.isCanMove = true;
+    }
+
+    public void CloseGetStickUI()
+    {
+        Time.timeScale = 1;
+        GetStickUI.enabled = false;
         player.isCanMove = true;
     }
 
@@ -485,12 +497,22 @@ public class GameControllerLV0 : MonoBehaviour
     public void EnemyUIContinue()
     {
         EnemyUI.SetActive(false);
+        ghostControllder.audioSource.Play();
         Time.timeScale = 1;
     }
 
     public void DrawUIContinue()
     {
         DrawUI.SetActive(false);
+        ghostControllder.audioSource.Play();
         Time.timeScale = 1;
+    }
+
+    IEnumerator OpenGetStickUI()
+    {
+        yield return new WaitForSeconds(2f);
+        Time.timeScale = 0;
+        PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
+        GetStickUI.enabled = true;
     }
 }

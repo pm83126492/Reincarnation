@@ -12,10 +12,11 @@ public class GhostControllder : MonoBehaviour
     public Shader OutlineShader;
     public Shader OriginalShader;
     public CanvasGroup SignCanvasGroup;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     public GameObject GhostCamera;
     public GameObject DrawObject, DrawCanvas;
+    public GameObject bloom;
 
     bool isFlashRed;
     bool isEnemyDie;
@@ -99,11 +100,13 @@ public class GhostControllder : MonoBehaviour
 
             case State.DRAW:
                 FlashRedLight();
+                bloom.SetActive(true);
                 if (LineCollider.ColliderNumber == 6&&!isDrawUI)
                 {
                     isDrawUI = true;
                     DrawCanvas.SetActive(false);
                     DrawObject.SetActive(false);
+                    bloom.SetActive(false);
                     GhostState = State.SPELL;
                 }
                 break;

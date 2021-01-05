@@ -75,9 +75,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WaterHeight: 26.943195
+    - _WaterHeight: 18.060257
     - _WaterLineHeight: 0.05
-    - _WaveHeightScale: 0
+    - _WaveHeightScale: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0.042452812, b: 0.08659222, a: 0.3019608}

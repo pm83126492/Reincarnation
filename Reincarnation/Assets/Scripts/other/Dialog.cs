@@ -50,7 +50,7 @@ public class Dialog : MonoBehaviour
         else
         {
             text.text = "";
-            SceneManager.LoadScene("StartUI");
+            FindObjectOfType<Loading>().LoadScene("ReadyStart");
         }
     }
 

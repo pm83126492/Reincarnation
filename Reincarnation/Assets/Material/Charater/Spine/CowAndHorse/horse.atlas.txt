@@ -1,0 +1,20 @@
+
+horse.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+horse_body
+  rotate: false
+  xy: 2, 113
+  size: 369, 703
+  orig: 369, 703
+  offset: 0, 0
+  index: -1
+horse_hand
+  rotate: false
+  xy: 373, 2
+  size: 109, 814
+  orig: 109, 814
+  offset: 0, 0
+  index: -1

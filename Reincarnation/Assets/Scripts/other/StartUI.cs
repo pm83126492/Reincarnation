@@ -10,10 +10,24 @@ public class StartUI : MonoBehaviour
     [SerializeField]
     private string sceneToLoad;
 
+    public GameObject AudioSettingCanvas;
+
     public void StartGame()
     {
         HaloBG[0].enabled = true;
         StartCoroutine(ChangeScene());
+    }
+
+    public void AudioSetting()
+    {
+        HaloBG[1].enabled = true;
+        StartCoroutine(AduioSettingOpen());
+    }
+
+    public void BackButton()
+    {
+        HaloBG[1].enabled = false;
+        AudioSettingCanvas.SetActive(false);
     }
 
     public void ExitGame()
@@ -26,5 +40,10 @@ public class StartUI : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         FindObjectOfType<Loading>().LoadScene(sceneToLoad);
+    }
+    IEnumerator AduioSettingOpen()
+    {
+        yield return new WaitForSeconds(0.2f);
+        AudioSettingCanvas.SetActive(true);
     }
 }
