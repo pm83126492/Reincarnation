@@ -13,7 +13,7 @@ public class GameControllerLV2 : MonoBehaviour
     public SmokeParticle smokeParticle01, smokeParticle02, smokeParticle03;
     public PlayerLV2 player;
     public BlackFade blackFade;
-    public Collider2D collider2d;
+    public Collider2D collider2d,collider2d_hole;
     public CinemachineVirtualCamera virtualCamera;
     bool isWin;
 
@@ -41,6 +41,7 @@ public class GameControllerLV2 : MonoBehaviour
 
         if (IceBig.transform.localPosition.x >= 111)
         {
+            collider2d_hole.enabled = true;
             collider2d.enabled = false;
         }
     }

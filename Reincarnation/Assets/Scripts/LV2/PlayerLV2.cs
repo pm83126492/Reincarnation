@@ -17,6 +17,7 @@ public class PlayerLV2 : Player
     {
         base.Start();
         rigidbody2D.sharedMaterial = WallPhysics;
+        ObjectsGravity = 4.5f;
     }
 
     protected override void MobileTouch()
