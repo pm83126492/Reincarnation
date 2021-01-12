@@ -15,11 +15,11 @@ public class IntrodutionUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneNubmer != SceneManager.GetActiveScene().buildIndex)
+        /*if (SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
             isNotOnce = false;
             SceneNubmer = SceneManager.GetActiveScene().buildIndex;
-        }
+        }*/
 
         if (isNotOnce)
         {

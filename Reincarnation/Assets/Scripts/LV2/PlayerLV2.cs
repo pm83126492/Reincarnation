@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PlayerLV2 : Player
 {
-    public GameObject organIce;
-    public GameObject OrganCircle;
+    public GameObject organIce;//冰塊起重機物件
+    public GameObject OrganCircle;//冰塊起重機轉盤物件
 
-    public Transform OrganPosition;
+    public Transform OrganPosition;//冰塊起重機轉盤角色操作位置
 
-    public bool isTouchOrgan;
-    public bool CanChangeScene;
+    public bool isTouchOrgan;//碰觸起重機轉盤中
 
-    public Rope rope;
+    public Rope rope;//轉盤繩索程式
+
+    public GameControllerLV2 gameController;
+
+    public Animator BlackAnim;
+
+    //public bool CanChangeScene;//可以切換場景
     protected override void Start()
     {
         base.Start();
@@ -124,7 +129,7 @@ public class PlayerLV2 : Player
 
         }
 
-        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50))
+        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50)&& isTouchOrgan)
         {
             isTouchOrgan = false;
         }
@@ -227,34 +232,43 @@ public class PlayerLV2 : Player
         rope.ChangeRopeBendLimit(0);
         gameObject.transform.position = OrganPosition.position;
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-        if (organIce.transform.position.y < 12)
+        if (organIce.transform.position.y < 11)
         {
             OrganCircle.transform.Rotate(0, 0, 100 * Time.deltaTime);
         }
         organIce.GetComponent<Rigidbody2D>().isKinematic = true;
         organIce.GetComponent<Rigidbody2D>().velocity = Vector2.up * 1f;
-        if (organIce.transform.position.y >= 12)
+        if (organIce.transform.position.y >= 11f)
         {
-            organIce.transform.position = new Vector3(organIce.transform.position.x, 12, organIce.transform.position.z);
+            organIce.transform.position = new Vector3(organIce.transform.position.x, 11f, organIce.transform.position.z);
             anim.enabled = false;
         }
         anim.SetBool("Roll", true);
     }
 
-    public void ReloadScene()
+   /* public void ReloadScene()
     {
-        CanChangeScene = true;
-    }
+        //CanChangeScene = true;
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DieObjects"))
         {
+            //Physics2D.IgnoreLayerCollision(9, 12);
             GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
             GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
-            GetComponent<PlayerLV2>().enabled = false;
+            //GetComponent<PlayerLV2>().enabled = false;
+            isCanMove = false;
             rigidbody2D.sharedMaterial = null;
             anim.SetTrigger("IceOrganDie");
+            StartCoroutine(IceDie());
         }
+    }
+
+    IEnumerator IceDie()
+    {
+        yield return new WaitForSeconds(3f);
+        BlackAnim.SetTrigger("FadeOut");
     }
 }

@@ -1,0 +1,101 @@
+
+white.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+face
+  rotate: true
+  xy: 927, 1431
+  size: 440, 655
+  orig: 606, 656
+  offset: 108, 0
+  index: -1
+hair
+  rotate: false
+  xy: 1242, 460
+  size: 615, 969
+  orig: 918, 1390
+  offset: 0, 31
+  index: -1
+lantern_1
+  rotate: false
+  xy: 222, 1771
+  size: 246, 100
+  orig: 246, 100
+  offset: 0, 0
+  index: -1
+lantern_2
+  rotate: true
+  xy: 2, 1012
+  size: 417, 1238
+  orig: 417, 1238
+  offset: 0, 0
+  index: -1
+lantern_3
+  rotate: true
+  xy: 2, 2
+  size: 1008, 1090
+  orig: 1008, 1090
+  offset: 0, 0
+  index: -1
+lantern_4
+  rotate: true
+  xy: 2, 1784
+  size: 87, 218
+  orig: 87, 218
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: true
+  xy: 470, 1758
+  size: 113, 455
+  orig: 113, 455
+  offset: 0, 0
+  index: -1
+
+white2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+left-hand
+  rotate: true
+  xy: 2, 993
+  size: 587, 1498
+  orig: 696, 1498
+  offset: 0, 0
+  index: -1
+right-hand
+  rotate: true
+  xy: 2, 62
+  size: 929, 1578
+  orig: 936, 1578
+  offset: 7, 0
+  index: -1
+
+white3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hat
+  rotate: true
+  xy: 2, 254
+  size: 1388, 1640
+  orig: 1388, 1640
+  offset: 0, 0
+  index: -1
+
+white4.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 2
+  size: 1557, 2035
+  orig: 1557, 2557
+  offset: 0, 0
+  index: -1

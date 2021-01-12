@@ -12,25 +12,35 @@ public class GhostControllder : MonoBehaviour
     public Shader OutlineShader;
     public Shader OriginalShader;
     public CanvasGroup SignCanvasGroup;
+
     public AudioSource audioSource;
+    public AudioSource ChokingAudio;//掐脖子音效
 
     public GameObject GhostCamera;
     public GameObject DrawObject, DrawCanvas;
     public GameObject bloom;
+
+    public Animator GhostAnim;
 
     bool isFlashRed;
     bool isEnemyDie;
     bool isDrawUI;
     bool isPlayAudio;
 
+    float PlayerIsDieTime;
+
     public bool GhostIsOut;
+    public bool isGhostAttackDie;
 
 
     float RedTime, BlackTime, SignAppearTime;
     float EnemyToPlayerDistance;
 
-    private Vignette vignette;
+    public float EnemyToPlayerDistanceMin;
+
+    public Vignette vignette;
     public Volume volume;
+    public SortingGroup sortingGroup;
     public enum State
     {
         NONE,
@@ -66,7 +76,7 @@ public class GhostControllder : MonoBehaviour
         if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
         {
             GhostState = State.COMING;
-            Destroy(player.hit2.collider.gameObject);
+            Destroy(player.hit2.collider.gameObject,1f);
         }
         if (EnemyToPlayerDistance <= 20f && !isDrawUI)
         {
@@ -82,11 +92,13 @@ public class GhostControllder : MonoBehaviour
                 if (SignCanvasGroup.alpha == 1)
                 {
                     DrawObject.SetActive(true);
+                    player.anim.SetBool("Spells", true);
                     GhostState = State.DRAW;
                 }
             }
-
         }
+
+       
 
         switch (GhostState)
         {
@@ -107,8 +119,30 @@ public class GhostControllder : MonoBehaviour
                     DrawCanvas.SetActive(false);
                     DrawObject.SetActive(false);
                     bloom.SetActive(false);
+                    player.PlayerRenderer.material.shader = OutlineShader;
+                    GhostAI.target = GhostAI.target2;
                     GhostState = State.SPELL;
                 }
+
+                if (EnemyToPlayerDistance <= EnemyToPlayerDistanceMin)
+                {
+                    isDrawUI = true;
+                    DrawObject.SetActive(false);
+                    bloom.SetActive(false);
+                    sortingGroup.sortingOrder = 39;
+                    PlayerIsDieTime += Time.deltaTime;
+                    GhostAI.enabled = false;
+                    GhostAnim.SetTrigger("TongueAttack");
+                    if (PlayerIsDieTime >= 1.5f)
+                    {
+                        ChokingAudio.Play();
+                        player.anim.SetTrigger("GhostAttack");
+                        player.anim.SetBool("Spells", false);
+                        SignAppearTime = 0;
+                        GhostState = State.FAIL;
+                    }
+                }
+
                 break;
 
             case State.COMING:
@@ -120,18 +154,18 @@ public class GhostControllder : MonoBehaviour
 
             case State.SPELL:
                 FlashRedLight();
-                GhostAI.enabled = false;
-                player.anim.SetBool("Spells", true);
+                //GhostAI.enabled = false;
+                //player.anim.SetBool("Spells", true);
                 StartCoroutine(SpellEffectOpen());
                 GhostState = State.SPELLTOPASS;
                 break;
 
             case State.PASS:
                 FlashRedLight();
-                GhostAI.target = GhostAI.target2;
-                GhostAI.enabled = true;
+                //GhostAI.target = GhostAI.target2;
+                //GhostAI.enabled = true;
                 player.anim.SetBool("Spells", false);
-                player.PlayerRenderer.material.shader = OutlineShader;
+                //player.PlayerRenderer.material.shader = OutlineShader;
                 if (EnemyToPlayerDistance >= 10 && isDrawUI)
                 {
                     player.isCanMove = true;
@@ -150,6 +184,14 @@ public class GhostControllder : MonoBehaviour
                 break;
 
             case State.FAIL:
+                FlashRedLight();
+                GhostCamera.SetActive(false);
+                SignAppearTime += Time.deltaTime;
+                SignCanvasGroup.alpha = 1-SignAppearTime / 1f;
+                if (SignCanvasGroup.alpha <= 0)
+                {
+                    isGhostAttackDie = true;
+                }
                 break;
         }
     }
@@ -193,4 +235,5 @@ public class GhostControllder : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         GhostState = State.PASS;
     }
+
 }

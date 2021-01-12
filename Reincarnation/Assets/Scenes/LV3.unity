@@ -521,7 +521,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 6026159203840590756}
   m_Lens:
-    FieldOfView: 20
+    FieldOfView: 23
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 5000
@@ -543,7 +543,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111237412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.76, y: -15.220067, z: -29}
+  m_LocalPosition: {x: 3.57, y: -14.743949, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1546453066}
@@ -590,6 +590,8 @@ MonoBehaviour:
   isCanMove: 0
   isNotStop: 0
   isNotStop2: 0
+  isInWater: 0
+  isSlode: 0
   OneTouchX: 0
   OneTouchX2: 0
   OneTouchY: 0
@@ -12587,7 +12589,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 5000
-  field of view: 20
+  field of view: 23
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -12613,7 +12615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7600002, y: -14.961409, z: -29}
+  m_LocalPosition: {x: 3.57, y: -14.743949, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13395,6 +13397,8 @@ MonoBehaviour:
   isCanMove: 0
   isNotStop: 0
   isNotStop2: 0
+  isInWater: 0
+  isSlode: 0
   OneTouchX: 0
   OneTouchX2: 0
   OneTouchY: 0
@@ -14621,7 +14625,7 @@ MonoBehaviour:
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.093
-  m_SoftZoneHeight: 0
+  m_SoftZoneHeight: 0.5
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -25444,7 +25448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6026159203840590782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.76, y: -17.47, z: 0}
+  m_LocalPosition: {x: 3.57, y: -17.34, z: 0}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
   m_Children:
   - {fileID: 800350853}
@@ -25860,7 +25864,7 @@ PrefabInstance:
     - target: {fileID: 3543792986563483418, guid: f659eaf67b802dd46b357637d39f4bee,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 12
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3543792986563483418, guid: f659eaf67b802dd46b357637d39f4bee,
         type: 3}

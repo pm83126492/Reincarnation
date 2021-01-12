@@ -995,7 +995,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111237412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.99, y: 4.886051, z: -29}
+  m_LocalPosition: {x: 41.1, y: 4.796051, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1546453066}
@@ -4248,7 +4248,7 @@ PrefabInstance:
     - target: {fileID: 3543792986563483418, guid: f659eaf67b802dd46b357637d39f4bee,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 12
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3732850375027956038, guid: f659eaf67b802dd46b357637d39f4bee,
         type: 3}
@@ -5042,7 +5042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.99, y: 4.886051, z: -29}
+  m_LocalPosition: {x: 41.1, y: 4.796051, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7139,6 +7139,8 @@ MonoBehaviour:
   isCanMove: 0
   isNotStop: 0
   isNotStop2: 0
+  isInWater: 0
+  isSlode: 0
   OneTouchX: 0
   OneTouchX2: 0
   OneTouchY: 0
@@ -7182,8 +7184,9 @@ MonoBehaviour:
   OrganCircle: {fileID: 98917231}
   OrganPosition: {fileID: 2005389812}
   isTouchOrgan: 0
-  CanChangeScene: 0
   rope: {fileID: 895619232}
+  gameController: {fileID: 0}
+  BlackAnim: {fileID: 9211412885300574262}
 --- !u!1 &1440296286
 GameObject:
   m_ObjectHideFlags: 0
@@ -20256,7 +20259,7 @@ SpriteRenderer:
   m_Size: {x: 4.325, y: 7.68222}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2000407877340655521
@@ -20780,7 +20783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701154132634879117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.99, y: 2.29, z: 0}
+  m_LocalPosition: {x: 41.1, y: 2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1387265963}
@@ -21004,12 +21007,18 @@ MonoBehaviour:
   OriginalShader: {fileID: 4800000, guid: 1e8a610c9e01c3648bac42585e5fc676, type: 3}
   SignCanvasGroup: {fileID: 0}
   audioSource: {fileID: 0}
+  ChokingAudio: {fileID: 0}
   GhostCamera: {fileID: 0}
   DrawObject: {fileID: 0}
   DrawCanvas: {fileID: 0}
   bloom: {fileID: 0}
+  GhostAnim: {fileID: 0}
   GhostIsOut: 0
+  isGhostAttackDie: 0
+  EnemyToPlayerDistanceMin: 0
+  vignette: {fileID: 0}
   volume: {fileID: 0}
+  sortingGroup: {fileID: 0}
   GhostState: 0
 --- !u!4 &3929182674871174819
 Transform:
@@ -26003,7 +26012,7 @@ SpriteRenderer:
   m_Size: {x: 4.325, y: 7.68222}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &3929182675099926933

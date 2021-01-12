@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        Debug.Log(distance);
+       // Debug.Log(distance);
 
         if (distance < nextWaypointDistance)
         {

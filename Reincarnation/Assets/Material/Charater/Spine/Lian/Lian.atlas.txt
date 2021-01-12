@@ -6,134 +6,141 @@ filter: Linear,Linear
 repeat: none
 breathwave04
   rotate: false
-  xy: 82, 1965
+  xy: 82, 1968
   size: 146, 29
   orig: 146, 29
   offset: 0, 0
   index: -1
 handle
   rotate: false
-  xy: 577, 1755
+  xy: 1034, 1746
   size: 148, 148
   orig: 148, 148
   offset: 0, 0
   index: -1
 light
   rotate: true
-  xy: 572, 1458
+  xy: 1026, 1461
   size: 262, 276
   orig: 262, 277
   offset: 0, 1
   index: -1
 light01
   rotate: false
-  xy: 1792, 1690
+  xy: 510, 1590
   size: 202, 201
   orig: 202, 201
   offset: 0, 0
   index: -1
 light2
   rotate: false
-  xy: 850, 1436
+  xy: 1304, 1439
   size: 287, 284
   orig: 287, 284
   offset: 0, 0
   index: -1
 no_stick_left-arm
   rotate: true
-  xy: 230, 1929
+  xy: 230, 1932
   size: 65, 246
   orig: 594, 420
   offset: 232, 109
   index: -1
 smoke03
   rotate: true
-  xy: 1045, 1895
+  xy: 1045, 1898
   size: 99, 104
   orig: 101, 108
   offset: 2, 3
   index: -1
 stick_eyes
   rotate: false
-  xy: 2, 1816
+  xy: 2, 1819
   size: 164, 147
   orig: 164, 147
   offset: 0, 0
   index: -1
 stick_head
   rotate: true
-  xy: 1139, 1423
+  xy: 1593, 1401
   size: 297, 371
   orig: 297, 371
   offset: 0, 0
   index: -1
 stick_left-arm
   rotate: false
-  xy: 2, 1119
+  xy: 2, 1251
   size: 594, 337
   orig: 594, 420
   offset: 0, 17
   index: -1
 stick_left-leg
   rotate: true
-  xy: 727, 1722
+  xy: 1184, 1725
   size: 169, 555
   orig: 351, 710
   offset: 137, 140
   index: -1
 stick_move-hair
   rotate: true
-  xy: 1151, 1893
+  xy: 1151, 1896
   size: 101, 171
   orig: 101, 171
   offset: 0, 0
   index: -1
 stick_neck
   rotate: true
-  xy: 2, 1595
+  xy: 1741, 1700
   size: 194, 256
   orig: 194, 256
   offset: 0, 0
   index: -1
 stick_redleft
   rotate: true
-  xy: 478, 1905
+  xy: 478, 1908
   size: 89, 565
   orig: 294, 789
   offset: 84, 185
   index: -1
 stick_redright
   rotate: true
-  xy: 1324, 1893
+  xy: 1324, 1896
   size: 101, 574
   orig: 295, 789
   offset: 194, 187
   index: -1
 stick_right-arm
   rotate: true
-  xy: 168, 1791
+  xy: 168, 1794
   size: 112, 407
   orig: 420, 594
   offset: 155, 156
   index: -1
 stick_right-leg
   rotate: true
-  xy: 1284, 1722
+  xy: 2, 1623
   size: 169, 506
   orig: 351, 710
   offset: 118, 181
   index: -1
 stick_upt
   rotate: true
-  xy: 260, 1542
+  xy: 714, 1544
   size: 247, 310
   orig: 594, 420
   offset: 164, 48
   index: -1
 tickwhite
   rotate: true
-  xy: 2, 1971
+  xy: 2, 1974
   size: 23, 78
   orig: 24, 79
   offset: 0, 1
+  index: -1
+tongue
+  rotate: true
+  xy: 577, 1793
+  size: 113, 455
+  orig: 113, 455
+  offset: 0, 0
   index: -1

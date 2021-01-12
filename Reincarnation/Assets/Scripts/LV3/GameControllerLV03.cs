@@ -20,6 +20,7 @@ public class GameControllerLV03 : MonoBehaviour
     public ParticleSystem[] BloodEffect;
     bool isDown;
     bool isWin;
+    bool isUp;
 
     public AudioSource audioSource;
     public AudioClip[] criminaAudio;
@@ -48,9 +49,16 @@ public class GameControllerLV03 : MonoBehaviour
         {
             BlackAnim.SetTrigger("FadeOut");
         }
-        if (player.transform.position.y >= -12)
+        if (player.transform.position.y >= -12&& player.transform.position.x >= -2)
         {
             RockFloor.transform.position = new Vector3(100, 100, 100);
+            isUp = true;
+        }
+
+        if ((isUp&& player.transform.position.y <= -12)|| player.transform.position.y <= -18)
+        {
+            player.enabled = false;
+            player.anim.SetTrigger("Down");
         }
 
         if (blackFade.CanChangeScene)

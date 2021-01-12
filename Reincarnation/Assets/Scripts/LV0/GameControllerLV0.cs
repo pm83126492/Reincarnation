@@ -53,6 +53,7 @@ public class GameControllerLV0 : MonoBehaviour
     public GameObject DoorOpen;
     public GameObject EnemyUI;
     public GameObject DrawUI;
+    public GameObject GhostAttackUI;
     public GameObject TeachObject;
     public GameObject Door_CorkRed_Under;
     public GameObject[] Door_LR;
@@ -108,6 +109,8 @@ public class GameControllerLV0 : MonoBehaviour
         DoorCrackHDR.SetFloat("_ColorAmount", 0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX = 0.5f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2f;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 2f;
     }
 
     // Update is called once per frame
@@ -127,6 +130,17 @@ public class GameControllerLV0 : MonoBehaviour
         {
             SceneManager.LoadScene("LV1");
         }
+
+       /* if (ghostControllder.isGhostAttackDie)//|| player.CanChangeScene)
+        {
+            BlockFadeAnim.SetTrigger("FadeOut");
+        }
+
+
+        if (blackFade.CanChangeScene && !IsWin)
+        {
+            SceneManager.LoadScene("LV0");
+        }*/
 
         UIEvent();
         
@@ -189,6 +203,12 @@ public class GameControllerLV0 : MonoBehaviour
                 {
                     player.isCanMove = false;
                     StartCoroutine(OpenGetStickUI());
+                    GameState = state.NONE;
+                }
+
+                if (ghostControllder.isGhostAttackDie)
+                {
+                    StartCoroutine(GhostAttack());
                     GameState = state.NONE;
                 }
                 break;
@@ -285,7 +305,6 @@ public class GameControllerLV0 : MonoBehaviour
             //解謎門動畫    
             case state.DoorCanAnim:
                 bloom.SetActive(true);
-                PlayerAnim.SetBool("Staff", false);
                 LightTimer += Time.deltaTime;
                 DoorCircleLightMaterial.SetFloat("_OutlineThickness", Mathf.Clamp(LightTimer / OneDuration, 0, 2));
                 break;
@@ -301,6 +320,7 @@ public class GameControllerLV0 : MonoBehaviour
 
             //解謎成功
             case state.DoorWin:
+                PlayerAnim.SetBool("Staff", false);
                 DoorCrackHDR.SetFloat("_ColorAmount", 1.5f);
                 DoorUIanim.Play();
                 StartCoroutine(DoorOpenAnim());
@@ -506,6 +526,22 @@ public class GameControllerLV0 : MonoBehaviour
         DrawUI.SetActive(false);
         ghostControllder.audioSource.Play();
         Time.timeScale = 1;
+    }
+
+    public void GhostAttackUIContinue()
+    {
+        ghostControllder.vignette.color.value = new Color(0f, 0f, 0f);
+        GhostAttackUI.SetActive(false);
+        GetStickUI.enabled = true;
+        Ghost.SetActive(false);
+        PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
+    }
+
+    IEnumerator GhostAttack()
+    {
+        yield return new WaitForSeconds(1f);
+        GhostAttackUI.SetActive(true);
+        Time.timeScale = 0;
     }
 
     IEnumerator OpenGetStickUI()

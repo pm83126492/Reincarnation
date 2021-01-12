@@ -69,7 +69,7 @@ public class Dialog : MonoBehaviour
 
     IEnumerator MomText()
     {
-        yield return new WaitForSeconds(13f);
+        yield return new WaitForSeconds(8f);
         index++;
         text.text = "";
         StartCoroutine(Type());
