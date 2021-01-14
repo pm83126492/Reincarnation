@@ -120,7 +120,7 @@ public class GameControllerLv1 : MonoBehaviour
                     audioSource.Play();
                     circleHeartBeat.gameObject.SetActive(true);
                    // StartCoroutine(FailTime());
-                    StartCoroutine(HeartBreatHz());
+                   // StartCoroutine(HeartBreatHz());
                     GameState = state.PUZZLE;
                 }
                 break;
@@ -134,15 +134,15 @@ public class GameControllerLv1 : MonoBehaviour
                     circleHeartBeat.rangeSpeed = 530;
                     HzNumber += 1;
                     HzTime = 0;
-                }else if(HzTime >= 13 && HzNumber == 2)
+                }else if(HzTime >= 13 && HzNumber == 1)
                 {
-                    circleHeartBeat.rangeSpeed = 790;
+                    circleHeartBeat.rangeSpeed = 680;
                     HzNumber += 1;
                     HzTime = 0;
                 }
-                else if (HzTime >= 8 && HzNumber == 3)
+                else if (HzTime >= 8 && HzNumber == 2)
                 {
-                    circleHeartBeat.rangeSpeed = 680;
+                    circleHeartBeat.rangeSpeed = 790;
                     HzNumber += 1;
                     HzTime = 0;
                 }
@@ -154,7 +154,7 @@ public class GameControllerLv1 : MonoBehaviour
                     ArtefactEmbers.Play();
                     Camera.main.orthographic = false;
                     circleHeartBeat.gameObject.SetActive(false);
-                    //ExportEffectCollider.gameObject.SetActive(true);
+                    ExportEffectCollider.gameObject.SetActive(true);
                     audioSource.Stop();
                     GameState = state.END;
                 }
@@ -188,7 +188,7 @@ public class GameControllerLv1 : MonoBehaviour
     {
         virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 3;
         EyesLight.SetActive(true);
-        //player.isCanMove = false;
+        player.isCanMove = false;
         isCine = true;
         audioSource.PlayOneShot(ScreamAudio);
         mirrorTouch.gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -294,7 +294,7 @@ public class GameControllerLv1 : MonoBehaviour
         Gizmos.DrawWireSphere(mirrorTouch.gameObject.transform.position, Radius);
     }*/
 
-    IEnumerator FailTime()//失敗時間計時
+   /* IEnumerator FailTime()//失敗時間計時
     {
         yield return new WaitForSeconds(40f);
         if (GameState == state.PUZZLE)
@@ -306,9 +306,9 @@ public class GameControllerLv1 : MonoBehaviour
             Ghost.gameObject.SetActive(true);
             CanvasGroupTimer = 0;
         }
-    }
+    }*/
 
-    IEnumerator HeartBreatHz()//心跳跳動頻率跟隨心跳音效
+   /* IEnumerator HeartBreatHz()//心跳跳動頻率跟隨心跳音效
     {
         yield return new WaitForSeconds(12f);
         circleHeartBeat.rangeSpeed = 530;
@@ -316,7 +316,7 @@ public class GameControllerLv1 : MonoBehaviour
         circleHeartBeat.rangeSpeed = 680;
         yield return new WaitForSeconds(8);
         circleHeartBeat.rangeSpeed = 790;
-    }
+    }*/
 
     IEnumerator Play()//PlayTimeLine
     {
