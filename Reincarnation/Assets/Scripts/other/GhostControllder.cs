@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class GhostControllder : MonoBehaviour
 {
-    public Player player;
+    public PlayerLV0 player;
     public EnemyAI GhostAI;
     public ParticleSystem SpellEffect;
     public Shader OutlineShader;
@@ -20,12 +20,14 @@ public class GhostControllder : MonoBehaviour
     public GameObject DrawObject, DrawCanvas;
     public GameObject bloom;
 
-    public Animator GhostAnim;
+    public Animator GhostWhiteAnim;
+    public Animator GhostBlackAnim;
 
     bool isFlashRed;
     bool isEnemyDie;
     bool isDrawUI;
     bool isPlayAudio;
+    public bool isWhiteGhost, isBlackGhost;
 
     float PlayerIsDieTime;
 
@@ -132,14 +134,29 @@ public class GhostControllder : MonoBehaviour
                     sortingGroup.sortingOrder = 39;
                     PlayerIsDieTime += Time.deltaTime;
                     GhostAI.enabled = false;
-                    GhostAnim.SetTrigger("TongueAttack");
-                    if (PlayerIsDieTime >= 1.5f)
+                    if (isBlackGhost)
                     {
-                        ChokingAudio.Play();
-                        player.anim.SetTrigger("GhostAttack");
-                        player.anim.SetBool("Spells", false);
-                        SignAppearTime = 0;
-                        GhostState = State.FAIL;
+                        GhostBlackAnim.SetTrigger("ChainAttack");
+                        if (PlayerIsDieTime >= 1.3f)
+                        {
+                            ChokingAudio.Play();
+                            player.anim.SetTrigger("GhostBlackAttack");
+                            player.anim.SetBool("Spells", false);
+                            SignAppearTime = 0;
+                            GhostState = State.FAIL;
+                        }
+                    }
+                    else if (isWhiteGhost)
+                    {
+                        GhostWhiteAnim.SetTrigger("TongueAttack");
+                        if (PlayerIsDieTime >= 1.3f)
+                        {
+                            ChokingAudio.Play();
+                            player.anim.SetTrigger("GhostWhiteAttack");
+                            player.anim.SetBool("Spells", false);
+                            SignAppearTime = 0;
+                            GhostState = State.FAIL;
+                        }
                     }
                 }
 

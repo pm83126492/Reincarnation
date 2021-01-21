@@ -11,6 +11,7 @@ public class GameControllerLV0 : MonoBehaviour
     public Canvas TeachUI;
     public Canvas SkipUI;
     public Canvas GetStickUI;
+    public Canvas ButtonCanvas;
 
     public CanvasGroup DoorCanvasGroup;
     public CanvasGroup DoorCicleFlowerCanvasGroup;
@@ -19,7 +20,7 @@ public class GameControllerLV0 : MonoBehaviour
     public bool IsWin02;
     bool isUseObjUI;
 
-    public Player player;
+    public PlayerLV0 player;
     public BlackFade blackFade;
     public PlayableDirector playableDirector;
     public CinemachineVirtualCamera virtualCamera;
@@ -179,6 +180,8 @@ public class GameControllerLV0 : MonoBehaviour
         {
             case state.EnemyAppearUI:
 
+                player.isCanMove = true;
+                player.anim.SetBool("SquatPush", false);
                 if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
                 {
                     ghostControllder.enabled = true;
@@ -219,7 +222,7 @@ public class GameControllerLV0 : MonoBehaviour
             case state.STOP:
                 player.anim.SetFloat("WalkSpeed", 0);
                 player.anim.SetBool("Slide", false);
-                player.anim.SetBool("SquatPush", false);
+                //player.anim.SetBool("SquatPush", false);
                 player.obstacle = null;
                 player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
                 player.isCanMove = false;
@@ -429,7 +432,7 @@ public class GameControllerLV0 : MonoBehaviour
 
     void PlayableTime()
     {
-        if (float.Parse(playableDirector.time.ToString("0.0"))==5.5f)
+        /*if (float.Parse(playableDirector.time.ToString("0.0"))==5.5f)
         {
             playableDirector.Pause();
             GameState = state.RightMove;
@@ -455,6 +458,36 @@ public class GameControllerLV0 : MonoBehaviour
             GameState = state.PleaseObj;
         }
         else if (float.Parse(playableDirector.time.ToString("0.0")) == 30f)
+        {
+            playableDirector.Pause();
+            GameState = state.UseObj;
+        }*/
+        if (float.Parse(playableDirector.time.ToString("0.0")) == 4f)
+        {
+            playableDirector.Pause();
+            GameState = state.RightMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 5f)
+        {
+            playableDirector.Pause();
+            GameState = state.LeftMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 9f)
+        {
+            playableDirector.Pause();
+            GameState = state.JumpMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 13f)
+        {
+            playableDirector.Pause();
+            GameState = state.SlideMove;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 14f)
+        {
+            playableDirector.Pause();
+            GameState = state.PleaseObj;
+        }
+        else if (float.Parse(playableDirector.time.ToString("0.0")) == 17f)
         {
             playableDirector.Pause();
             GameState = state.UseObj;
@@ -490,6 +523,7 @@ public class GameControllerLV0 : MonoBehaviour
         PlayerAnim.runtimeAnimatorController = trickAnim as RuntimeAnimatorController;
         SkipUI.enabled = false;
         GetStickUI.enabled = true;
+        ButtonCanvas.enabled = true;
         //player.isCanMove = true;
     }
 
@@ -509,6 +543,7 @@ public class GameControllerLV0 : MonoBehaviour
     {
         Time.timeScale = 1;
         TeachUI.enabled = true;
+        ButtonCanvas.enabled = true;
         playableDirector.Play();
         GameState = state.STOP;
         SkipUI.enabled = false;

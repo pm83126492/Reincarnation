@@ -44,7 +44,7 @@ public class GameControllerLv1 : MonoBehaviour
 
     bool isParse;//TimeLins暫停中;
     bool isCine;//鏡頭震動中
-    bool isWin;//關卡過關
+    public bool isWin;//關卡過關
     bool isFail;//關卡失敗
     bool isReloadScence;//重新開始中
     bool isDieEffect;//死亡效果中
@@ -55,10 +55,10 @@ public class GameControllerLv1 : MonoBehaviour
     float PlayerIsDieTime;//Player準備被纏脖子時間
     public float Radius;//鏡子破裂爆炸範圍
     public float Force;//鏡子破裂爆炸力道
-
-    float FailTimer;
-    float HzTime;
-    int HzNumber;
+    float ColliderOpenTime;//鏡子碰觸Collider打開倒數時間
+    float FailTimer;//失敗時間計時時間
+    float HzTime;//心跳頻率計時時間
+    int HzNumber;//心跳頻率等級
 
     public GameObject EyesLight;//點擊Mirror氣氛轉換物件
     public GameObject MirrorCrack;//Mirror碎片物件
@@ -108,7 +108,6 @@ public class GameControllerLv1 : MonoBehaviour
         {
             case state.MIRROR://鏡子進入解謎狀態
                 EyesLight.SetActive(false);
-                player.enabled = false;
                 CanvasGroupTimer += Time.deltaTime;
                 MirrorCanvasGroup.gameObject.SetActive(true);
                 BGMirrorCanvasGroup.gameObject.SetActive(true);
@@ -173,7 +172,13 @@ public class GameControllerLv1 : MonoBehaviour
                 break;
 
             case state.END://鏡子解謎結束狀態
-                player.enabled = true;
+                ColliderOpenTime += Time.deltaTime;
+                if (ColliderOpenTime >= 7)
+                {
+                    mirrorTouch.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+                    player.isCanMove = true;
+                    GameState = state.NONE;
+                }
                 break;
         }
 

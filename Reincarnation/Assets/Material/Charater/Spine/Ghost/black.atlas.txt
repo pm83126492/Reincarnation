@@ -1,0 +1,75 @@
+
+black.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+face
+  rotate: true
+  xy: 891, 1297
+  size: 439, 440
+  orig: 441, 445
+  offset: 0, 0
+  index: -1
+hair
+  rotate: true
+  xy: 2, 1337
+  size: 416, 887
+  orig: 422, 923
+  offset: 6, 0
+  index: -1
+hat
+  rotate: false
+  xy: 1333, 797
+  size: 615, 753
+  orig: 615, 753
+  offset: 0, 0
+  index: -1
+left-arm
+  rotate: true
+  xy: 2, 876
+  size: 419, 1282
+  orig: 419, 1310
+  offset: 0, 28
+  index: -1
+left-hand
+  rotate: false
+  xy: 1231, 1738
+  size: 310, 210
+  orig: 330, 229
+  offset: 12, 7
+  index: -1
+ooo
+  rotate: true
+  xy: 2, 1755
+  size: 193, 1227
+  orig: 193, 1227
+  offset: 0, 0
+  index: -1
+right-arm
+  rotate: true
+  xy: 2, 126
+  size: 748, 1316
+  orig: 767, 1323
+  offset: 15, 0
+  index: -1
+right-hand
+  rotate: true
+  xy: 1543, 1552
+  size: 396, 405
+  orig: 396, 405
+  offset: 0, 0
+  index: -1
+
+black2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 2
+  size: 1111, 1623
+  orig: 1117, 1659
+  offset: 4, 9
+  index: -1

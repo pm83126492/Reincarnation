@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,149 +29,42 @@ public class PlayerLV2 : Player
     {
         base.MobileTouch();
 
-        //第一隻手指
-        if (Input.touchCount == 1)
-        {
-            Touch touch = Input.GetTouch(0);
-
-
-            //第一隻手指放掉瞬間
-            if (touch.phase == TouchPhase.Ended)
-            {
-                if (obstacle != null)
-                {
-                    anim.SetBool("Push", false);
-                    anim.SetBool("SquatPush", false);
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                    obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                    obstacle = null;
-                }
-                if (organIce != null)
-                {
-                    anim.enabled = true;
-                    anim.SetBool("Roll", false);
-                    organIce.GetComponent<Rigidbody2D>().isKinematic = false;
-                    isTouchOrgan = false;
-                }
-            }
-            if (touch.phase == TouchPhase.Stationary && OneTouchX == OneTouchX2)
-            {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle)
-                {
-                    isTouchOrgan = true;
-                }
-            }
-        }
-
-        //第二隻手指     
-        if (Input.touchCount > 1)
-        {
-            isTouch2 = true;
-            Touch touch2 = Input.GetTouch(1);
-            //第二隻手指放掉瞬間
-            if (touch2.phase == TouchPhase.Ended)
-            {
-                if (obstacle != null)
-                {
-                    anim.SetBool("Push", false);
-                    anim.SetBool("SquatPush", false);
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                    obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                    obstacle = null;
-                }
-            }
-
-            if (touch2.phase == TouchPhase.Stationary)
-            {
-                if (isObstacle)
-                {
-                    if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
-                    {
-                        anim.SetBool("Push", true);
-                        Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                        if (rigidbody2D.velocity.x < 0)
-                        {
-                            anim.SetBool("Push", false);
-                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                            obstacle = null;
-                        }
-                    }
-                    else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
-                    {
-                        anim.SetBool("SquatPush", true);
-                        Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                        if (rigidbody2D.velocity.x < 0)
-                        {
-                            anim.SetBool("SquatPush", false);
-                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                            obstacle = null;
-                        }
-                    }
-                    else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
-                    {
-                        anim.SetBool("SquatPush", true);
-                        Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                        if (rigidbody2D.velocity.x > 0)
-                        {
-                            anim.SetBool("SquatPush", false);
-                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                            obstacle = null;
-                        }
-                    }
-                }
-            }
-
-        }
-
-        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50)&& isTouchOrgan)
-        {
-            isTouchOrgan = false;
-        }
-
-        //判斷起重機是否放掉
-        if (!isObstacle || OneTouchX != OneTouchX2 || TwoTouchX != TwoTouchX2)
-        {
-            organIce.GetComponent<Rigidbody2D>().isKinematic = false;
-        }
-
-
         if (Input.GetKey(KeyCode.E))
         {
             if (hit2.collider != null && hit2.collider.gameObject.tag == "organ" && isObstacle)
             {
+                rigidbody2D.velocity = Vector2.zero;
+                isCanMove = false;
                 isTouchOrgan = true;
+                Organ();
             }
             if (isObstacle)
             {
-                /*if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle" && rigidbody2D.velocity.x > 0)
+                if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
                 {
-                    Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 7;
-                    if (rigidbody2D.velocity.x < 0)
+                    if (joystick.Horizontal > 0)
                     {
-                        anim.SetBool("Push", false);
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                        obstacle = null;
+                        anim.enabled = true;
+                        anim.SetBool("Push", true);
+                        anim.SetBool("-Push", false);
                     }
-                }*/
+                    else if (joystick.Horizontal < 0)
+                    {
+                        anim.enabled = true;
+                        anim.SetBool("Push", false);
+                        anim.SetBool("-Push", true);
+                    }
+                    else if (joystick.Horizontal == 0)
+                    {
+                        anim.enabled = false;
+                    }
+                    Obstacle();
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                }
                 if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
                 {
                     Obstacle();
                     obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                    if (rigidbody2D.velocity.x < 0)
-                    {
-                        anim.SetBool("SquatPush", false);
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                        obstacle = null;
-                    }
                     anim.SetBool("SquatPush", true);
                 }
                 else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
@@ -200,11 +93,12 @@ public class PlayerLV2 : Player
             }
             if (obstacle != null)
             {
+                isPushObstacle = false;
                 anim.SetBool("Push", false);
                 anim.SetBool("SquatPush", false);
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
                 obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                obstacle = null;
+                //obstacle = null;
             }
         }
     }
@@ -213,22 +107,16 @@ public class PlayerLV2 : Player
     {
         base.Update();
 
-        if (isTouchOrgan)
-        {
-            Organ();
-        }
+        RollUseObjButton();//轉冰塊事件
 
-        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50) || Input.GetKey(KeyCode.D) || OneTouchX2 + 50 < OneTouchX || TwoTouchX2 + 50 < TwoTouchX || Input.GetKey(KeyCode.A))
-        {
-            anim.enabled = true;
-            anim.SetBool("Roll", false);
-        }
+        PushUseObjButton();//推冰塊事件
     }
 
     
     //起重冰事件
     void Organ()
     {
+        anim.SetBool("Roll", true);
         rope.ChangeRopeBendLimit(0);
         gameObject.transform.position = OrganPosition.position;
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -243,13 +131,127 @@ public class PlayerLV2 : Player
             organIce.transform.position = new Vector3(organIce.transform.position.x, 11f, organIce.transform.position.z);
             anim.enabled = false;
         }
-        anim.SetBool("Roll", true);
     }
 
-   /* public void ReloadScene()
+    //轉冰塊事件
+    void RollUseObjButton()
     {
-        //CanChangeScene = true;
-    }*/
+        if (useObjButton.Pressed && isObstacle && hit2.collider.gameObject.tag == "organ")
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            isCanMove = false;
+            isTouchOrgan = true;
+            Organ();
+        }
+        else if (!useObjButton.Pressed && joystick.Horizontal == 0 && isTouchOrgan)
+        {
+            anim.enabled = true;
+            anim.SetBool("Roll", false);
+            organIce.GetComponent<Rigidbody2D>().isKinematic = false;
+            isCanMove = true;
+            isTouchOrgan = false;
+        }
+        else if (!useObjButton.Pressed && joystick.Horizontal != 0 && isTouchOrgan)
+        {
+            anim.enabled = true;
+            anim.SetFloat("WalkSpeed", Mathf.Abs(rigidbody2D.velocity.x));
+            organIce.GetComponent<Rigidbody2D>().isKinematic = false;
+            isCanMove = true;
+            isTouchOrgan = false;
+        }
+        else
+        {
+            anim.SetBool("Roll", false);
+        }
+    }
+
+    //推冰塊事件
+    void PushUseObjButton()
+    {
+        if (useObjButton.Pressed && isObstacle)
+        {
+            if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
+            {
+                isPushObstacle = true;
+                if (joystick.Horizontal > 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("Push", true);
+                    anim.SetBool("-Push", false);
+                }
+                else if (joystick.Horizontal < 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("Push", false);
+                    anim.SetBool("-Push", true);
+                }
+                else if (joystick.Horizontal == 0)
+                {
+                    anim.enabled = false;
+                }
+                Obstacle();
+                obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+            }
+            else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
+            {
+                isPushObstacle = true;
+                if (joystick.Horizontal > 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("SquatPush", true);
+                    anim.SetBool("-SquatPush", false);
+                }
+                else if (joystick.Horizontal < 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("SquatPush", false);
+                    anim.SetBool("-SquatPush", true);
+                }
+                else if (joystick.Horizontal == 0)
+                {
+                    anim.enabled = false;
+                }
+                Obstacle();
+                obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+
+            }
+            else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
+            {
+                isPushObstacle = true;
+                if (joystick.Horizontal < 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("SquatPush", true);
+                    anim.SetBool("-SquatPush", false);
+                }
+                else if (joystick.Horizontal > 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("SquatPush", false);
+                    anim.SetBool("-SquatPush", true);
+                }
+                else if (joystick.Horizontal == 0)
+                {
+                    anim.enabled = false;
+                }
+                Obstacle();
+                obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+            }
+        }
+        else if (!useObjButton.Pressed && obstacle != null)
+        {
+            isPushObstacle = false;
+            anim.enabled = true;
+            anim.SetBool("Push", false);
+            anim.SetBool("SquatPush", false);
+            anim.SetBool("-Push", false);
+            anim.SetBool("-SquatPush", false);
+            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+            obstacle.GetComponent<FixedJoint2D>().enabled = false;
+            obstacle = null;
+            
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

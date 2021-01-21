@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
-using UnityEngine.Rendering.Universal;
 
 public class GameControllerLV03 : MonoBehaviour
 {
-    public Player player;
-    public Animator BlackAnim;
-    public BlackFade blackFade;
-    public CinemachineVirtualCamera virtualCamera;
-    public GameObject PlayerCirminalHand;
-    public GameObject criminalBody01, criminalBody02, criminalBody03, criminalBody04;
-    public GameObject RockFloor;
-    public SpriteRenderer criminal01, criminal02, criminal03, criminal04;
-    public Sprite[] criminal_hand;
-    public PlayerLV3 playerLV3;
-    public ParticleSystem[] BloodEffect;
-    bool isDown;
-    bool isWin;
-    bool isUp;
+    public Animator BlackAnim;//黑頻動畫
 
-    public AudioSource audioSource;
-    public AudioClip[] criminaAudio;
+    public BlackFade blackFade;//黑頻程式
+    public CinemachineVirtualCamera virtualCamera;//攝影機
+    public PlayerLV3 playerLV3;//Player程式
+
+    public GameObject PlayerCirminalHand;//Player手上斷手物件
+    public GameObject criminalBody01, criminalBody02, criminalBody03, criminalBody04;//斷手身體物件
+    public GameObject RockFloor;//岩石物件
+    public GameObject RebirthPoint;//玩家重生點1
+
+    public SpriteRenderer criminal01, criminal02, criminal03, criminal04;//罪犯Sprite
+    public Sprite[] criminal_hand;//斷手Sprite
+
+    public ParticleSystem[] BloodEffect;//血特效
+    bool isDown;//掉落中
+    bool isWin;//過關
+    bool isUp;//在最上層岩石中
+
+    public static int LV3RebirthNumber;//重生數
+
+    public AudioSource audioSource;//音效
+    public AudioClip[] criminaAudio;//罪犯慘叫音效
     // Start is called before the first frame update
     void Start()
     {
@@ -35,42 +40,24 @@ public class GameControllerLV03 : MonoBehaviour
             IntrodutionUI.isNotOnce = false;
             IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
         }
+
+        if (LV3RebirthNumber == 1)
+        {
+            playerLV3.transform.position = RebirthPoint.transform.position;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y <= -18)
-        {
-            virtualCamera.Follow = null;
-            playerLV3.enabled = false;
-        }
-        if (player.transform.position.y <= -70)
-        {
-            BlackAnim.SetTrigger("FadeOut");
-        }
-        if (player.transform.position.y >= -12&& player.transform.position.x >= -2)
-        {
-            RockFloor.transform.position = new Vector3(100, 100, 100);
-            isUp = true;
-        }
+        Lose();//失敗
 
-        if ((isUp&& player.transform.position.y <= -12)|| player.transform.position.y <= -18)
-        {
-            player.enabled = false;
-            player.anim.SetTrigger("Down");
-        }
+        BreakHand();//罪犯斷手事件
 
-        if (blackFade.CanChangeScene)
-        {
-            SceneManager.LoadScene("LV3");
-        }
-
-        BreakHand();
-
-        CanGoLV4();
+        CanGoLV4();//前往第四關
     }
 
+    //罪犯斷手事件
     void BreakHand()
     {
         if((playerLV3.isSwingJump&&!playerLV3.isSwingJump2 )||(!playerLV3.isSwingJump && playerLV3.isSwingJump2))
@@ -85,7 +72,7 @@ public class GameControllerLV03 : MonoBehaviour
 
     void CanGoLV4()
     {
-        if (player.transform.position.x >= 42)
+        if (playerLV3.transform.position.x >= 42)
         {
             isWin = true;
             BlackAnim.SetTrigger("FadeOut");
@@ -97,7 +84,44 @@ public class GameControllerLV03 : MonoBehaviour
         }
     }
 
+    //失敗
+    void Lose()
+    {
+        //墜落攝影機不跟隨
+        if (playerLV3.transform.position.y <= -18)
+        {
+            virtualCamera.Follow = null;
+            playerLV3.enabled = false;
+        }
+        //淡出
+        if (playerLV3.transform.position.y <= -70)
+        {
+            BlackAnim.SetTrigger("FadeOut");
+        }
+        //站上最上層岩石
+        if (playerLV3.transform.position.y >= -12 && playerLV3.transform.position.x >= -2)
+        {
+            RockFloor.transform.position = new Vector3(100, 100, 100);
+            isUp = true;
+            if (LV3RebirthNumber == 0)
+            {
+                LV3RebirthNumber = 1;
+            }
+        }
+        //掉落
+        if ((isUp && playerLV3.transform.position.y <= -12) || playerLV3.transform.position.y <= -18)
+        {
+            playerLV3.enabled = false;
+            playerLV3.anim.SetTrigger("Down");
+        }
 
+        if (blackFade.CanChangeScene)
+        {
+            SceneManager.LoadScene("LV3");
+        }
+    }
+
+    //罪犯斷手時間計時
     IEnumerator BreakHandTime()
     {
         yield return new WaitForSeconds(5f);

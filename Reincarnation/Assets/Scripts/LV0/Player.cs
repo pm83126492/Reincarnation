@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    protected Joystick joystick;
+    protected JumpJoyButton jumpJoyButton;
+    protected UseObjButton useObjButton;
+    public float horizontal;
+    public float Vertical;
+
+
     public MeshRenderer PlayerRenderer;
     public PhysicsMaterial2D WallPhysics;
     public Rigidbody2D rigidbody2D;
@@ -12,7 +19,7 @@ public class Player : MonoBehaviour
     public Animator anim;
     public float runSpeed = 250f;
     public float JumpForce = 13f;
-    public float ObjectsGravity=4f;
+    public float ObjectsGravity=4.5f;
     private float horizontalMove;
 
     public float StopSlideTime;//停止滑行時間
@@ -22,6 +29,7 @@ public class Player : MonoBehaviour
     public bool isNotStop2;
     public bool isInWater;//在水裡
     public bool isSlode;//在斜坡
+    public bool isPushObstacle;//推物件中
 
     public float OneTouchX;
     public float OneTouchX2;
@@ -75,6 +83,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        joystick = FindObjectOfType<Joystick>();
+        jumpJoyButton = FindObjectOfType<JumpJoyButton>();
+        useObjButton = FindObjectOfType<UseObjButton>();
+
         isCanMove = true;
         player = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -86,6 +98,9 @@ public class Player : MonoBehaviour
     }
     protected virtual void Update()
     {
+        //horizontal = joystick.Horizontal;
+        //Vertical = joystick.Vertical;
+
         //PlayerRenderer.material.shader = OutlineShader;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         if (isCanMove && !isInWater&&!isSlode)
@@ -111,74 +126,56 @@ public class Player : MonoBehaviour
                 boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
                 boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
             }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                if (isObstacle)
+                {
+                    if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
+                    {
+                        Obstacle();
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                        if (rigidbody2D.velocity.x < 0)
+                        {
+                            anim.SetBool("Push", false);
+                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                            obstacle = null;
+                        }
+                        anim.SetBool("Push", true);
+                    }
+                    else if (hit2.collider != null && hit2.collider.gameObject.tag == "smallobstacle")
+                    {
+                        anim.SetBool("SquatPush", true);
+                        Obstacle();
+                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                        if (rigidbody2D.velocity.x < 0)
+                        {
+                            anim.SetBool("SquatPush", false);
+                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                            obstacle = null;
+                        }
+                    }
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                if (obstacle != null)
+                {
+                    anim.SetBool("Push", false);
+                    anim.SetBool("SquatPush", false);
+                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
+                    obstacle.GetComponent<FixedJoint2D>().enabled = false;
+                    obstacle = null;
+                }
+            }
+
         }
+
         PlayerAnimation();//角色動畫
         GroundCheck();//判斷是否在地面上
         obstacleCheck();//判斷是否碰到障礙物
-
-        
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (isObstacle)
-            {
-                if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
-                {
-                    Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                    if (rigidbody2D.velocity.x < 0)
-                    {
-                        anim.SetBool("Push", false);
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                        obstacle = null;
-                    }
-                    anim.SetBool("Push", true);
-                }
-                else if (hit2.collider != null && hit2.collider.gameObject.tag == "smallobstacle")
-                {
-                    anim.SetBool("SquatPush", true);
-                    Obstacle();
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                    if (rigidbody2D.velocity.x < 0)
-                    {
-                        anim.SetBool("SquatPush", false);
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                        obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                        obstacle = null;
-                    }
-                }
-            }
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            if (obstacle != null)
-            {
-                anim.SetBool("Push", false);
-                anim.SetBool("SquatPush", false);
-                obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                obstacle = null;
-            }
-        }
-
-
-        //判斷到地面上停止
-        if (isNotStop && isGround)
-        {
-            OneTouchX = OneTouchX2 = 0;
-            isNotStop = false;
-        }
-        //判斷到地面上停止
-        if (isNotStop2 && isGround)
-        {
-            TwoTouchX = TwoTouchX2= 0;
-            if(Input.touchCount == 0)
-            {
-                OneTouchX = OneTouchX2 = 0;
-            }
-            isNotStop2 = false;
-        }
     }
 
     protected virtual void FixedUpdate()
@@ -196,256 +193,71 @@ public class Player : MonoBehaviour
 
     protected virtual void MobileTouch()
     {
-        //第一隻手指
-        if (Input.touchCount == 1)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            //第一隻手指按下瞬間
-            if (touch.phase == TouchPhase.Began)
-            {
-                OneTouchX = touch.position.x;
-                OneTouchX2 = touch.position.x;
-                OneTouchY = touch.position.y;
-                OneTouchY2 = touch.position.y;
-            }
-            //第一隻手指移動中
-            if (touch.phase == TouchPhase.Moved&&!isTouch2)
-            {
-                OneTouchX2 = touch.position.x;
-                if (!isJumpButton)
-                {
-                    OneTouchY2 = touch.position.y;
-                    if (OneTouchY + 100 < OneTouchY2)
-                    {
-                        isJumpButton = true;
-                    }
-                }
-            }
-            //第一隻手指放掉瞬間
-            if (touch.phase == TouchPhase.Ended)
-            {
-                isTouch2 = false;
-                intervals = 0.1f;
-                if (isGround)
-                {
-                    OneTouchX = OneTouchX2 = TwoTouchX = TwoTouchX2 = TwoTouchY = TwoTouchY2 = OneTouchY = OneTouchY2 = 0;
-                }
-                else if (!isGround)
-                {
-                    isNotStop = true;
-                }
-
-                isJumpButton = false;
-                if (isJumpButton2)
-                {
-                    isJumpButton2 = false;
-                }
-
-                if (obstacle != null)
-                {
-                    anim.SetBool("Push", false);
-                    anim.SetBool("SquatPush", false);
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                    obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                    obstacle = null;
-                }
-            }
-        }
-
-        //第二隻手指     
-        if (Input.touchCount > 1)
-        {
-            isTouch2 = true;
-            Touch touch2 = Input.GetTouch(1);
-            Touch touch1 = Input.GetTouch(0);
-
-            
-
-            //第二隻手指按下瞬間
-            if (touch2.phase == TouchPhase.Began)
-            {
-                TwoTouchX = touch2.position.x;
-                TwoTouchX2 = touch2.position.x;
-                TwoTouchY = touch2.position.y;
-                TwoTouchY2 = touch2.position.y;
-            }
-            //第二隻手指移動中
-            if (touch2.phase == TouchPhase.Moved)
-            {
-               // TwoTouchX2 = touch2.position.x;
-                if (!isJumpButton2)
-                {
-                    TwoTouchY2 = touch2.position.y;
-                    if (TwoTouchY + 100 < TwoTouchY2)
-                    {
-                        isJumpButton2 = true;
-                    }
-                    else
-                    {
-                        TwoTouchX2 = touch2.position.x;
-                    }
-                }
-            }
-            //第二隻手指放掉瞬間
-            if (touch2.phase == TouchPhase.Ended)
-            {
-                if (isGround)
-                {
-                    OneTouchX = OneTouchX2 = TwoTouchX = TwoTouchX2 = TwoTouchY = TwoTouchY2 = 0;
-                }
-                else if (!isGround)
-                {
-                    isNotStop2 = true;
-                }
-                isSlide = false;
-                anim.SetBool("Slide", false);
-
-                intervals2 = 0.1f;
-                isJumpButton2 = false;
-
-                if (obstacle != null)
-                {
-                    anim.SetBool("Push", false);
-                    anim.SetBool("SquatPush", false);
-                    obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                    obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                    obstacle = null;
-                }
-            }
-            if (touch2.phase == TouchPhase.Stationary)
-            {
-                if (isObstacle)
-                {
-                    if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
-                    {
-                        anim.SetBool("Push", true);
-                        Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                        if (rigidbody2D.velocity.x < 0)
-                        {
-                            anim.SetBool("Push", false);
-                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                            obstacle = null;
-                        }
-                    }
-                    else if (hit2.collider != null && hit2.collider.gameObject.tag == "smallobstacle")
-                    {
-                        anim.SetBool("SquatPush", true);
-                        Obstacle();
-                        obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
-                        if (rigidbody2D.velocity.x < 0)
-                        {
-                            anim.SetBool("SquatPush", false);
-                            obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
-                            obstacle.GetComponent<FixedJoint2D>().enabled = false;
-                            obstacle = null;
-                        }
-                    }
-                }
-            }
-
-
-            if (touch1.phase == TouchPhase.Began)
-            {
-                ThreeTouchY = touch1.position.y;
-                ThreeTouchY2 = touch1.position.y;
-                isTouch3 = true;
-            }
-            if (touch1.phase == TouchPhase.Moved&&isTouch3)
-            {
-                if (!isJumpButton3)
-                {
-                    ThreeTouchY2 = touch1.position.y;
-                    if (ThreeTouchY + 100 < ThreeTouchY2)
-                    {
-                        isJumpButton3 = true;
-                    }
-                }
-            }
-            if (touch1.phase == TouchPhase.Ended)
-            {
-                if (isGround)
-                {
-                    ThreeTouchY = ThreeTouchY2 = 0;
-                }
-                isJumpButton3 = false;
-                isSlide = false;
-                isTouch3 = false;
-            }
-        }
-
-        if ((TwoTouchY > TwoTouchY2 + 200|| OneTouchY > OneTouchY2 + 200|| ThreeTouchY > ThreeTouchY2 + 200) && rigidbody2D.velocity.x != 0)
+        if (joystick.Vertical<-0.5f)
         {
             isSlide = true;
-        }
-
-        if (isSlide)
-        {
             SlideTime += Time.deltaTime;
-            anim.SetBool("Slide", true);
-            boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
-            boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
-            if (SlideTime >= 1)
+            if (SlideTime >= 1.5f)
             {
-                isSlide = false;
-                OneTouchY = OneTouchY2;
-                TwoTouchY = TwoTouchY2;
+                anim.SetBool("Slide", false);
+                boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
+                boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
             }
-        }
-        else if(!isSlide)
+            else
+            {
+                anim.SetBool("Slide", true);
+                boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
+                boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
+            }
+        }else if(joystick.Vertical > -0.5f)
         {
             SlideTime = 0;
+            isSlide = false;
             anim.SetBool("Slide", false);
             boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
             boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
         }
 
-        if (rigidbody2D.velocity.x == 0)
-        {
-            isSlide = false;
-        }
-
         //判斷是否跳
-        if ((OneTouchY + 100 < OneTouchY2 || TwoTouchY + 100 < TwoTouchY2||ThreeTouchY+100<ThreeTouchY2) && !jump)
+        if (jumpJoyButton.Pressed&&!jump&&isGround)
         {
             jump = true;
+            jumpJoyButton.Pressed = false;
         }
     }
     //移動程式
     protected virtual void Movement()
     {
         //靜止
-        if (OneTouchX == 0 || OneTouchX2 == 0 || TwoTouchX == 0 || TwoTouchX2 == 0)
+        if(joystick.Horizontal == 0)
         {
             rigidbody2D.velocity = new Vector2(0 * Time.deltaTime, rigidbody2D.velocity.y);
         }
         //右移動
-        if ((OneTouchX2 > OneTouchX + 50) || (TwoTouchX2 > TwoTouchX + 50) || Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.D) || joystick.Horizontal > 0)
         {
             
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
-            transform.rotation = new Quaternion(0, 0, 0, 0);
+            if (!isPushObstacle)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+            }
         }
         //左移動
-        if (OneTouchX2 + 50 < OneTouchX || TwoTouchX2 + 50 < TwoTouchX || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || joystick.Horizontal < 0)
         {
             
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
-            transform.rotation = new Quaternion(0, 180, 0, 0);
+            if (!isPushObstacle)
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);
+            }
         }
         //跳
         if (jump && isGround)
         {
             anim.SetTrigger("Jump");
             rigidbody2D.velocity = Vector2.up * JumpForce;
-            OneTouchY = 0;
-            OneTouchY2 = 0;
-            TwoTouchY = 0;
-            TwoTouchY2 = 0;
-            ThreeTouchY = 0;
-            ThreeTouchY2 = 0;
             isGround = false;
             jump = false;
         }
@@ -505,7 +317,6 @@ public class Player : MonoBehaviour
         if (hit2.collider.gameObject.tag == "obstacle"|| hit2.collider.gameObject.tag == "smallobstacle")
         {
             obstacle = hit2.collider.gameObject;
-           // obstacle.GetComponent<Rigidbody2D>().gravityScale = 5;
         }
         else
         {

@@ -24,6 +24,7 @@ public class IntrodutionUI : MonoBehaviour
         if (isNotOnce)
         {
             canvasGroup.alpha = 0;
+            gameObject.SetActive(false);
         }
         else
         {

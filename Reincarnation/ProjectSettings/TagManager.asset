@@ -30,6 +30,7 @@ TagManager:
   - loweffect
   - Export
   - OutWater
+  - Rebirth
   layers:
   - Default
   - TransparentFX
