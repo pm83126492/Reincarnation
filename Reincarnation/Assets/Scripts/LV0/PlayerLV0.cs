@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerLV0 : Player
 {
-    //public Animator anim;
     protected override void Start()
     {
         base.Start();
@@ -54,6 +53,4 @@ public class PlayerLV0 : Player
             obstacle = null;
         }
     }
-
-
 }

@@ -6,6 +6,7 @@ public class FootStep : MonoBehaviour
 {
     public AudioClip[] FootAudio;
     public AudioClip JumpAudio;
+    public AudioClip ShineAudio;
     private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -27,5 +28,10 @@ public class FootStep : MonoBehaviour
     public void Jump()
     {
         audioSource.PlayOneShot(JumpAudio);
+    }
+
+    public void Shine()
+    {
+        audioSource.PlayOneShot(ShineAudio);
     }
 }

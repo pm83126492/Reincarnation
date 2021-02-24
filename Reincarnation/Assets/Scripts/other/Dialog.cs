@@ -50,7 +50,8 @@ public class Dialog : MonoBehaviour
         else
         {
             text.text = "";
-            FindObjectOfType<Loading>().LoadScene("ReadyStart");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //FindObjectOfType<Loading>().LoadScene("ReadyStart");
         }
     }
 

@@ -5,14 +5,16 @@ using UnityEngine;
 public class WinCollider : MonoBehaviour
 {
     public GameControllerLV0 gameController;
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Update()
     {
-        if (collision.CompareTag("WinCollider01"))
+        //判斷門栓勝利條件
+        if (transform.localPosition.x >= 420)
         {
-            gameController.IsWin =true;
+            gameController.IsWin = true;
         }
 
-        if (collision.CompareTag("WinCollider02"))
+        if(transform.localPosition.x <= -380)
         {
             gameController.IsWin02 = true;
         }

@@ -33,7 +33,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
 --- !u!114 &1776061501839899287
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -76,7 +76,7 @@ MonoBehaviour:
     m_Value: 0.67
   contrast:
     m_OverrideState: 1
-    m_Value: 6
+    m_Value: 15
     min: -100
     max: 100
   colorFilter:
@@ -125,7 +125,7 @@ MonoBehaviour:
     max: 1
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.37
+    m_Value: 0.84
     min: 0.01
     max: 1
   rounded:

@@ -10,6 +10,8 @@ public class Line : MonoBehaviour
     public GameObject drawPrefab;
     public Transform LinePrefab;
     GameObject theTrail;
+
+    public List<GameObject> TrailList;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -31,9 +33,8 @@ public class Line : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            //theTrail.transform.parent = null;
             theTrail.transform.parent = LinePrefab;
-            //edgeCollider.enabled = false;
+            TrailList.Add(theTrail);
         }
     }
 

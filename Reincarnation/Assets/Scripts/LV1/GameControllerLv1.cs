@@ -28,6 +28,7 @@ public class GameControllerLv1 : MonoBehaviour
 
     public BoxCollider2D ExportEffectCollider;//出口特效Collider
 
+    public Canvas MirrorCanvas, BGMirrorCanvas;//MirrorCanva
     public CanvasGroup MirrorCanvasGroup, BGMirrorCanvasGroup;//MirrorCanvaGroup
 
     public UniversalRenderPipelineAsset cameraData;//攝影機
@@ -41,6 +42,7 @@ public class GameControllerLv1 : MonoBehaviour
     public AudioClip BrokeGlassAudio;//玻璃破碎音效
     public AudioClip ScreamAudio;//鬼叫聲音效
     public AudioClip ChokingAudio;//被掐脖子音效
+    public AudioClip DissolveAudio;//Dissolve音效
 
     bool isParse;//TimeLins暫停中;
     bool isCine;//鏡頭震動中
@@ -76,9 +78,9 @@ public class GameControllerLv1 : MonoBehaviour
     void Start()
     {
         Drag2.MirrorCrackNumber = 0;
-
-        MirrorCanvasGroup.gameObject.SetActive(false);
-        BGMirrorCanvasGroup.gameObject.SetActive(false);
+        SceneSingleton._Instance.SetState(0);
+        MirrorCanvas.enabled = false;
+        BGMirrorCanvas.enabled = false;
 
         Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.85f;
@@ -109,8 +111,8 @@ public class GameControllerLv1 : MonoBehaviour
             case state.MIRROR://鏡子進入解謎狀態
                 EyesLight.SetActive(false);
                 CanvasGroupTimer += Time.deltaTime;
-                MirrorCanvasGroup.gameObject.SetActive(true);
-                BGMirrorCanvasGroup.gameObject.SetActive(true);
+                MirrorCanvas.enabled = true;
+                BGMirrorCanvas.enabled = true;
                 MirrorCanvasGroup.alpha = BGMirrorCanvasGroup .alpha= CanvasGroupTimer / 1;
                 if (MirrorCanvasGroup.alpha >= 1)
                 {
@@ -175,6 +177,8 @@ public class GameControllerLv1 : MonoBehaviour
                 ColliderOpenTime += Time.deltaTime;
                 if (ColliderOpenTime >= 7)
                 {
+                    MirrorCanvas.enabled = false;
+                    BGMirrorCanvas.enabled = false;
                     mirrorTouch.gameObject.GetComponent<BoxCollider2D>().enabled = true;
                     player.isCanMove = true;
                     GameState = state.NONE;
@@ -195,7 +199,8 @@ public class GameControllerLv1 : MonoBehaviour
         EyesLight.SetActive(true);
         player.isCanMove = false;
         isCine = true;
-        audioSource.PlayOneShot(ScreamAudio);
+        AudioManager.Instance.PlaySource("MirrorScream", 1,"1");
+        //audioSource.PlayOneShot(ScreamAudio);
         mirrorTouch.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine(Play());
     }
@@ -204,8 +209,13 @@ public class GameControllerLv1 : MonoBehaviour
     {
         if (float.Parse(playableDirector.time.ToString("0.0")) > 0f)
         {
+            if (DissolveTimer == 0)
+            {
+                AudioManager.Instance.PlaySource("Dissolve", 1,"0");
+                //audioSource.PlayOneShot(DissolveAudio);
+            }
             DissolveTimer += Time.deltaTime;
-            SealMaterial.SetFloat("_DissolveAmount", Mathf.Clamp(DissolveTimer / 2, 0, 1.1f));
+            SealMaterial.SetFloat("_DissolveAmount", Mathf.Clamp(DissolveTimer / 1, 0, 1.1f));
         }
 
         if (float.Parse(playableDirector.time.ToString("0.0")) == 4f && !isParse)
@@ -213,7 +223,8 @@ public class GameControllerLv1 : MonoBehaviour
             MirrorComplete.transform.position = new Vector3(100, 0, 0);
             MirrorCrack.gameObject.SetActive(true);
             ArtefactEmbers.Pause();
-            audioSource.PlayOneShot(BrokeGlassAudio);
+            AudioManager.Instance.PlaySource("BrokeGlass", 1,"1");
+            //audioSource.PlayOneShot(BrokeGlassAudio);
             CowAnim.SetBool("isMirror", false);
             HorseAnim.SetBool("isMirror", false);
             playableDirector.Pause();
@@ -246,40 +257,42 @@ public class GameControllerLv1 : MonoBehaviour
                 {
                     if (!isDieEffect)
                     {
-                        audioSource.PlayOneShot(ChokingAudio);
+                        //audioSource.PlayOneShot(ChokingAudio);
+                        AudioManager.Instance.PlaySource("Choking", 1,"1");
                         player.anim.SetTrigger("GhostAttack");
                         isDieEffect = true;
                     }
                     if (PlayerIsDieTime >= 3f)
                     {
-                        isReloadScence = true;
+                        SceneSingleton._Instance.SetState(2);
                     }
                 }
             }
         }
 
-        if (isReloadScence)
+        /*if (isReloadScence)
         {
              BlackAnim.SetTrigger("FadeOut");
              if (blackFade.CanChangeScene)
              {
                  SceneManager.LoadScene("LV1");
              }
-        }
+        }*/
     }
 
     void CanGoLV2()//前往下一關
     {
         if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "Export")
         {
+            SceneSingleton._Instance.SetState(1);
             player.isCanMove = false;
-            BlackAnim.SetTrigger("FadeOut");
+            //BlackAnim.SetTrigger("FadeOut");
         }
 
-        if (blackFade.CanChangeScene)// && isWin)
+       /* if (blackFade.CanChangeScene)// && isWin)
         {
             SceneManager.LoadScene("LV2");
-        }
+        }*/
     }
 
     void Explose()//鏡子爆破事件

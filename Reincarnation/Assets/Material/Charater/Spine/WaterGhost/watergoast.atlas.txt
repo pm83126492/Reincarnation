@@ -1,0 +1,34 @@
+
+watergoast.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+w_0000_t
+  rotate: false
+  xy: 2, 1456
+  size: 382, 272
+  orig: 382, 272
+  offset: 0, 0
+  index: -1
+w_0001_l_arm
+  rotate: false
+  xy: 695, 1366
+  size: 408, 362
+  orig: 415, 362
+  offset: 0, 0
+  index: -1
+w_0002_body
+  rotate: true
+  xy: 2, 396
+  size: 968, 1726
+  orig: 968, 1726
+  offset: 0, 0
+  index: -1
+w_0003_r_arm
+  rotate: false
+  xy: 386, 1421
+  size: 307, 307
+  orig: 415, 326
+  offset: 0, 0
+  index: -1

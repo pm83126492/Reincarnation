@@ -17,11 +17,14 @@ public class PlayerLV2 : Player
 
     public Animator BlackAnim;
 
+    bool isPlayOrganAudio;
+    bool isPlayPushIceAudio;
+
     //public bool CanChangeScene;//可以切換場景
     protected override void Start()
     {
         base.Start();
-        rigidbody2D.sharedMaterial = WallPhysics;
+        //rigidbody2D.sharedMaterial = WallPhysics;
         ObjectsGravity = 4.5f;
     }
 
@@ -122,6 +125,12 @@ public class PlayerLV2 : Player
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         if (organIce.transform.position.y < 11)
         {
+            if (!isPlayOrganAudio)
+            {
+                AudioManager.Instance.CanPausePlaySource(false,false, "RotateOrgan", "2", 1);
+               // OrganCircle.GetComponent<AudioSource>().Play();
+                isPlayOrganAudio = true;
+            }
             OrganCircle.transform.Rotate(0, 0, 100 * Time.deltaTime);
         }
         organIce.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -130,6 +139,11 @@ public class PlayerLV2 : Player
         {
             organIce.transform.position = new Vector3(organIce.transform.position.x, 11f, organIce.transform.position.z);
             anim.enabled = false;
+            if (isPlayOrganAudio)
+            {
+                AudioManager.Instance.CanPausePlaySource(false, true, "RotateOrgan", "2", 1);
+                isPlayOrganAudio = false;
+            }
         }
     }
 
@@ -162,6 +176,11 @@ public class PlayerLV2 : Player
         else
         {
             anim.SetBool("Roll", false);
+            if (isPlayOrganAudio)
+            {
+                AudioManager.Instance.CanPausePlaySource(false,true, "RotateOrgan", "2", 1);
+                isPlayOrganAudio = false;
+            }
         }
     }
 
@@ -188,12 +207,24 @@ public class PlayerLV2 : Player
                 else if (joystick.Horizontal == 0)
                 {
                     anim.enabled = false;
+                    if (isPlayPushIceAudio)
+                    {
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        isPlayPushIceAudio = false;
+                    }
                 }
                 Obstacle();
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                if (!isPlayPushIceAudio && joystick.Horizontal != 0)
+                {
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    //obstacle.GetComponent<AudioSource>().Play();
+                    isPlayPushIceAudio = true;
+                }
             }
             else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleLeft")
             {
+                
                 isPushObstacle = true;
                 if (joystick.Horizontal > 0)
                 {
@@ -210,9 +241,21 @@ public class PlayerLV2 : Player
                 else if (joystick.Horizontal == 0)
                 {
                     anim.enabled = false;
+                    if (isPlayPushIceAudio)
+                    {
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        //obstacle.GetComponent<AudioSource>().Pause();
+                        isPlayPushIceAudio = false;
+                    }
                 }
                 Obstacle();
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                if (!isPlayPushIceAudio && joystick.Horizontal != 0)
+                {
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    //obstacle.GetComponent<AudioSource>().Play();
+                    isPlayPushIceAudio = true;
+                }
 
             }
             else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
@@ -233,13 +276,27 @@ public class PlayerLV2 : Player
                 else if (joystick.Horizontal == 0)
                 {
                     anim.enabled = false;
+                    if (isPlayPushIceAudio)
+                    {
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        //obstacle.GetComponent<AudioSource>().Pause();
+                        isPlayPushIceAudio = false;
+                    }
                 }
                 Obstacle();
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                if (!isPlayPushIceAudio && joystick.Horizontal != 0)
+                {
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    isPlayPushIceAudio = true;
+                }
             }
         }
         else if (!useObjButton.Pressed && obstacle != null)
         {
+            
+            AudioManager.Instance.CanPausePlaySource(false, true, "IceFriction", "2", 1);
+            isPlayPushIceAudio = false;
             isPushObstacle = false;
             anim.enabled = true;
             anim.SetBool("Push", false);
@@ -249,7 +306,6 @@ public class PlayerLV2 : Player
             obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
             obstacle.GetComponent<FixedJoint2D>().enabled = false;
             obstacle = null;
-            
         }
     }
 
@@ -271,6 +327,7 @@ public class PlayerLV2 : Player
     IEnumerator IceDie()
     {
         yield return new WaitForSeconds(3f);
-        BlackAnim.SetTrigger("FadeOut");
+        SceneSingleton._Instance.SetState(2);
+        //BlackAnim.SetTrigger("FadeOut");
     }
 }

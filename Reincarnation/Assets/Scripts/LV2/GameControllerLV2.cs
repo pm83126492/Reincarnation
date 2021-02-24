@@ -15,6 +15,7 @@ public class GameControllerLV2 : MonoBehaviour
     public GameObject RebirthPoint2;//玩家重生點2
     public GameObject RebirthCollider;//玩家重生點碰撞器
     public GameObject RebirthCollider2;//玩家重生點碰撞器2
+    public GameObject GhostObjects;//鬼差物件
 
     public ParticleSystem SmokeIce01, SmokeIce02, SmokeIce03;//冰霧特效
 
@@ -42,9 +43,11 @@ public class GameControllerLV2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       // GhostObjects = GameObject.Find("Ghost");
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 2f;
+        SceneSingleton._Instance.SetState(0);
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
             IntrodutionUI.isNotOnce = false;
@@ -55,13 +58,14 @@ public class GameControllerLV2 : MonoBehaviour
         StartCoroutine(PlaySmokeIce02());
         StartCoroutine(PlaySmokeIce03());
 
-        if (LV2RebirthNumber == 1)
+        if (SceneSingleton.Instance.m_RebirthNumber == 1)
         {
             player.transform.position = RebirthPoint.transform.position;
             Destroy(RebirthCollider);
         }
-        else if(LV2RebirthNumber == 2)
+        else if (SceneSingleton.Instance.m_RebirthNumber >= 2)
         {
+            SceneSingleton.Instance.m_RebirthNumber = 3;
             player.transform.position = RebirthPoint2.transform.position;
             Destroy(RebirthCollider);
             Destroy(RebirthCollider2);
@@ -90,6 +94,7 @@ public class GameControllerLV2 : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         SmokeIce01.Play();
+        SmokeIce01.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(3f);
         StartCoroutine(PlaySmokeIce01());
     }
@@ -97,6 +102,7 @@ public class GameControllerLV2 : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         SmokeIce02.Play();
+        SmokeIce02.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(4f);
         StartCoroutine(PlaySmokeIce02());
     }
@@ -104,6 +110,7 @@ public class GameControllerLV2 : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         SmokeIce03.Play();
+        SmokeIce03.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(3f);
         StartCoroutine(PlaySmokeIce03());
     }
@@ -115,35 +122,6 @@ public class GameControllerLV2 : MonoBehaviour
         {
             collider2d_hole.enabled = true;
             collider2d.enabled = false;
-        }
-    }
-
-    //失敗
-    void Lose()
-    {
-        if (Player.transform.position.y <= -20)//|| player.CanChangeScene)
-        {
-            player.isCanMove = false;
-            player.rigidbody2D.velocity = Vector2.zero;
-            BlackAnim.SetTrigger("FadeOut");
-        }
-
-        if(Player.transform.position.y <= -6)
-        {
-            virtualCamera.Follow = null;
-        }
-
-        if (blackFade.CanChangeScene&&!isWin)
-        {
-            SceneManager.LoadScene("LV2");
-        }
-
-        if(smokeParticle01.isIceSmoke|| smokeParticle02.isIceSmoke || smokeParticle03.isIceSmoke)
-        {
-            PlayerAnim.SetTrigger("IceSmokeDie");
-            StartCoroutine(IceSmokeDie());
-            player.rigidbody2D.sharedMaterial = null;
-            player.enabled = false;
         }
     }
 
@@ -178,13 +156,45 @@ public class GameControllerLV2 : MonoBehaviour
     {
         if (player.transform.position.x >= 130)
         {
-            isWin = true;
-            BlackAnim.SetTrigger("FadeOut");
+            SceneSingleton._Instance.SetState(1);
+            /*isWin = true;
+            BlackAnim.SetTrigger("FadeOut");*/
         }
 
-        if (blackFade.CanChangeScene && isWin)
+       /* if (blackFade.CanChangeScene && isWin)
         {
             SceneManager.LoadScene("LV3");
+        }*/
+    }
+
+    //失敗
+    void Lose()
+    {
+        if (Player.transform.position.y <= -20||GhostObjects.GetComponentInChildren<GhostControllder>().isGhostAttackDie)//|| player.CanChangeScene)
+        {
+            SceneSingleton._Instance.SetState(2);
+            /*player.isCanMove = false;
+            player.rigidbody2D.velocity = Vector2.zero;
+            BlackAnim.SetTrigger("FadeOut");*/
+        }
+
+
+        if (Player.transform.position.y <= -6)
+        {
+            virtualCamera.Follow = null;
+        }
+
+        /*if (blackFade.CanChangeScene && !isWin)
+        {
+            SceneManager.LoadScene("LV2");
+        }*/
+
+        if (smokeParticle01.isIceSmoke || smokeParticle02.isIceSmoke || smokeParticle03.isIceSmoke)
+        {
+            PlayerAnim.SetTrigger("IceSmokeDie");
+            StartCoroutine(IceSmokeDie());
+            player.rigidbody2D.sharedMaterial = null;
+            player.enabled = false;
         }
     }
 
@@ -193,8 +203,13 @@ public class GameControllerLV2 : MonoBehaviour
     {
         if (player.isObstacle && player.hit2.collider.gameObject.tag == "Rebirth")
         {
-            LV2RebirthNumber += 1;
+            SceneSingleton.Instance.m_RebirthNumber++;
             Destroy(player.hit2.collider.gameObject);
+        }
+
+        if (SceneSingleton.Instance.m_RebirthNumber==2)
+        {
+            GhostObjects.SetActive(true);
         }
     }
 

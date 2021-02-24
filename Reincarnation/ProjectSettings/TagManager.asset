@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - HellDoor
-  - WinCollider01
-  - WinCollider02
   - organ
   - obstacle
   - IceButton
@@ -31,6 +29,12 @@ TagManager:
   - Export
   - OutWater
   - Rebirth
+  - Wood
+  - boxGround
+  - Ladder
+  - Lian
+  - RunnerKingAttack
+  - Bait
   layers:
   - Default
   - TransparentFX

@@ -5,14 +5,12 @@ using UnityEngine;
 public class Helldoor : MonoBehaviour
 {
     public bool DoorIsOpen;
-    public CanvasGroup openBackgroundImageCanvasGroup;
-    float m_Timer;
-    public float fadeDuration = 1f;
-    private void Update()
+    private void Start()
     {
          Physics2D.IgnoreLayerCollision(10, 5);
-         
     }
+
+    //點擊門進入解謎
     private void OnMouseDown()
     {
         DoorIsOpen = true;

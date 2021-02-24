@@ -7,6 +7,6 @@ public class ReadyStart : MonoBehaviour
 {
     public void ChangeScene()
     {
-        FindObjectOfType<Loading>().LoadScene("StartUI");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

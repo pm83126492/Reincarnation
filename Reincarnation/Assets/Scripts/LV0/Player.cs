@@ -28,8 +28,9 @@ public class Player : MonoBehaviour
     public bool isNotStop;
     public bool isNotStop2;
     public bool isInWater;//在水裡
-    public bool isSlode;//在斜坡
+    //public bool isSlode;//在斜坡
     public bool isPushObstacle;//推物件中
+    //protected bool isBoxGround;
 
     public float OneTouchX;
     public float OneTouchX2;
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
     public bool isTouch3;
     public bool isSlide;
     public bool isColliderEnemy;
+    public bool isClimbing;
 
     protected float SlideTime;
 
@@ -98,12 +100,12 @@ public class Player : MonoBehaviour
     }
     protected virtual void Update()
     {
-        //horizontal = joystick.Horizontal;
-        //Vertical = joystick.Vertical;
+        horizontal = joystick.Horizontal;
+        Vertical = joystick.Vertical;
 
         //PlayerRenderer.material.shader = OutlineShader;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        if (isCanMove && !isInWater&&!isSlode)
+        if (isCanMove && !isInWater)
         {
             MobileTouch();//判斷手指滑動狀態
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
@@ -181,7 +183,7 @@ public class Player : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         //if (isCanMove)
-        if (isCanMove&&!isInWater&&!isSlode)
+        if (isCanMove&&!isInWater)
         {
             Movement();//角色移動
         }
@@ -193,29 +195,33 @@ public class Player : MonoBehaviour
 
     protected virtual void MobileTouch()
     {
-        if (joystick.Vertical<-0.5f)
+        if (isGround)
         {
-            isSlide = true;
-            SlideTime += Time.deltaTime;
-            if (SlideTime >= 1.5f)
+            if (joystick.Vertical < -0.5f)
             {
+                isSlide = true;
+                SlideTime += Time.deltaTime;
+                if (SlideTime >= 1.5f)
+                {
+                    anim.SetBool("Slide", false);
+                    boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
+                    boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
+                }
+                else
+                {
+                    anim.SetBool("Slide", true);
+                    boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
+                    boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
+                }
+            }
+            else if (joystick.Vertical > -0.5f)
+            {
+                SlideTime = 0;
+                isSlide = false;
                 anim.SetBool("Slide", false);
                 boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
                 boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
             }
-            else
-            {
-                anim.SetBool("Slide", true);
-                boxCollider2D.offset = new Vector2(-0.08030701f, 0.25f);
-                boxCollider2D.size = new Vector2(1.270004f, 0.6733987f);
-            }
-        }else if(joystick.Vertical > -0.5f)
-        {
-            SlideTime = 0;
-            isSlide = false;
-            anim.SetBool("Slide", false);
-            boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
-            boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
         }
 
         //判斷是否跳
@@ -233,8 +239,9 @@ public class Player : MonoBehaviour
         {
             rigidbody2D.velocity = new Vector2(0 * Time.deltaTime, rigidbody2D.velocity.y);
         }
+       
         //右移動
-        if(Input.GetKey(KeyCode.D) || joystick.Horizontal > 0)
+        if((Input.GetKey(KeyCode.D) || joystick.Horizontal > 0) && !isClimbing)
         {
             
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
@@ -244,7 +251,7 @@ public class Player : MonoBehaviour
             }
         }
         //左移動
-        if (Input.GetKey(KeyCode.A) || joystick.Horizontal < 0)
+        if ((Input.GetKey(KeyCode.A) || joystick.Horizontal < 0)&&!isClimbing)
         {
             
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
@@ -314,7 +321,7 @@ public class Player : MonoBehaviour
 
     public void Obstacle()
     {
-        if (hit2.collider.gameObject.tag == "obstacle"|| hit2.collider.gameObject.tag == "smallobstacle")
+        if (hit2.collider.gameObject.tag == "obstacle"|| hit2.collider.gameObject.tag == "smallobstacle" || hit2.collider.gameObject.tag == "boxGround")
         {
             obstacle = hit2.collider.gameObject;
         }

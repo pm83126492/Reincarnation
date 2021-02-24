@@ -6,43 +6,40 @@ using UnityEngine.Rendering.Universal;
 
 public class GhostControllder : MonoBehaviour
 {
-    public PlayerLV0 player;
-    public EnemyAI GhostAI;
-    public ParticleSystem SpellEffect;
-    public Shader OutlineShader;
-    public Shader OriginalShader;
-    public CanvasGroup SignCanvasGroup;
+    public Player player;//player程式
+    public EnemyAI GhostAI;//EnemyAI程式  
 
-    public AudioSource audioSource;
+    public ParticleSystem SpellEffect;//陣法特效
+    public Shader OutlineShader;//隱身Shader
+    public Shader OriginalShader;//原始Shader
+    public CanvasGroup SignCanvasGroup;//符咒CanvasGroup
+
+    public AudioSource audioSource;//AudioSource
     public AudioSource ChokingAudio;//掐脖子音效
 
-    public GameObject GhostCamera;
-    public GameObject DrawObject, DrawCanvas;
-    public GameObject bloom;
+    public GameObject GhostCamera;//Ghost攝影機
+    public GameObject DrawObject, DrawCanvas;//符咒物件 符咒Canvas
+    public GameObject bloom;//開啟符咒後光暈
 
-    public Animator GhostWhiteAnim;
-    public Animator GhostBlackAnim;
+    public Animator GhostWhiteAnim;//白無常動畫
+    public Animator GhostBlackAnim;//黑無常動畫
 
-    bool isFlashRed;
-    bool isEnemyDie;
-    bool isDrawUI;
-    bool isPlayAudio;
-    public bool isWhiteGhost, isBlackGhost;
+    bool isFlashRed;//閃紅燈中
+    public bool isDrawUI;//符咒UI開啟中
+    bool isPlayAudio;//音效已播放
+    public bool isWhiteGhost, isBlackGhost;//是黑無常  是白無常
+    public bool GhostIsOut;//鬼差已離開
+    public bool isGhostAttackDie;//玩家已死亡
 
-    float PlayerIsDieTime;
+    float PlayerIsDieTime;//Player死亡動畫播放倒數時間
+    float RedTime, BlackTime;//閃紅燈時間 閃黑燈時間
+    public float EnemyToPlayerDistance;//鬼差與Player距離
+    public float SignAppearTime;//符咒顯示時間
+    public float EnemyToPlayerDistanceMin=4.1f;//鬼差與Player最小距離
 
-    public bool GhostIsOut;
-    public bool isGhostAttackDie;
-
-
-    float RedTime, BlackTime, SignAppearTime;
-    float EnemyToPlayerDistance;
-
-    public float EnemyToPlayerDistanceMin;
-
-    public Vignette vignette;
-    public Volume volume;
-    public SortingGroup sortingGroup;
+    public Vignette vignette;//PostProcee
+    public Volume volume;//PostProcee
+    public SortingGroup sortingGroup;//SortingGroup
     public enum State
     {
         NONE,
@@ -58,32 +55,36 @@ public class GhostControllder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GhostAI.enabled = false;
         audioSource = GetComponent<AudioSource>();
-        Vignette tmp;
-        if (volume.profile.TryGet<Vignette>(out tmp))
-        {
-            vignette = tmp;
-        }
+        player = GameObject.Find("Player").GetComponent<Player>();
+        GhostAI = GameObject.Find("Ghost").GetComponent<EnemyAI>();
+        GhostAI.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vignette tmp;
+        if (volume.profile.TryGet<Vignette>(out tmp)&&vignette==null)
+        {
+            vignette = tmp;
+        }
+
         if (GhostAI != null)
         {
             EnemyToPlayerDistance = Vector2.Distance(GhostAI.transform.position, player.transform.position);
         }
-        //Debug.Log(EnemyToPlayerDistance);
+
         if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
         {
             GhostState = State.COMING;
             Destroy(player.hit2.collider.gameObject,1f);
         }
+
         if (EnemyToPlayerDistance <= 20f && !isDrawUI)
         {
             player.anim.SetFloat("WalkSpeed", 0);
-            player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
+            //player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
             player.isCanMove = false;
             GhostCamera.SetActive(true);
             if (EnemyToPlayerDistance <= 15f)
@@ -105,11 +106,6 @@ public class GhostControllder : MonoBehaviour
         switch (GhostState)
         {
             case State.NONE:
-
-                break;
-
-            case State.SPELLTOPASS:
-                FlashRedLight();
                 break;
 
             case State.DRAW:
@@ -136,11 +132,11 @@ public class GhostControllder : MonoBehaviour
                     GhostAI.enabled = false;
                     if (isBlackGhost)
                     {
-                        GhostBlackAnim.SetTrigger("ChainAttack");
+                        GhostBlackAnim.SetBool("ChainAttack",true);
                         if (PlayerIsDieTime >= 1.3f)
                         {
                             ChokingAudio.Play();
-                            player.anim.SetTrigger("GhostBlackAttack");
+                            player.anim.SetBool("GhostBlackAttack",true);
                             player.anim.SetBool("Spells", false);
                             SignAppearTime = 0;
                             GhostState = State.FAIL;
@@ -148,11 +144,11 @@ public class GhostControllder : MonoBehaviour
                     }
                     else if (isWhiteGhost)
                     {
-                        GhostWhiteAnim.SetTrigger("TongueAttack");
+                        GhostWhiteAnim.SetBool("TongueAttack",true);
                         if (PlayerIsDieTime >= 1.3f)
                         {
                             ChokingAudio.Play();
-                            player.anim.SetTrigger("GhostWhiteAttack");
+                            player.anim.SetBool("GhostWhiteAttack",true);
                             player.anim.SetBool("Spells", false);
                             SignAppearTime = 0;
                             GhostState = State.FAIL;
@@ -165,7 +161,6 @@ public class GhostControllder : MonoBehaviour
             case State.COMING:
                 FlashRedLight();
                 player.isCanMove = false;
-                player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
                 GhostAI.enabled = true;
                 break;
 
@@ -175,6 +170,10 @@ public class GhostControllder : MonoBehaviour
                 //player.anim.SetBool("Spells", true);
                 StartCoroutine(SpellEffectOpen());
                 GhostState = State.SPELLTOPASS;
+                break;
+
+            case State.SPELLTOPASS:
+                FlashRedLight();
                 break;
 
             case State.PASS:

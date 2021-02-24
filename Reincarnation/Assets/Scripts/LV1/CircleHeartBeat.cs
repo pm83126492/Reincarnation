@@ -17,6 +17,7 @@ public class CircleHeartBeat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //心臟跳動
         range += rangeSpeed * Time.deltaTime;
         if (range > rangeMax)
         {

@@ -14,6 +14,7 @@ public class Seal_2Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //鏡子上封印旋轉
         transform.Rotate(new Vector3(0f, 0f, RotationZ));
     }
 }

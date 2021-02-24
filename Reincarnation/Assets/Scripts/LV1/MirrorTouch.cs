@@ -24,8 +24,6 @@ public class MirrorTouch : MonoBehaviour
         {
             gameController.player.isCanMove = false;
             MirrorLook.SetActive(true);
-            //MirrorStory.SetActive(false);
-            //MirrorOriginal.SetActive(false);
             MirrorLookAnim.SetBool("Look", true);
             MirrorIsOpen = !MirrorIsOpen;
         }
@@ -42,7 +40,5 @@ public class MirrorTouch : MonoBehaviour
         yield return new WaitForSeconds(1f);
         MirrorLook.SetActive(false);
         gameController.player.isCanMove = true;
-        // MirrorStory.SetActive(true);
-        // MirrorOriginal.SetActive(true);
     }
 }

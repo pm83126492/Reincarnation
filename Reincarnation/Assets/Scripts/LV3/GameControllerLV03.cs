@@ -32,7 +32,8 @@ public class GameControllerLV03 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
+        SceneSingleton._Instance.SetState(0);
+        // Camera.main.GetComponent<UniversalAdditionalCameraData>().SetRenderer(0);
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
@@ -41,10 +42,11 @@ public class GameControllerLV03 : MonoBehaviour
             IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
         }
 
-        if (LV3RebirthNumber == 1)
+        if (SceneSingleton.Instance.m_RebirthNumber==1)
         {
             playerLV3.transform.position = RebirthPoint.transform.position;
         }
+        SceneSingleton.Instance.m_RebirthNumber = 0;
     }
 
     // Update is called once per frame
@@ -74,13 +76,7 @@ public class GameControllerLV03 : MonoBehaviour
     {
         if (playerLV3.transform.position.x >= 42)
         {
-            isWin = true;
-            BlackAnim.SetTrigger("FadeOut");
-        }
-
-        if (blackFade.CanChangeScene && isWin)
-        {
-            SceneManager.LoadScene("LV4");
+            SceneSingleton._Instance.SetState(1);
         }
     }
 
@@ -96,7 +92,7 @@ public class GameControllerLV03 : MonoBehaviour
         //淡出
         if (playerLV3.transform.position.y <= -70)
         {
-            BlackAnim.SetTrigger("FadeOut");
+            SceneSingleton._Instance.SetState(2);
         }
         //站上最上層岩石
         if (playerLV3.transform.position.y >= -12 && playerLV3.transform.position.x >= -2)
@@ -105,7 +101,7 @@ public class GameControllerLV03 : MonoBehaviour
             isUp = true;
             if (LV3RebirthNumber == 0)
             {
-                LV3RebirthNumber = 1;
+                SceneSingleton.Instance.m_RebirthNumber=1;
             }
         }
         //掉落
@@ -113,11 +109,6 @@ public class GameControllerLV03 : MonoBehaviour
         {
             playerLV3.enabled = false;
             playerLV3.anim.SetTrigger("Down");
-        }
-
-        if (blackFade.CanChangeScene)
-        {
-            SceneManager.LoadScene("LV3");
         }
     }
 
