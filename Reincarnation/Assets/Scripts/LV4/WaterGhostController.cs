@@ -17,7 +17,7 @@ public class WaterGhostController : MonoBehaviour
 
     public bool isPlayerBeAttacked;//Player被抓到
     bool isBaitHeadBeAttacked;//Bait被抓到
-    bool isPlayerPlayAttackAnim;
+    public bool isPlayerPlayAttackAnim;
     private bool isCurrentGhost;//當前Ghost
     public bool isCurrentAttackGhost;//當前攻擊Ghost
     public bool WoodTrackGhost;
