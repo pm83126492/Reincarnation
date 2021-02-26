@@ -81,7 +81,7 @@ public class PlayerLV4 : Player
         }
         else
         {
-            rigidbody2D.gravityScale = 3;
+            //rigidbody2D.gravityScale = 3;
         }
     }
 
@@ -308,6 +308,8 @@ public class PlayerLV4 : Player
             if (!isClimbing)
             {
                 Instantiate(WaterPS, transform.position, transform.rotation);
+               // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,r);
+               // rigidbody2D.gravityScale = 1f;
                 isCanMove = isSwimming = false;
                 StartCoroutine(isInWaterBool());
                 isEnemyAttack = isEnterWater = true;
@@ -338,7 +340,7 @@ public class PlayerLV4 : Player
         RaycastHit2D waterAudioCheck = Raycast3(new Vector2(WaterWidth, WaterOffset), Vector2.right, WaterDistance);
         if (waterAudioCheck)
         {
-            Invoke("Drowning", 5f); //溺水事件
+            //Invoke("Drowning", 5f); //溺水事件
             if (!isPlayWaterAudio)
             {
                 audioSource.PlayOneShot(audioClip[0], 0.5f);
