@@ -24,7 +24,7 @@ public class WoodGround : MonoBehaviour
     {
         if (CanMove)
         {
-            transform.Translate(1 * Time.deltaTime, 0, 0);
+            transform.Translate(1.5f * Time.deltaTime, 0, 0);
         }
         /*transform.Rotate(Vector3.forward * 2);
         if (isFallingWater&&transform.rotation.z!=0)

@@ -62,7 +62,7 @@ public class WaterGhostController : MonoBehaviour
         {
             target = woodGround.gameObject.transform;
             anim.speed = 0.5f;
-            speed = 70;
+            speed = 115;
             TrackingWood = true;
         }
         else if(WoodTrackGhost&&playerLV4.isEnemyAttack||woodGround.transform.localPosition.x > 127)
