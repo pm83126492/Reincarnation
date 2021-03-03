@@ -35,6 +35,7 @@ TagManager:
   - Lian
   - RunnerKingAttack
   - Bait
+  - HighestLadder
   layers:
   - Default
   - TransparentFX
@@ -51,7 +52,7 @@ TagManager:
   - Obstacle
   - BigIceFloor
   - Effect
-  - test
+  - WaterCanCollison
   - 
   - 
   - 

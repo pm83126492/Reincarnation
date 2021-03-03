@@ -49799,7 +49799,6 @@ MonoBehaviour:
   isNotStop: 0
   isNotStop2: 0
   isInWater: 0
-  isSlode: 0
   isPushObstacle: 0
   OneTouchX: 0
   OneTouchX2: 0

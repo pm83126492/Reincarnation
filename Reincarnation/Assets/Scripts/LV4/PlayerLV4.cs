@@ -21,6 +21,7 @@ public class PlayerLV4 : Player
     bool isThrow;//投擲中
     bool isEnterWater;//進入水
     public bool isWoodGround;//在木頭上
+    bool isPlayerTounchHighestLadder;//已經碰到繩子最高點
 
     public Water2D_Simulation simulation;
     public PhysicsMaterial2D NoFriction, HaveFriction;
@@ -41,6 +42,8 @@ public class PlayerLV4 : Player
     public AudioClip[] audioClip;
 
     public Vector2 direction;
+
+    public BoxCollider2D HeadCollider;
     protected override void Start()
     {
         base.Start();
@@ -60,11 +63,11 @@ public class PlayerLV4 : Player
 
         WaterHeightLimit();//在水裡高度限制
 
-        ClimbLadder();//爬繩子事件
+        //ClimbLadder();//爬繩子事件
 
         WaterCheck();//碰撞入水偵測事件
 
-        WaterAudioCheck();//碰撞入水聲音偵測事件
+     //   WaterAudioCheck();//碰撞入水聲音偵測事件
 
         ThrowBaitHeadEvent();//投擲罪犯頭事件
     }
@@ -79,9 +82,9 @@ public class PlayerLV4 : Player
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, joystick.Vertical * ClimbingSpeed);
             rigidbody2D.gravityScale = 0;
         }
-        else
+        else if(!isClimbing&&!isPlayerTounchHighestLadder)
         {
-            //rigidbody2D.gravityScale = 3;
+            rigidbody2D.gravityScale = 3;
         }
     }
 
@@ -219,16 +222,16 @@ public class PlayerLV4 : Player
 
             if (joystick.Horizontal < 0)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle_Sum + 90);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle_Sum);
                 rigidbody2D.velocity = new Vector2(200 * Time.deltaTime * joystick.Horizontal, 200 * Time.deltaTime * joystick.Vertical);
-                transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 
             }
             else if (joystick.Horizontal > 0)
             {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle_Sum + 90);
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle_Sum);
                 rigidbody2D.velocity = new Vector2(200 * Time.deltaTime * joystick.Horizontal, 200 * Time.deltaTime * joystick.Vertical);
-                transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
+                transform.localScale = new Vector3(1, 1, transform.localScale.z);
             }
         }
         else if (!isInWater)
@@ -253,6 +256,84 @@ public class PlayerLV4 : Player
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        /*if (other.CompareTag("HighestLadder")&&isClimbing)
+        {
+            rigidbody2D.velocity=Vector2.zero;
+            anim.SetBool("Climb", false);
+            anim.SetBool("Spells", true);
+            isPlayerTounchHighestLadder = true;
+            isClimbing = isCanMove = false;
+        }*/
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder")&&!isPlayerTounchHighestLadder)
+        {
+            Shadow.SetActive(false);
+            if (useObjButton.Pressed && isInWater)
+            {
+                transform.parent = other.gameObject.transform;
+                transform.localPosition = new Vector3(-0.55f, transform.localPosition.y, transform.localPosition.z);
+                isInWaterLadder = isClimbing = true;
+                anim.SetBool("SwimingIdle", false);
+                anim.SetBool("Swiming", false);
+                anim.SetBool("Climb", true);
+                WaterVcam.SetActive(false);
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+                rigidbody2D.velocity = Vector2.zero;
+                isInWater = false;
+            }
+            else if (useObjButton.Pressed && !isInWater)
+            {
+               // HeadCollider.enabled = false;
+                transform.parent = other.gameObject.transform;
+                transform.localPosition = new Vector3(-0.55f, transform.localPosition.y, transform.localPosition.z);
+                if (rigidbody2D.isKinematic == true)
+                {
+                    rigidbody2D.isKinematic = false;
+                }
+                isBeginSwiming = false;
+                isClimbing = true;
+                rigidbody2D.velocity = Vector2.zero;
+            }
+        }
+        /*else if (isClimbing && transform.position.y < -2)
+        {
+            transform.parent = null;
+            isInWater = true;
+            isClimbing = isSwimming = false;
+            anim.SetBool("Climb", false);
+        }*/
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            if (isClimbing && transform.position.y < -2)
+            {
+                transform.parent = null;
+                isInWater = true;
+                isClimbing = isSwimming = false;
+                anim.SetBool("Climb", false);
+            }
+            else
+            {
+                Shadow.SetActive(true);
+                transform.parent = null;
+                isClimbing = false;
+                anim.SetBool("Climb", false);
+            }
+        }
+
+       /* if (other.CompareTag("HighestLadder"))
+        {
+            isPlayerTounchHighestLadder = false;
+        }*/
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -277,7 +358,7 @@ public class PlayerLV4 : Player
         yield return new WaitForSeconds(1f);
         isCanMove = true;
         isInWater = true;
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,90);
+        //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,90);
     }
 
     private RaycastHit2D Raycast3(Vector2 offset, Vector2 rayDirection, float lengh)
@@ -307,7 +388,7 @@ public class PlayerLV4 : Player
         {
             if (!isClimbing)
             {
-                Instantiate(WaterPS, transform.position, transform.rotation);
+                //Instantiate(WaterPS, transform.position, transform.rotation);
                // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,r);
                // rigidbody2D.gravityScale = 1f;
                 isCanMove = isSwimming = false;

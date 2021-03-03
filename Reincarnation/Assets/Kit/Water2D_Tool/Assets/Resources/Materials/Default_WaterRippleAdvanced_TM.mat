@@ -88,7 +88,7 @@ Material:
     m_Colors:
     - _BumpDirection: {r: 1, g: 30, b: 20, a: -20}
     - _BumpTiling: {r: 0.04, g: 0.04, b: 0.04, a: 0.08}
-    - _DeepWaterColor: {r: 0.5882353, g: 0.74509805, b: 1, a: 1}
+    - _DeepWaterColor: {r: 1, g: 0.44743934, b: 0.4198113, a: 1}
     - _Foam: {r: 0.1, g: 15.65, b: 0.08, a: 1.75}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReflectionColor: {r: 0.54, g: 0.99, b: 0.54310346, a: 0.5}

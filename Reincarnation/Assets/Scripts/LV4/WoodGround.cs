@@ -52,8 +52,8 @@ public class WoodGround : MonoBehaviour
             gameObject.layer = 8;
             boxrigidbody.gravityScale = 3;
             boxrigidbody.mass = 1;
-            boxCollider.offset = new Vector2(boxCollider.offset.x, -0.22f);
-            boxCollider.size = new Vector2(boxCollider.size.x, 0.58f);
+            boxCollider.offset = new Vector2(boxCollider.offset.x, -0.28f);
+            boxCollider.size = new Vector2(boxCollider.size.x, 0.65f);
         }
     }
 }
