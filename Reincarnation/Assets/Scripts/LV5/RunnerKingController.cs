@@ -56,7 +56,7 @@ public class RunnerKingController : MonoBehaviour
                 ChangeAnimationState("idle");
                 if (CountdownTime > MaxCountdownTime)
                 {
-                    int RangeNumber = Random.Range(3, 4);
+                    int RangeNumber = Random.Range(2, 3);
                     FaceRotation();
                     if (RangeNumber == 1)
                     {

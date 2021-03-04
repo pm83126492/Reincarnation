@@ -247,7 +247,7 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
             if (!isPushObstacle)
             {
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             }
         }
         //左移動
@@ -257,7 +257,7 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
             if (!isPushObstacle)
             {
-                transform.rotation = new Quaternion(0, 180, 0, 0);
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
             }
         }
         //跳
