@@ -258,8 +258,8 @@ public class GameControllerLv1 : MonoBehaviour
                     if (!isDieEffect)
                     {
                         //audioSource.PlayOneShot(ChokingAudio);
-                        AudioManager.Instance.PlaySource("Choking", 1,"1");
-                        player.anim.SetTrigger("GhostAttack");
+                        AudioManager.Instance.PlaySource("PlayerScream", 1,"other");
+                        player.anim.SetBool("GhostWhiteAttack",true);
                         isDieEffect = true;
                     }
                     if (PlayerIsDieTime >= 3f)

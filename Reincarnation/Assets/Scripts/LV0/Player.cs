@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     public bool isSlide;
     public bool isColliderEnemy;
     public bool isClimbing;
+    public bool isWoodGround;//在木頭上
 
     protected float SlideTime;
 
@@ -245,9 +246,13 @@ public class Player : MonoBehaviour
         {
             
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
-            if (!isPushObstacle)
+            if (!isPushObstacle&&!isWoodGround)
             {
                 transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            }
+            else if (isWoodGround)
+            {
+                transform.localScale = new Vector3(0.4103743f, transform.localScale.y, transform.localScale.z);
             }
         }
         //左移動
@@ -255,9 +260,13 @@ public class Player : MonoBehaviour
         {
             
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
-            if (!isPushObstacle)
+            if (!isPushObstacle && !isWoodGround)
             {
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            }
+            else if (isWoodGround)
+            {
+                transform.localScale = new Vector3(-0.4103743f, transform.localScale.y, transform.localScale.z);
             }
         }
         //跳

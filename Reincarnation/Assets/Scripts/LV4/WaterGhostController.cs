@@ -62,14 +62,14 @@ public class WaterGhostController : MonoBehaviour
         {
             target = woodGround.gameObject.transform;
             anim.speed = 0.5f;
-            speed = 115;
+            speed = 100;
             TrackingWood = true;
         }
-        else if(WoodTrackGhost&&playerLV4.isEnemyAttack||woodGround.transform.localPosition.x > 127)
+        else if(WoodTrackGhost&&(playerLV4.isEnemyAttack||woodGround.transform.localPosition.x > 127))
         {
             TrackingWood = false;
             anim.speed = 1.5f;
-            //speed = 400;
+           // speed = 400;
         }
 
         if (isPlayerPlayAttackAnim)
@@ -104,6 +104,7 @@ public class WaterGhostController : MonoBehaviour
     {
         if (CatchDistance < 2 && playerLV4.isEnemyAttack && !baitController.isAllure)
         {
+            AudioManager.Instance.PlaySource("WaterGhostAttack", 0.5f, "4");
             isPlayerBeAttacked = true;
             isCurrentAttackGhost = true;
         }
@@ -141,6 +142,7 @@ public class WaterGhostController : MonoBehaviour
             //if (playerLV4.isInWater && playerLV4.transform.position.x <= MaxPosition && playerLV4.transform.position.x >= MinPosition)
         {
             isCurrentGhost = true;
+            
             if (isCurrentGhost&& playerLV4.isInWater)
             {
                 playerLV4.isEnemyAttack = true;

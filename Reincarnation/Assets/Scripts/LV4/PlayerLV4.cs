@@ -20,7 +20,7 @@ public class PlayerLV4 : Player
     bool isBeginSwiming;//開始游泳中
     bool isThrow;//投擲中
     bool isEnterWater;//進入水
-    public bool isWoodGround;//在木頭上
+    //public bool isWoodGround;//在木頭上
     bool isPlayerTounchHighestLadder;//已經碰到繩子最高點
 
     public Water2D_Simulation simulation;
@@ -67,7 +67,7 @@ public class PlayerLV4 : Player
 
         WaterCheck();//碰撞入水偵測事件
 
-     //   WaterAudioCheck();//碰撞入水聲音偵測事件
+        //WaterAudioCheck();//碰撞入水聲音偵測事件
 
         ThrowBaitHeadEvent();//投擲罪犯頭事件
     }
@@ -145,6 +145,7 @@ public class PlayerLV4 : Player
             Shadow.SetActive(false);
             if (useObjButton.Pressed && !isInWater)
             {
+                anim.SetBool("Climb", true);
                 if (rigidbody2D.isKinematic == true)
                 {
                     rigidbody2D.isKinematic = false;
@@ -152,6 +153,7 @@ public class PlayerLV4 : Player
                 isBeginSwiming = false;
                 isClimbing = true;
                 rigidbody2D.velocity = Vector2.zero;
+                transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
             }
             else if (useObjButton.Pressed && isInWater)
             {
@@ -162,6 +164,7 @@ public class PlayerLV4 : Player
                 WaterVcam.SetActive(false);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 rigidbody2D.velocity = Vector2.zero;
+                transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
                 isInWater = false;
             }
         }
@@ -273,10 +276,30 @@ public class PlayerLV4 : Player
         if (other.CompareTag("Ladder")&&!isPlayerTounchHighestLadder)
         {
             Shadow.SetActive(false);
+            if (isClimbing)
+            {
+                if (joystick.Vertical > 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("Climb", true);
+                    anim.SetBool("-Climb", false);
+                }
+                else if (joystick.Vertical < 0)
+                {
+                    anim.enabled = true;
+                    anim.SetBool("-Climb", true);
+                    anim.SetBool("Climb", false);
+                }
+                else if (joystick.Vertical == 0)
+                {
+                    anim.enabled = false;
+                }
+            }
+
             if (useObjButton.Pressed && isInWater)
             {
                 transform.parent = other.gameObject.transform;
-                transform.localPosition = new Vector3(-0.55f, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition = new Vector3(0f, transform.localPosition.y, transform.localPosition.z);
                 isInWaterLadder = isClimbing = true;
                 anim.SetBool("SwimingIdle", false);
                 anim.SetBool("Swiming", false);
@@ -290,7 +313,7 @@ public class PlayerLV4 : Player
             {
                // HeadCollider.enabled = false;
                 transform.parent = other.gameObject.transform;
-                transform.localPosition = new Vector3(-0.55f, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition = new Vector3(0f, transform.localPosition.y, transform.localPosition.z);
                 if (rigidbody2D.isKinematic == true)
                 {
                     rigidbody2D.isKinematic = false;
@@ -391,8 +414,10 @@ public class PlayerLV4 : Player
                 //Instantiate(WaterPS, transform.position, transform.rotation);
                // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,r);
                // rigidbody2D.gravityScale = 1f;
-                isCanMove = isSwimming = false;
-                StartCoroutine(isInWaterBool());
+                isSwimming = false;
+                //isCanMove = true;
+                isInWater = true;
+                //StartCoroutine(isInWaterBool());
                 isEnemyAttack = isEnterWater = true;
             }
             else if (isClimbing)

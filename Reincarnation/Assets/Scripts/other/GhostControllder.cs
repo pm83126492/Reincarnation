@@ -27,6 +27,7 @@ public class GhostControllder : MonoBehaviour
     bool isFlashRed;//閃紅燈中
     public bool isDrawUI;//符咒UI開啟中
     bool isPlayAudio;//音效已播放
+    bool isPlayGhostComeAudio;//鬼來音效已播放
     public bool isWhiteGhost, isBlackGhost;//是黑無常  是白無常
     public bool GhostIsOut;//鬼差已離開
     public bool isGhostAttackDie;//玩家已死亡
@@ -87,6 +88,11 @@ public class GhostControllder : MonoBehaviour
             //player.OneTouchX = player.OneTouchX = player.OneTouchX2 = player.TwoTouchX = player.TwoTouchX2 = player.TwoTouchY = player.TwoTouchY2 = 0;
             player.isCanMove = false;
             GhostCamera.SetActive(true);
+            if (!isPlayGhostComeAudio)
+            {
+                AudioManager.Instance.PlaySource("GhostCome", 1, "other");
+                isPlayGhostComeAudio = true;
+            }
             if (EnemyToPlayerDistance <= 15f)
             {
                 SignAppearTime += Time.deltaTime;

@@ -29,6 +29,16 @@ public class GameControllerLV4 : MonoBehaviour
     void Update()
     {
         Rebirth();
+        CanGoLV5();
+    }
+
+    void CanGoLV5()
+    {
+        if (player.transform.position.x >= 263)
+        {
+            SceneSingleton._Instance.SetState(1);
+            player.isCanMove = false;
+        }
     }
 
     void Rebirth()
