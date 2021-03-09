@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Water2DTool;
+using UnityEngine.Rendering;
 
 public class PlayerLV4 : Player
 {
@@ -44,10 +45,13 @@ public class PlayerLV4 : Player
     public Vector2 direction;
 
     public BoxCollider2D HeadCollider;
+
+    public SortingGroup sortingGroup;
     protected override void Start()
     {
         base.Start();
         audioSource = GetComponent<AudioSource>();
+        sortingGroup = GetComponent<SortingGroup>();
     }
 
     protected override void MobileTouch()

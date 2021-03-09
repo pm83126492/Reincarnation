@@ -124,6 +124,7 @@ public class WaterGhostController : MonoBehaviour
             playerLV4.isBeEnemyAttacked = true;
             ChangeAnimationState("Grab");
             rb.velocity = Vector2.zero;
+            playerLV4.sortingGroup.sortingOrder = -1;
         }
         else if (isBaitHeadBeAttacked)
         {
