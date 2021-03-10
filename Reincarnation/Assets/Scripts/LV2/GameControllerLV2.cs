@@ -15,7 +15,8 @@ public class GameControllerLV2 : MonoBehaviour
     public GameObject RebirthPoint2;//玩家重生點2
     public GameObject RebirthCollider;//玩家重生點碰撞器
     public GameObject RebirthCollider2;//玩家重生點碰撞器2
-    public GameObject GhostObjects;//鬼差物件
+
+    public GhostControllder GhostObjects;//鬼差物件
 
     public ParticleSystem SmokeIce01, SmokeIce02, SmokeIce03;//冰霧特效
 
@@ -63,9 +64,15 @@ public class GameControllerLV2 : MonoBehaviour
             player.transform.position = RebirthPoint.transform.position;
             Destroy(RebirthCollider);
         }
-        else if (SceneSingleton.Instance.m_RebirthNumber >= 2)
+        else if (SceneSingleton.Instance.m_RebirthNumber == 2)
         {
-            SceneSingleton.Instance.m_RebirthNumber = 3;
+            //SceneSingleton.Instance.m_RebirthNumber = 3;
+            player.transform.position = RebirthPoint2.transform.position;
+            Destroy(RebirthCollider);
+            Destroy(RebirthCollider2);
+        }else if(SceneSingleton.Instance.m_RebirthNumber == 3)
+        {
+            GhostObjects.transform.parent.gameObject.SetActive(false);
             player.transform.position = RebirthPoint2.transform.position;
             Destroy(RebirthCollider);
             Destroy(RebirthCollider2);
@@ -86,7 +93,7 @@ public class GameControllerLV2 : MonoBehaviour
             player.anim.SetTrigger("Down");
         }
 
-       
+        Debug.Log(SceneSingleton.Instance.m_RebirthNumber);
     }
 
     //冰霧噴射時間
@@ -157,25 +164,16 @@ public class GameControllerLV2 : MonoBehaviour
         if (player.transform.position.x >= 130)
         {
             SceneSingleton._Instance.SetState(1);
-            /*isWin = true;
-            BlackAnim.SetTrigger("FadeOut");*/
         }
-
-       /* if (blackFade.CanChangeScene && isWin)
-        {
-            SceneManager.LoadScene("LV3");
-        }*/
     }
 
     //失敗
     void Lose()
     {
-        if (Player.transform.position.y <= -20||GhostObjects.GetComponentInChildren<GhostControllder>().isGhostAttackDie)//|| player.CanChangeScene)
+        if (Player.transform.position.y <= -20|| GhostObjects.isGhostAttackDie)
         {
-            SceneSingleton._Instance.SetState(2);
-            /*player.isCanMove = false;
-            player.rigidbody2D.velocity = Vector2.zero;
-            BlackAnim.SetTrigger("FadeOut");*/
+            BlackAnim.SetTrigger("FadeOut");
+            StartCoroutine(RebirthEvent());
         }
 
 
@@ -183,11 +181,6 @@ public class GameControllerLV2 : MonoBehaviour
         {
             virtualCamera.Follow = null;
         }
-
-        /*if (blackFade.CanChangeScene && !isWin)
-        {
-            SceneManager.LoadScene("LV2");
-        }*/
 
         if (smokeParticle01.isIceSmoke || smokeParticle02.isIceSmoke || smokeParticle03.isIceSmoke)
         {
@@ -207,16 +200,25 @@ public class GameControllerLV2 : MonoBehaviour
             Destroy(player.hit2.collider.gameObject);
         }
 
-        if (SceneSingleton.Instance.m_RebirthNumber==2)
+        if (GhostObjects.GhostIsOut)
         {
-            GhostObjects.SetActive(true);
+            SceneSingleton.Instance.m_RebirthNumber=3;
         }
     }
 
     //冰霧噴到死亡動畫
     IEnumerator IceSmokeDie()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         BlackAnim.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1.5f);
+        SceneSingleton._Instance.SetState(2);
+    }
+
+    //重生倒數
+    IEnumerator RebirthEvent()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneSingleton._Instance.SetState(2);
     }
 }
