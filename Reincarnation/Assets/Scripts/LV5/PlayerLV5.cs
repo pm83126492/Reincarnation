@@ -6,8 +6,7 @@ public class PlayerLV5 : Player
 {
     bool isCanNotAttacked;
     bool isAvoidCD;
-    public Shader OutlineShader;
-    public Shader OriginalShader;
+    public ParticleSystem ShieldEffect;
 
     protected override void Start()
     {
@@ -30,7 +29,7 @@ public class PlayerLV5 : Player
     {
         if (useObjButton.Pressed && !isAvoidCD)
         {
-            PlayerRenderer.material.shader = OutlineShader;
+            ShieldEffect.Play();
             isCanNotAttacked = true;
             isAvoidCD = true;
             StartCoroutine(AvoidStealth());
@@ -40,7 +39,6 @@ public class PlayerLV5 : Player
     IEnumerator AvoidStealth()
     {
         yield return new WaitForSeconds(1.5f);
-        PlayerRenderer.material.shader = OriginalShader;
         isCanNotAttacked = false;
         yield return new WaitForSeconds(1f);
         isAvoidCD = false;

@@ -5,26 +5,35 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public float Speed;
+    bool CanFire;
     public GameObject target;
 
     public GameObject Explose;
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("FormationEffect");
+        target = GameObject.Find("Player");
         transform.LookAt(target.transform);
+        Invoke("Fire",1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.forward * Speed * Time.deltaTime;
+        if (CanFire)
+        {
+            transform.position += transform.forward * Speed * Time.deltaTime;
+        }
     }
 
     /*void OnTriggerEnter2D(Collider2D other)
     {
         Spawn();
     }*/
+    void Fire()
+    {
+        CanFire = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

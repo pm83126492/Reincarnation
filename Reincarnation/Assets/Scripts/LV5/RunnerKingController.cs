@@ -6,8 +6,10 @@ public class RunnerKingController : MonoBehaviour
 {
     private float MaxCountdownTime;
     private float CountdownTime;
-    private float AnimoverTime;
+    public float AnimoverTime;
     public float BrustSpeed;
+
+    bool isAttack;
 
     private Animator anim;
 
@@ -19,6 +21,12 @@ public class RunnerKingController : MonoBehaviour
     public GameObject AreaGround;
     public Transform[] AreaGroundPoint;
 
+    public GameObject TonadoIce;
+    public Transform TonadoIcePoint;
+
+    public GameObject TeslaEffect;
+    public Transform[] TeslaPoint;
+
     private Transform PlayerTarget;
 
     private string currentState;
@@ -28,7 +36,8 @@ public class RunnerKingController : MonoBehaviour
         IDLE,
         FIREATTACK,
         GROUNDATTACK,
-        BURSTATTACK,
+        TONADOATTACK,
+        TESLAATTACK,
     };
 
     public State RunnerKingState;
@@ -53,11 +62,10 @@ public class RunnerKingController : MonoBehaviour
         switch (RunnerKingState)
         {
             case State.IDLE:
-                ChangeAnimationState("idle");
                 if (CountdownTime > MaxCountdownTime)
                 {
-                    int RangeNumber = Random.Range(2, 3);
-                    FaceRotation();
+                    int RangeNumber = Random.Range(1, 5);
+                    isAttack = false;
                     if (RangeNumber == 1)
                     {
                         RunnerKingState = State.FIREATTACK;
@@ -68,31 +76,44 @@ public class RunnerKingController : MonoBehaviour
                     }
                     else if (RangeNumber == 3)
                     {
-                        if (PlayerTarget.position.x > transform.position.x)
-                        {
-                            BrustSpeed = BrustSpeed * -1;
-                        }
-                        else if (PlayerTarget.position.x < transform.position.x)
-                        {
-                            if (BrustSpeed > 0)
-                            {
-                                BrustSpeed = BrustSpeed * -1;
-                            }
-                        }
-                        RunnerKingState = State.BURSTATTACK;
+                        RunnerKingState = State.TONADOATTACK;
+                    }
+                    else if (RangeNumber == 4)
+                    {
+                        RunnerKingState = State.TESLAATTACK;
                     }
                 }
                 break;
             case State.FIREATTACK:
-                ChangeAnimationState("attack");
+                if (!isAttack)
+                {
+                    Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
+                    isAttack = true;
+                }
                 IdleState();
                 break;
             case State.GROUNDATTACK:
-                ChangeAnimationState("special");
+                if (!isAttack)
+                {
+                    Instantiate(AreaGround, AreaGroundPoint[Random.Range(0,3)].position, transform.rotation);
+                    isAttack = true;
+                }
                 IdleState();
                 break;
-            case State.BURSTATTACK:            
-                ChangeAnimationState("spit");
+            case State.TONADOATTACK:
+                if (!isAttack)
+                {
+                    Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
+                    isAttack = true;
+                }
+                IdleState();
+                break;
+            case State.TESLAATTACK:
+                if (!isAttack)
+                {
+                    Instantiate(TeslaEffect, TeslaPoint[Random.Range(0, 3)].position, transform.rotation);
+                    isAttack = true;
+                }
                 IdleState();
                 break;
         }
@@ -100,7 +121,6 @@ public class RunnerKingController : MonoBehaviour
 
     void IdleState()
     {
-        AnimoverTime = anim.GetCurrentAnimatorStateInfo(0).length;
         Invoke("ChangeIdleAnim", AnimoverTime);
     }
 

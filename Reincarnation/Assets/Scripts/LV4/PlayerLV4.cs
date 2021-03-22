@@ -17,7 +17,6 @@ public class PlayerLV4 : Player
     public bool isInWaterLadder;//在水裡繩子上
     bool isSwimming;//游泳中
     public bool isPlayWaterAudio;//播放過入水音效
-    bool isPlayDrownAudio;//播放過溺水音效
     bool isBeginSwiming;//開始游泳中
     bool isThrow;//投擲中
     bool isEnterWater;//進入水
@@ -69,7 +68,7 @@ public class PlayerLV4 : Player
 
         //ClimbLadder();//爬繩子事件
 
-        WaterCheck();//碰撞入水偵測事件
+        //WaterCheck();//碰撞入水偵測事件
 
         //WaterAudioCheck();//碰撞入水聲音偵測事件
 
@@ -253,13 +252,27 @@ public class PlayerLV4 : Player
     {
         if (isObstacle && hit2.collider.gameObject.tag == "Bait"&& useObjButton.Pressed)
         {
-            Rigidbody2D rigidbody = GameObject.Find("BaitHead").GetComponent<Rigidbody2D>();
-            rigidbody.isKinematic = false;
             if (!isThrow)
             {
-                rigidbody.AddForce(Vector3.left * 120);
-                isThrow = true;
+                anim.SetBool("Throw",true);
             }
+        }
+    }
+
+    public void ThrowOver()
+    {
+        anim.SetBool("Throw", false);
+    }
+
+    public void ThrowBait()
+    {
+        Rigidbody2D rigidbody = GameObject.Find("BaitHead").GetComponent<Rigidbody2D>();
+        rigidbody.isKinematic = false;
+        rigidbody.gameObject.GetComponent<AudioSource>().Play();
+        if (!isThrow)
+        {
+            rigidbody.AddForce(Vector3.left * 120);
+            isThrow = true;
         }
     }
 
@@ -273,6 +286,21 @@ public class PlayerLV4 : Player
             isPlayerTounchHighestLadder = true;
             isClimbing = isCanMove = false;
         }*/
+        if (other.CompareTag("Water") && !isGround)
+        {
+                if (!isClimbing)
+                {
+                    isSwimming = false;
+                    isInWater = true;
+                    isEnemyAttack = true;
+                    //Invoke("Drowning", 5f); //溺水事件
+                }
+                else if (isClimbing)
+                {
+                    isInWaterLadder = isEnemyAttack = true;
+                }
+
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -346,6 +374,7 @@ public class PlayerLV4 : Player
                 isInWater = true;
                 isClimbing = isSwimming = false;
                 anim.SetBool("Climb", false);
+                anim.SetBool("-Climb", false);
             }
             else
             {
@@ -353,13 +382,29 @@ public class PlayerLV4 : Player
                 transform.parent = null;
                 isClimbing = false;
                 anim.SetBool("Climb", false);
+                anim.SetBool("-Climb", false);
             }
         }
 
-       /* if (other.CompareTag("HighestLadder"))
+        if (other.CompareTag("Water"))
         {
-            isPlayerTounchHighestLadder = false;
-        }*/
+            //CancelInvoke("Drowning");
+            if (isInWaterLadder)
+            {
+                isInWaterLadder = isEnemyAttack = false;
+            }
+            else
+            {
+               // isInWater = isEnemyAttack = isInWaterLadder = isEnterWater = false;
+                isInWater = isEnemyAttack = isInWaterLadder = false;
+            }
+
+        }
+
+        /* if (other.CompareTag("HighestLadder"))
+         {
+             isPlayerTounchHighestLadder = false;
+         }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -415,13 +460,8 @@ public class PlayerLV4 : Player
         {
             if (!isClimbing)
             {
-                //Instantiate(WaterPS, transform.position, transform.rotation);
-               // rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x,r);
-               // rigidbody2D.gravityScale = 1f;
                 isSwimming = false;
-                //isCanMove = true;
                 isInWater = true;
-                //StartCoroutine(isInWaterBool());
                 isEnemyAttack = isEnterWater = true;
             }
             else if (isClimbing)
@@ -433,7 +473,6 @@ public class PlayerLV4 : Player
         {
             if (isInWaterLadder)
             {
-                //isInWater = true;
                 isInWaterLadder = false;
             }
             else
@@ -483,20 +522,21 @@ public class PlayerLV4 : Player
     }
 
     //溺水事件
-    void Drowning()
+    /*void Drowning()
     {
         if (!isPlayDrownAudio)
         {
             AudioManager.Instance.PlaySource("Drown", 1, "4");
             isPlayDrownAudio = true;
         }
+        transform.rotation=Quaternion.Euler(0.0f,0.0f,-90.0f);
         isInWater = isCanMove = isEnemyAttack = false;
         rigidbody2D.velocity = Vector2.zero;
-        rigidbody2D.isKinematic = true;
+        rigidbody2D.isKinematic = false;
         anim.SetBool("SwimingBeginIdle", false);
         anim.SetBool("SwimingIdle", false);
         anim.SetBool("Swiming", false);
-        anim.SetBool("WaterGhostAttack", true);
-    }
+        anim.SetBool("Drowning", true);
+    }*/
 
 }

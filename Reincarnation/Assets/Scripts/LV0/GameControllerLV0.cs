@@ -205,7 +205,7 @@ public class GameControllerLV0 : MonoBehaviour
                 if (player.obstacle!=null&&player.obstacle.transform.position.x>-5f)
                 {
                     playableDirector.Play();
-                    Ghost.SetActive(true);
+                   // Ghost.SetActive(true);
                     GameState = state.EnemyAppearUI;
                 }
                 break;
@@ -224,7 +224,7 @@ public class GameControllerLV0 : MonoBehaviour
                 break;
 
             case state.DrawAppearUI:
-                if (ghostControllder.SignCanvasGroup.alpha >= 0.98f)
+                if (ghostControllder.SignCanvasGroup.alpha >= 0.9f)
                 {
                     DrawUI.SetActive(true);
                     GameState = state.FinishDrawUI;
@@ -245,6 +245,7 @@ public class GameControllerLV0 : MonoBehaviour
                 {
                     StartCoroutine(GhostAttack());
                     GameState = state.DrawAppearUI;
+                    ghostControllder.isPlayGhostComeAudio = false;
                 }
                 break;
 
@@ -476,6 +477,7 @@ public class GameControllerLV0 : MonoBehaviour
         SkipUI.enabled = false;
         GetStickUI.enabled = true;
         ButtonCanvas.enabled = true;
+        Ghost.SetActive(false);
         //player.isCanMove = true;
     }
 

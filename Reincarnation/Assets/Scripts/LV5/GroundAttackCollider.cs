@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GroundAttackCollider : MonoBehaviour
 {
-    private PolygonCollider2D polygonCollider;
+    private BoxCollider2D boxCollider2D;
     // Start is called before the first frame update
     void Start()
     {
-        polygonCollider = GetComponent<PolygonCollider2D>();
-        polygonCollider.enabled = false;
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        boxCollider2D.enabled = false;
         Invoke("OpenCollider", 1f);
     }
 
     void OpenCollider()
     {
-        polygonCollider.enabled = true;
+        boxCollider2D.enabled = true;
     }
 }

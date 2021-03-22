@@ -1,4 +1,4 @@
-﻿  using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,7 @@ public class PlayerLV2 : Player
     public Transform OrganPosition;//冰塊起重機轉盤角色操作位置
 
     public bool isTouchOrgan;//碰觸起重機轉盤中
+    bool isPlayFallIceAudio;
 
     public Rope rope;//轉盤繩索程式
 
@@ -122,7 +123,7 @@ public class PlayerLV2 : Player
         anim.SetBool("Roll", true);
         rope.ChangeRopeBendLimit(0);
         gameObject.transform.position = OrganPosition.position;
-        gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
         if (organIce.transform.position.y < 11)
         {
             if (!isPlayOrganAudio)
@@ -316,6 +317,11 @@ public class PlayerLV2 : Player
             //Physics2D.IgnoreLayerCollision(9, 12);
             GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
             GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
+            if (!isPlayFallIceAudio)
+            {
+                AudioManager.Instance.PlaySource("FallIce", 0.3f, "2");
+                isPlayFallIceAudio = true;
+            }
             //GetComponent<PlayerLV2>().enabled = false;
             isCanMove = false;
             rigidbody2D.sharedMaterial = null;

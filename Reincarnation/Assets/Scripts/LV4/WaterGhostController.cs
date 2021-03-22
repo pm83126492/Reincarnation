@@ -8,7 +8,7 @@ public class WaterGhostController : MonoBehaviour
     public Transform target;//追擊目標物
     public Transform BeAttackedPoint, BeAttackedPoint2;//Player被抓位置 Bait被抓位置
 
-    public float speed = 200f;//追擊速度
+    public float speed;//追擊速度
 
     public float nextWaypointDistance = 3f;
     Path path;
@@ -37,19 +37,19 @@ public class WaterGhostController : MonoBehaviour
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         playerLV4 = target.GetComponentInParent<PlayerLV4>();
         baitController = FindObjectOfType<BaitController>();
-        SceneSingleton._Instance.SetState(0);
         anim = GetComponent<Animator>();
         seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("UpdatePath", 0f, 0.1f);
         woodGround=FindObjectOfType<WoodGround>();
+        SceneSingleton._Instance.SetState(0);
     }
 
     void Update()
     {
-       // anim.SetFloat("Speed", 10) ;
+        // anim.SetFloat("Speed", 10) ;
         DistanceEvent();//判斷追擊Player Or Bait
 
         BeAttackedEvent();//判斷抓到Player Or Bait
@@ -60,16 +60,16 @@ public class WaterGhostController : MonoBehaviour
 
         if(WoodTrackGhost&& woodGround.isFallingWater&& playerLV4.isWoodGround&&!playerLV4.isEnemyAttack&&woodGround.transform.localPosition.x<127)
         {
-            target = woodGround.gameObject.transform;
+            target = woodGround.gameObject.transform.GetChild(0);
             anim.speed = 0.5f;
-            speed = 100;
+            speed = 120;
             TrackingWood = true;
         }
         else if(WoodTrackGhost&&(playerLV4.isEnemyAttack||woodGround.transform.localPosition.x > 127))
         {
             TrackingWood = false;
-            anim.speed = 1.5f;
-           // speed = 400;
+            anim.speed = 1f;
+            speed = 300;
         }
 
         if (isPlayerPlayAttackAnim)
@@ -78,6 +78,7 @@ public class WaterGhostController : MonoBehaviour
             playerLV4.gameObject.transform.localPosition = Vector3.zero;
             playerLV4.gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
             playerLV4.gameObject.transform.localScale = new Vector3(-1, -1, transform.localScale.z);
+            playerLV4.anim.enabled = true;
             playerLV4.anim.SetBool("SwimingBeginIdle", false);
             playerLV4.anim.SetBool("SwimingIdle", false);
             playerLV4.anim.SetBool("Swiming", false);
@@ -164,7 +165,7 @@ public class WaterGhostController : MonoBehaviour
         if (seeker.IsDone())
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
-
+    
     void OnPathComplete(Path p)
     {
         if (!p.error)

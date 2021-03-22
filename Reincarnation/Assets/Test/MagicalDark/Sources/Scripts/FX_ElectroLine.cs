@@ -25,10 +25,14 @@ namespace MagicalFX
 		public GameObject FXStart, FXEnd;
 		private GameObject fxStart, fxEnd;
 		public bool KeepConnect = false;
-		
-		void Start ()
+
+        public LineRenderer Strike;
+
+        void Start ()
 		{
-			if (StartObject) {
+            //Strike.enabled = false;
+
+            if (StartObject) {
 				StartPosition = StartObject.transform.position;
 			}
 			if (EndObject) {
@@ -95,21 +99,28 @@ namespace MagicalFX
 				fxStart.transform.parent = this.transform;
 
 			}
-			
-			if (FXEnd != null) {
-				Quaternion rotate = this.transform.rotation;
-				if (!FixRotation)
-					rotate = FXEnd.transform.rotation;
-			
-				fxEnd = (GameObject)GameObject.Instantiate (FXEnd, EndPosition, rotate);
-				if (Normal)
-					fxEnd.transform.forward = this.transform.forward;
-				
-				if(ParentFXend)
-				fxEnd.transform.parent = this.transform;
-				
-			}
+            LineRender.enabled = false;
+            Invoke("StartEffect", 1);
 		}
+
+        void StartEffect()
+        {
+            LineRender.enabled = true;
+            if (FXEnd != null)
+            {
+                Quaternion rotate = this.transform.rotation;
+                if (!FixRotation)
+                    rotate = FXEnd.transform.rotation;
+
+                fxEnd = (GameObject)GameObject.Instantiate(FXEnd, EndPosition, rotate);
+                if (Normal)
+                    fxEnd.transform.forward = this.transform.forward;
+
+                if (ParentFXend)
+                    fxEnd.transform.parent = this.transform;
+
+            }
+        }
 		
 		void UpdatePosition ()
 		{

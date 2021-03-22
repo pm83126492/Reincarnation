@@ -53,4 +53,9 @@ public class PlayerLV0 : Player
             obstacle = null;
         }
     }
+
+    public void PlayTrickShineAudio()
+    {
+        AudioManager.Instance.PlaySource("shine", 1, "0");
+    }
 }

@@ -38,7 +38,7 @@ public class PlayerLV3 : Player
             obstacle2 = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+       /* if (Input.GetKeyDown(KeyCode.E))
         {
 
             if (isSwing&&(hit2.collider.gameObject.tag == "Swing" || hit2.collider.gameObject.tag == "Swing2" || hit2.collider.gameObject.tag == "Swing3" || hit2.collider.gameObject.tag == "Swing4"))
@@ -54,13 +54,13 @@ public class PlayerLV3 : Player
                     gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
                     transform.localPosition = new Vector3(0,0,0);
                     obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                    transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 }
                 else if (rigidbody2D.velocity.x < 0)
                 {
                     gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
                     transform.localPosition = new Vector3(0, 0, 0);
-                    transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                     obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
                 }
             }
@@ -80,7 +80,7 @@ public class PlayerLV3 : Player
                 }
                 else if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity > -45 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
                 {
-                    transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                     rigidbody2D.velocity = new Vector2(-6f, SwingJumpSpeed);
                 }
                 else if(obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0)
@@ -90,11 +90,11 @@ public class PlayerLV3 : Player
                 }
                 else if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 0)
                 {
-                    transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                     rigidbody2D.velocity = new Vector2(-4.5f, 0);
                 }
             }
-        }
+        }*/
 
         if (isGround)
         {
@@ -114,22 +114,22 @@ public class PlayerLV3 : Player
                 rigidbody2D.isKinematic = true;
                 anim.SetBool("SwingHandOpen", false);
                 anim.SetBool("Swing", true);
-              //  anim.Play("no-stick_grab-swing", 0, 0f);
                 obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
                 if (rigidbody2D.velocity.x >= 0)
                 {
                     gameObject.transform.parent = obstacle2.transform.GetChild(0).gameObject.transform;
                     transform.localPosition = new Vector3(0, 0, 0);
                     obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * SwingSpeed;
-                    transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 }
                 else if (rigidbody2D.velocity.x < 0)
                 {
                     gameObject.transform.parent = obstacle2.transform.GetChild(1).gameObject.transform;
                     transform.localPosition = new Vector3(0, 0, 0);
-                    transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                     obstacle2.GetComponent<Rigidbody2D>().velocity = Vector2.right * -SwingSpeed;
                 }
+                transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
         }
         else if(!useObjButton.Pressed && isSwingJump)
@@ -141,24 +141,25 @@ public class PlayerLV3 : Player
             rigidbody2D.isKinematic = false;
             if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 40 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
             {
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 rigidbody2D.velocity = new Vector2(7f, SwingJumpSpeed);
             }
             else if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity > -45 && obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 0 && obstacle2.GetComponent<Rigidbody2D>().velocity.y > 0)
             {
-                transform.localRotation = new Quaternion(0, 180, 0, 0);
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                 rigidbody2D.velocity = new Vector2(-6f, SwingJumpSpeed);
             }
             else if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity > 0)
             {
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 rigidbody2D.velocity = new Vector2(4.5f, 0);
             }
             else if (obstacle2.GetComponent<Rigidbody2D>().angularVelocity < 0)
             {
-                transform.localRotation = new Quaternion(0, 180, 0, 0);
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                 rigidbody2D.velocity = new Vector2(-4.5f, 0);
             }
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
         }
 
     }
