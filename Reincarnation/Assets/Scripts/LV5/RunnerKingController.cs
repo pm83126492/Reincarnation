@@ -11,6 +11,8 @@ public class RunnerKingController : MonoBehaviour
 
     bool isAttack;
 
+    public int PointNumber;
+
     private Animator anim;
 
     private Rigidbody2D RunnerKingRb;
@@ -44,7 +46,7 @@ public class RunnerKingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MaxCountdownTime = Random.Range(1, 3);
+        MaxCountdownTime =3;
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
@@ -95,7 +97,7 @@ public class RunnerKingController : MonoBehaviour
             case State.GROUNDATTACK:
                 if (!isAttack)
                 {
-                    Instantiate(AreaGround, AreaGroundPoint[Random.Range(0,3)].position, transform.rotation);
+                    anim.SetTrigger("RLHand");
                     isAttack = true;
                 }
                 IdleState();
@@ -104,6 +106,7 @@ public class RunnerKingController : MonoBehaviour
                 if (!isAttack)
                 {
                     Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
+                    anim.SetTrigger("RightHand");
                     isAttack = true;
                 }
                 IdleState();
@@ -111,10 +114,9 @@ public class RunnerKingController : MonoBehaviour
             case State.TESLAATTACK:
                 if (!isAttack)
                 {
-                    Instantiate(TeslaEffect, TeslaPoint[Random.Range(0, 3)].position, transform.rotation);
+                    anim.SetTrigger("LeftHand");
                     isAttack = true;
                 }
-                IdleState();
                 break;
         }
     }
@@ -172,5 +174,23 @@ public class RunnerKingController : MonoBehaviour
     {
         int AreaGroundPointRangeNumber= Random.Range(0, 2);
         Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
+    }
+
+    public void TeslaAtack()
+    {
+        if (PlayerTarget.position.x > 5)
+        {
+            PointNumber = 1;
+        }
+        else if (PlayerTarget.position.x > -5&& PlayerTarget.position.x < 5)
+        {
+            PointNumber = 0;
+        }
+        else if (PlayerTarget.position.x < -5)
+        {
+            PointNumber = 2;
+        }
+        Instantiate(TeslaEffect, TeslaPoint[PointNumber].position, transform.rotation);
+        IdleState();
     }
 }

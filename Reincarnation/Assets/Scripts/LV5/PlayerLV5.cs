@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerLV5 : Player
 {
-    bool isCanNotAttacked;
+    public bool isCanNotAttacked;
     bool isAvoidCD;
     public ParticleSystem ShieldEffect;
 
+
     protected override void Start()
     {
+        SceneSingleton.Instance.SetState(0);
         base.Start();
     }
 
@@ -62,6 +64,7 @@ public class PlayerLV5 : Player
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
+            Invoke("PlayerDie", 2f);
         }
     }
 
@@ -83,6 +86,13 @@ public class PlayerLV5 : Player
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
+            Invoke("PlayerDie", 2f);
         }
     }
+
+    void PlayerDie()
+    {
+        SceneSingleton.Instance.SetState(2);
+    }
+
 }

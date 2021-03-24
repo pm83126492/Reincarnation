@@ -27,11 +27,13 @@ namespace MagicalFX
 		public bool KeepConnect = false;
 
         public LineRenderer Strike;
+        private BoxCollider2D boxCollider;
 
         void Start ()
 		{
             //Strike.enabled = false;
-
+            boxCollider = GetComponentInParent<BoxCollider2D>();
+            boxCollider.enabled = false;
             if (StartObject) {
 				StartPosition = StartObject.transform.position;
 			}
@@ -106,6 +108,7 @@ namespace MagicalFX
         void StartEffect()
         {
             LineRender.enabled = true;
+            boxCollider.enabled = true;
             if (FXEnd != null)
             {
                 Quaternion rotate = this.transform.rotation;
