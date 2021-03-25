@@ -14,7 +14,7 @@ public class FireBall : MonoBehaviour
     {
         target = GameObject.Find("Player");
         transform.LookAt(target.transform);
-        Invoke("Fire",1f);
+        Invoke("Fire",3f);
     }
 
     // Update is called once per frame

@@ -7937,7 +7937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!210 &535914844
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -36739,8 +36739,8 @@ MonoBehaviour:
   GhostBlackAnim: {fileID: 1499454719}
   isDrawUI: 0
   isPlayGhostComeAudio: 0
-  isWhiteGhost: 1
-  isBlackGhost: 0
+  isWhiteGhost: 0
+  isBlackGhost: 1
   GhostIsOut: 0
   isGhostAttackDie: 0
   EnemyToPlayerDistance: 0
@@ -47973,7 +47973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1499454716
 Transform:
   m_ObjectHideFlags: 0
