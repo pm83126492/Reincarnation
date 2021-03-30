@@ -50,9 +50,9 @@ namespace MagicalFX
 			block = new MaterialPropertyBlock ();
 			timeTemp = Time.time;
 
-			if (SpawnAfterDead == null) {
+			/*if (SpawnAfterDead == null) {
 				GameObject.Destroy (this.gameObject, LifeTime);
-			}
+			}*/
 
             /*for (int i = 0; i < Particles.Length; i++) {
                 Particles [i].Play ();
@@ -84,13 +84,13 @@ namespace MagicalFX
 					Faders [i].OnDead ();
 				}
 			}
-			if (Time.time > timeTemp + LifeTime) {
+			/*if (Time.time > timeTemp + LifeTime) {
 
 				if (SpawnAfterDead != null) {
 					GameObject.Destroy (this.gameObject);
 					GameObject.Instantiate (SpawnAfterDead, this.transform.position, SpawnAfterDead.transform.rotation);
 				}
-			}
+			}*/
 		}
 
         void PlayEffect()

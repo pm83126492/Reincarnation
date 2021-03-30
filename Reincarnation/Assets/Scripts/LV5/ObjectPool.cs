@@ -48,26 +48,17 @@ public class ObjectPool : MonoBehaviour
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
+        IPoolObject pooledObj = objectToSpawn.GetComponent<IPoolObject>();
+
+        if (pooledObj != null)
+        {
+            pooledObj.OnObjectSpawn();
+        }
+
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
 
-    /*public void RecycleObj(GameObject obj)
-    {
-        //設定為非啟用
-        obj.SetActive(false);
-        //判斷是否有該物件的物件池
-        if (poolDictionary.ContainsKey(obj.name))
-        {
-            //放置到該物件池
-            objectPool.Enqueue(obj);
-        }
-        else
-        {
-            //建立該型別的池子，並將物件放入
-            poolDictionary.Add(obj.name, new List<GameObject>() { obj });
-        }
 
-    }*/
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBall : MonoBehaviour
+public class FireBall : MonoBehaviour,IPoolObject
 {
     public float Speed;
     bool CanFire;
@@ -10,12 +10,19 @@ public class FireBall : MonoBehaviour
 
     public GameObject Explose;
     // Start is called before the first frame update
-    void Start()
+
+    public void OnObjectSpawn()
     {
         target = GameObject.Find("Player");
         transform.LookAt(target.transform);
         Invoke("Fire",1f);
     }
+    /*oid Start()
+    {
+        target = GameObject.Find("Player");
+        transform.LookAt(target.transform);
+        Invoke("Fire",1f);
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -52,6 +59,7 @@ public class FireBall : MonoBehaviour
     void Spawn()
     {
         Instantiate(Explose, transform.position, target.transform.rotation);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        CanFire = false;
     }
 }

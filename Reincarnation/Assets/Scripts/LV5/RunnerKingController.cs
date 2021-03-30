@@ -64,6 +64,7 @@ public class RunnerKingController : MonoBehaviour
     };
 
     public State RunnerKingState;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -126,7 +127,7 @@ public class RunnerKingController : MonoBehaviour
             case State.IDLE:
                 if (CountdownTime >= MaxCountdownTime)
                 {
-                    int RangeNumber = Random.Range(1, 5);
+                    int RangeNumber = Random.Range(1, 4);
                     isAttack = false;
                     if (RangeNumber == 1)
                     {

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Destroy : MonoBehaviour {
+public class Destroy : MonoBehaviour,IPoolObject {
 
 	public float lifetime = 2.0f;
 
-	void Awake()
+	public void OnObjectSpawn()
+    {
+		Invoke("Close", lifetime);
+	}
+	void Close()
 	{
-		Destroy(gameObject, lifetime);
+		gameObject.SetActive(false);
 	}
 }
