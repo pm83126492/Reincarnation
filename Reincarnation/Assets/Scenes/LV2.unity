@@ -2095,7 +2095,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 1922402fe6c56f547912558f8f3806ed, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 75ca2e99096f14f4a9884b2f91a550d0, type: 2}
 --- !u!4 &387778841
 Transform:
   m_ObjectHideFlags: 0
@@ -2535,9 +2535,6 @@ MonoBehaviour:
   SmokeIce01: {fileID: 1844660942}
   SmokeIce02: {fileID: 1706086220}
   SmokeIce03: {fileID: 697804025}
-  SmokeIce04: {fileID: 0}
-  SmokeIce05: {fileID: 0}
-  SmokeIce06: {fileID: 0}
   CanButtonPoint: {fileID: 825447478}
   CanButtonPoint02: {fileID: 2126418497}
   PlayerButtonPoint: {fileID: 1014554139}

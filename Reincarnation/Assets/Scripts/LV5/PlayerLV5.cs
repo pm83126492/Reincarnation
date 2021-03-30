@@ -48,7 +48,7 @@ public class PlayerLV5 : Player
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked)
+        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked&&RunnerKingController.WinNumber<20)
         {
             if (other.gameObject.transform.position.x > transform.position.x)
             {

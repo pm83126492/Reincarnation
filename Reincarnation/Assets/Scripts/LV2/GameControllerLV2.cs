@@ -18,7 +18,7 @@ public class GameControllerLV2 : MonoBehaviour
 
     public GhostControllder GhostObjects;//鬼差物件
 
-    public ParticleSystem SmokeIce01, SmokeIce02, SmokeIce03, SmokeIce04, SmokeIce05, SmokeIce06;//冰霧特效
+    public ParticleSystem SmokeIce01, SmokeIce02, SmokeIce03;//冰霧特效
 
     public Transform CanButtonPoint;//按鈕地洞位置
     public Transform CanButtonPoint02;//按鈕地洞位置2
@@ -92,8 +92,6 @@ public class GameControllerLV2 : MonoBehaviour
         {
             player.anim.SetTrigger("Down");
         }
-
-        Debug.Log(SceneSingleton.Instance.m_RebirthNumber);
     }
 
     //冰霧噴射時間
@@ -102,8 +100,6 @@ public class GameControllerLV2 : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SmokeIce01.Play();
         SmokeIce01.gameObject.GetComponent<AudioSource>().Play();
-        SmokeIce04.Play();
-        SmokeIce04.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(3f);
         StartCoroutine(PlaySmokeIce01());
     }
@@ -112,8 +108,6 @@ public class GameControllerLV2 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SmokeIce02.Play();
         SmokeIce02.gameObject.GetComponent<AudioSource>().Play();
-        SmokeIce05.Play();
-        SmokeIce05.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(4f);
         StartCoroutine(PlaySmokeIce02());
     }
@@ -122,8 +116,6 @@ public class GameControllerLV2 : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SmokeIce03.Play();
         SmokeIce03.gameObject.GetComponent<AudioSource>().Play();
-        SmokeIce06.Play();
-        SmokeIce06.gameObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(3f);
         StartCoroutine(PlaySmokeIce03());
     }

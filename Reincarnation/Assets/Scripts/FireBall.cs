@@ -14,7 +14,7 @@ public class FireBall : MonoBehaviour
     {
         target = GameObject.Find("Player");
         transform.LookAt(target.transform);
-        Invoke("Fire",3f);
+        Invoke("Fire",1f);
     }
 
     // Update is called once per frame
@@ -23,6 +23,12 @@ public class FireBall : MonoBehaviour
         if (CanFire)
         {
             transform.position += transform.forward * Speed * Time.deltaTime;
+        }
+
+        if (RunnerKingController.WinNumber >= 20)
+        {
+            target= GameObject.Find("Mom");
+            transform.LookAt(target.transform);
         }
     }
 
@@ -37,7 +43,10 @@ public class FireBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Spawn();
+        if (collision.gameObject.tag != "RunnerKingAttack"&& RunnerKingController.WinNumber < 20)
+        {
+            Spawn();
+        }
     }
 
     void Spawn()

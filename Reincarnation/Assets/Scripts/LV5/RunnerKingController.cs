@@ -1,17 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class RunnerKingController : MonoBehaviour
 {
-    private float MaxCountdownTime;
+    private Bloom bloom;
+    public Volume volume;
+    public Material FinalLightMaterial;
+
+    public Canvas FinalLightCanvas;
+
+    public float MaxCountdownTime;
     private float CountdownTime;
     public float AnimoverTime;
     public float BrustSpeed;
+    float AppearTime;
 
     bool isAttack;
 
     public int PointNumber;
+    public static int WinNumber;
 
     private Animator anim;
 
@@ -29,6 +39,14 @@ public class RunnerKingController : MonoBehaviour
     public GameObject TeslaEffect;
     public Transform[] TeslaPoint;
 
+    public GameObject FinalAttack;
+
+    public GameObject MomEffect;
+    public Transform MomEffectPoint;
+    public SpriteRenderer MomSprite;
+
+    public ObjectPool objectPool;
+
     private Transform PlayerTarget;
 
     private string currentState;
@@ -40,22 +58,38 @@ public class RunnerKingController : MonoBehaviour
         GROUNDATTACK,
         TONADOATTACK,
         TESLAATTACK,
+        FINAL,
+        MOMAPPEAR,
+        FINALLIGHT,
     };
 
     public State RunnerKingState;
     // Start is called before the first frame update
     void Start()
     {
+        FinalLightMaterial.color = new Color(2, 2, 2,0);
         MaxCountdownTime =3;
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
+        WinNumber = 0;
+
+        Bloom tmp;
+        if (volume.profile.TryGet<Bloom>(out tmp))
+        {
+            bloom = tmp;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         RunnerKingStateJudgment();
+        if (WinNumber == 20)
+        {
+            isAttack = false;
+            RunnerKingState = State.FINAL;
+        }
     }
 
     void RunnerKingStateJudgment()
@@ -63,8 +97,34 @@ public class RunnerKingController : MonoBehaviour
         CountdownTime += Time.deltaTime;
         switch (RunnerKingState)
         {
+            case State.FINALLIGHT:
+                FinalLightCanvas.enabled = true;
+                AppearTime += Time.deltaTime;
+                bloom.intensity.value = 1.74f;
+                FinalLightMaterial.color = new Color(2, 2, 2, AppearTime / 5f);
+                break;
+
+            case State.MOMAPPEAR:
+                AppearTime += Time.deltaTime;
+                MomSprite.color = new Color(1, 1, 1, AppearTime / 1f);
+                if (MomSprite.color.a >= 1)
+                {
+                    RunnerKingState = State.FINALLIGHT;
+                    AppearTime = 0;
+                }
+                break;
+
+            case State.FINAL:
+                if (!isAttack)
+                {
+                    Invoke("FinalAttackEvent", 2f);
+                    isAttack = true;
+                    WinNumber += 1;
+                }
+                break;
+
             case State.IDLE:
-                if (CountdownTime > MaxCountdownTime)
+                if (CountdownTime >= MaxCountdownTime)
                 {
                     int RangeNumber = Random.Range(1, 5);
                     isAttack = false;
@@ -89,7 +149,8 @@ public class RunnerKingController : MonoBehaviour
             case State.FIREATTACK:
                 if (!isAttack)
                 {
-                    Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
+                    objectPool.SpawnFromPool("FireBall", FireballPoint.position, FireballPoint.rotation);
+                    //Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
                     isAttack = true;
                 }
                 IdleState();
@@ -105,7 +166,8 @@ public class RunnerKingController : MonoBehaviour
             case State.TONADOATTACK:
                 if (!isAttack)
                 {
-                    Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
+                    //Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
+                    objectPool.SpawnFromPool("Tonadolce", TonadoIcePoint.position, TonadoIce.transform.rotation);
                     anim.SetTrigger("RightHand");
                     isAttack = true;
                 }
@@ -128,9 +190,26 @@ public class RunnerKingController : MonoBehaviour
 
     void ChangeIdleAnim()
     {
+        WinNumber += 1;
         RunnerKingState = State.IDLE;
         CountdownTime = 0;
-        MaxCountdownTime = Random.Range(1, 4);
+        if (WinNumber <= 5)
+        {
+            MaxCountdownTime = 2;
+        }
+        else if (WinNumber > 5&&WinNumber<=10)
+        {
+            MaxCountdownTime = 1;
+        }
+        else if (WinNumber > 10 && WinNumber <= 15)
+        {
+            MaxCountdownTime = 0.5f;
+        }
+        else if (WinNumber > 15)
+        {
+            MaxCountdownTime = 0.2f;
+        }
+        //MaxCountdownTime = Random.Range(1, 4);
         CancelInvoke("ChangeIdleAnim");
     }
 
@@ -173,7 +252,8 @@ public class RunnerKingController : MonoBehaviour
     public void GroundAttack()
     {
         int AreaGroundPointRangeNumber= Random.Range(0, 2);
-        Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
+       // Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
+        objectPool.SpawnFromPool("GroundAttack", AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
     }
 
     public void TeslaAtack()
@@ -190,7 +270,22 @@ public class RunnerKingController : MonoBehaviour
         {
             PointNumber = 2;
         }
-        Instantiate(TeslaEffect, TeslaPoint[PointNumber].position, transform.rotation);
+        //Instantiate(TeslaEffect, TeslaPoint[PointNumber].position, transform.rotation);
+        objectPool.SpawnFromPool("Tesla", TeslaPoint[PointNumber].position, transform.rotation);
         IdleState();
+    }
+
+    void FinalAttackEvent()
+    {
+        Time.timeScale = 0.5f;
+        PlayerTarget.GetComponent<PlayerLV5>().isCanMove = false;
+        Invoke("FinalAttackEvent2", 1f);
+        FinalAttack.SetActive(true);
+    }
+
+    void FinalAttackEvent2()
+    {
+        Instantiate(MomEffect, MomEffectPoint.position, MomEffect.transform.rotation);
+        RunnerKingState = State.MOMAPPEAR;
     }
 }
