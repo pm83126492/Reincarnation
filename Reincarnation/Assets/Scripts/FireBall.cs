@@ -13,6 +13,18 @@ public class FireBall : MonoBehaviour,IPoolObject
 
     public void OnObjectSpawn()
     {
+        if (RunnerKingController.WinNumber <= 7)
+        {
+            Speed = 15;
+        }
+        else if (RunnerKingController.WinNumber > 7 && RunnerKingController.WinNumber <= 14)
+        {
+            Speed = 17;
+        }
+        else if (RunnerKingController.WinNumber > 14)
+        {
+            Speed = 20;
+        }
         target = GameObject.Find("Player");
         transform.LookAt(target.transform);
         Invoke("Fire",1f);

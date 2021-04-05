@@ -730,7 +730,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111237412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.34, y: -0.21811485, z: -29}
+  m_LocalPosition: {x: -30.2, y: -1.7521458, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1546453066}
@@ -5951,7 +5951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.308842, y: -0.21811488, z: -29}
+  m_LocalPosition: {x: -27.308842, y: -1.7521458, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8185,7 +8185,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 0.5
-  sharedProfile: {fileID: 11400000, guid: 76d7e805d233b1b42ae7910117d5606f, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!4 &1204807579
 Transform:
   m_ObjectHideFlags: 0
@@ -10430,7 +10430,7 @@ MonoBehaviour:
   m_ZDamping: 1
   m_TargetMovementOnly: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.85
+  m_ScreenY: 0.72
   m_CameraDistance: 29
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 2
@@ -11453,7 +11453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1786640166
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11464,11 +11464,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 851fc09fc0720c846b73044a458f386b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 237777707ab589345b4705d035ac2967, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11571,7 +11571,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786640165}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48b6a97733d1d574d8af7cbea002b14f, type: 3}
   m_Name: 
@@ -19250,7 +19250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6026159203840590782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.34, y: -4.348197, z: 0}
+  m_LocalPosition: {x: -30.2, y: -4.348197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 800350853}
@@ -38704,7 +38704,7 @@ GameObject:
   - component: {fileID: 9178674708828289554}
   - component: {fileID: 9178674708828289775}
   m_Layer: 0
-  m_Name: Ghost (1)
+  m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

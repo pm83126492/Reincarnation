@@ -7,19 +7,30 @@ public class GameControllerLV4 : MonoBehaviour
     private Player player;
     public GameObject RebirthPoint, RebirthPoint2;
     public GameObject RebirthCollider, RebirthCollider2;
+
+    public GhostControllder GhostObjects;
+    public Animator BlackAnim;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        SceneSingleton._Instance.SetState(0);
         if (SceneSingleton.Instance.m_RebirthNumber == 1)
         {
             player.transform.position = RebirthPoint.transform.position;
             Destroy(RebirthCollider);
         }
-        else if (SceneSingleton.Instance.m_RebirthNumber >= 2)
+        else if (SceneSingleton.Instance.m_RebirthNumber == 2)
         {
-            SceneSingleton.Instance.m_RebirthNumber = 3;
             player.transform.position = RebirthPoint2.transform.position;
+            Destroy(RebirthCollider);
+            Destroy(RebirthCollider2);
+        }
+        else if (SceneSingleton.Instance.m_RebirthNumber >= 3)
+        {
+            SceneSingleton.Instance.m_RebirthNumber = 4;
+            player.transform.position = RebirthPoint2.transform.position;
+            GhostObjects.transform.parent.gameObject.SetActive(false);
             Destroy(RebirthCollider);
             Destroy(RebirthCollider2);
         }
@@ -30,6 +41,17 @@ public class GameControllerLV4 : MonoBehaviour
     {
         Rebirth();
         CanGoLV5();
+
+        if (GhostObjects.isGhostAttackDie)
+        {
+            BlackAnim.SetTrigger("FadeOut");
+            StartCoroutine(RebirthEvent());
+        }
+
+        if (GhostObjects.GhostIsOut)
+        {
+            SceneSingleton.Instance.m_RebirthNumber = 3;
+        }
     }
 
     void CanGoLV5()
@@ -49,5 +71,12 @@ public class GameControllerLV4 : MonoBehaviour
             Destroy(player.hit2.collider.gameObject);
         }
 
+    }
+
+    //重生倒數
+    IEnumerator RebirthEvent()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneSingleton._Instance.SetState(2);
     }
 }

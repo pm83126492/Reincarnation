@@ -30,7 +30,7 @@ public class DontDestroy : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 

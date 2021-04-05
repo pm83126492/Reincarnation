@@ -254,6 +254,7 @@ public class GhostControllder : MonoBehaviour
     IEnumerator SpellEffectOpen()
     {
         yield return new WaitForSeconds(0.5f);
+        AudioManager.Instance.PlaySource("swell", 1, "other");
         SpellEffect.Play();
         yield return new WaitForSeconds(2.0f);
         GhostState = State.PASS;

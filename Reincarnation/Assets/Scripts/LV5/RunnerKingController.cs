@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class RunnerKingController : MonoBehaviour
 {
     private Bloom bloom;
     public Volume volume;
     public Material FinalLightMaterial;
+
+    public PlayerLV5 player;
+    public EnemyAI Ghost;
+    public Animator GhostAnim;
+    bool isDieEffect;
+    float PlayerIsDieTime;
+
 
     public Canvas FinalLightCanvas;
 
@@ -31,7 +39,7 @@ public class RunnerKingController : MonoBehaviour
     public Transform FireballPoint;
 
     public GameObject AreaGround;
-    public Transform[] AreaGroundPoint;
+    public Transform AreaGroundPoint;
 
     public GameObject TonadoIce;
     public Transform TonadoIcePoint;
@@ -48,6 +56,9 @@ public class RunnerKingController : MonoBehaviour
     public ObjectPool objectPool;
 
     private Transform PlayerTarget;
+
+    public AudioSource audioSource;
+    public AudioClip[] EffectAudio;
 
     private string currentState;
 
@@ -68,13 +79,13 @@ public class RunnerKingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FinalLightMaterial.color = new Color(2, 2, 2,0);
-        MaxCountdownTime =3;
+        FinalLightMaterial.color = new Color(2, 2, 2, 0);
+        MaxCountdownTime = 5;
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
         WinNumber = 0;
-
+        SceneSingleton._Instance.SetState(0);
         Bloom tmp;
         if (volume.profile.TryGet<Bloom>(out tmp))
         {
@@ -86,7 +97,7 @@ public class RunnerKingController : MonoBehaviour
     void Update()
     {
         RunnerKingStateJudgment();
-        if (WinNumber == 20)
+        if (WinNumber == 25)
         {
             isAttack = false;
             RunnerKingState = State.FINAL;
@@ -98,36 +109,10 @@ public class RunnerKingController : MonoBehaviour
         CountdownTime += Time.deltaTime;
         switch (RunnerKingState)
         {
-            case State.FINALLIGHT:
-                FinalLightCanvas.enabled = true;
-                AppearTime += Time.deltaTime;
-                bloom.intensity.value = 1.74f;
-                FinalLightMaterial.color = new Color(2, 2, 2, AppearTime / 5f);
-                break;
-
-            case State.MOMAPPEAR:
-                AppearTime += Time.deltaTime;
-                MomSprite.color = new Color(1, 1, 1, AppearTime / 1f);
-                if (MomSprite.color.a >= 1)
-                {
-                    RunnerKingState = State.FINALLIGHT;
-                    AppearTime = 0;
-                }
-                break;
-
-            case State.FINAL:
-                if (!isAttack)
-                {
-                    Invoke("FinalAttackEvent", 2f);
-                    isAttack = true;
-                    WinNumber += 1;
-                }
-                break;
-
             case State.IDLE:
                 if (CountdownTime >= MaxCountdownTime)
                 {
-                    int RangeNumber = Random.Range(1, 4);
+                    int RangeNumber = Random.Range(1, 2);
                     isAttack = false;
                     if (RangeNumber == 1)
                     {
@@ -151,6 +136,7 @@ public class RunnerKingController : MonoBehaviour
                 if (!isAttack)
                 {
                     objectPool.SpawnFromPool("FireBall", FireballPoint.position, FireballPoint.rotation);
+                    audioSource.PlayOneShot(EffectAudio[0]);
                     //Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
                     isAttack = true;
                 }
@@ -169,6 +155,7 @@ public class RunnerKingController : MonoBehaviour
                 {
                     //Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
                     objectPool.SpawnFromPool("Tonadolce", TonadoIcePoint.position, TonadoIce.transform.rotation);
+                    audioSource.PlayOneShot(EffectAudio[2]);
                     anim.SetTrigger("RightHand");
                     isAttack = true;
                 }
@@ -179,6 +166,56 @@ public class RunnerKingController : MonoBehaviour
                 {
                     anim.SetTrigger("LeftHand");
                     isAttack = true;
+                }
+                break;
+
+            case State.FINAL:
+                if (!isAttack)
+                {
+                    player.isCanMove = false;
+                    Ghost.gameObject.SetActive(true);             
+                    isAttack = true;
+                    WinNumber += 1;
+                }
+
+                float EnemyToPlayerDistance = Vector2.Distance(Ghost.transform.position, player.transform.position);
+                if (EnemyToPlayerDistance <= 4.5f)
+                {
+                    PlayerIsDieTime += Time.deltaTime;
+                    Ghost.enabled = false;
+                    GhostAnim.SetTrigger("TongueAttack");
+                    if (PlayerIsDieTime >= 1f)
+                    {
+                        if (!isDieEffect)
+                        {
+                            //audioSource.PlayOneShot(ChokingAudio);
+                            AudioManager.Instance.PlaySource("PlayerScream", 1, "other");
+                            player.anim.SetBool("GhostWhiteAttack", true);
+                            isDieEffect = true;
+                            Invoke("FinalAttackEvent", 2f);
+                        }
+                    }
+                }
+                break;
+
+            case State.MOMAPPEAR:
+                AppearTime += Time.deltaTime;
+                MomSprite.color = new Color(1, 1, 1, AppearTime / 1f);
+                if (MomSprite.color.a >= 1)
+                {
+                    RunnerKingState = State.FINALLIGHT;
+                    AppearTime = 0;
+                }
+                break;
+
+            case State.FINALLIGHT:
+                FinalLightCanvas.enabled = true;
+                AppearTime += Time.deltaTime;
+                //bloom.intensity.value = 1.74f;
+                FinalLightMaterial.color = new Color(2, 2, 2, AppearTime / 5f);
+                if (FinalLightMaterial.color.a> 0.5f)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
                 break;
         }
@@ -245,16 +282,12 @@ public class RunnerKingController : MonoBehaviour
         }
     }
 
-    public void FireAttack()
-    {
-        Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
-    }
-
     public void GroundAttack()
     {
         int AreaGroundPointRangeNumber= Random.Range(0, 2);
-       // Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
-        objectPool.SpawnFromPool("GroundAttack", AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
+        audioSource.PlayOneShot(EffectAudio[1]);
+        // Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
+        objectPool.SpawnFromPool("GroundAttack", new Vector3(Random.Range(-10,10), AreaGroundPoint.position.y, AreaGroundPoint.position.z), AreaGroundPoint.rotation);
     }
 
     public void TeslaAtack()
@@ -272,13 +305,16 @@ public class RunnerKingController : MonoBehaviour
             PointNumber = 2;
         }
         //Instantiate(TeslaEffect, TeslaPoint[PointNumber].position, transform.rotation);
-        objectPool.SpawnFromPool("Tesla", TeslaPoint[PointNumber].position, transform.rotation);
+        objectPool.SpawnFromPool("Tesla", TeslaPoint[0].position, transform.rotation);
+        audioSource.PlayOneShot(EffectAudio[3]);
         IdleState();
     }
 
     void FinalAttackEvent()
     {
         Time.timeScale = 0.5f;
+        audioSource.PlayOneShot(EffectAudio[4]);
+        anim.SetTrigger("FinalHand");
         PlayerTarget.GetComponent<PlayerLV5>().isCanMove = false;
         Invoke("FinalAttackEvent2", 1f);
         FinalAttack.SetActive(true);

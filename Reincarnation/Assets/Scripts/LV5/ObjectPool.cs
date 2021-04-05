@@ -12,6 +12,12 @@ public class ObjectPool : MonoBehaviour
         public int size;
     }
 
+    public static ObjectPool Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
     // Start is called before the first frame update

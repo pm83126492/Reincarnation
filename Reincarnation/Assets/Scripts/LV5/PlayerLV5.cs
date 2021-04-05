@@ -8,6 +8,11 @@ public class PlayerLV5 : Player
     bool isAvoidCD;
     public ParticleSystem ShieldEffect;
 
+    public AudioSource audioSource;
+    public AudioClip safeAudio;
+    public AudioClip BeAttackAudio;
+
+    public CDImage cdImage;
 
     protected override void Start()
     {
@@ -29,11 +34,12 @@ public class PlayerLV5 : Player
 
     void AvoidAttack()
     {
-        if (useObjButton.Pressed && !isAvoidCD)
+        if (useObjButton.Pressed && !cdImage.isStartTimer)
         {
+            audioSource.PlayOneShot(safeAudio);
             ShieldEffect.Play();
             isCanNotAttacked = true;
-            isAvoidCD = true;
+            cdImage.isStartTimer = true;
             StartCoroutine(AvoidStealth());
         }
     }
@@ -42,25 +48,23 @@ public class PlayerLV5 : Player
     {
         yield return new WaitForSeconds(1.5f);
         isCanNotAttacked = false;
-        yield return new WaitForSeconds(1f);
-        isAvoidCD = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked&&RunnerKingController.WinNumber<20)
+        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked&&RunnerKingController.WinNumber<25)
         {
             if (other.gameObject.transform.position.x > transform.position.x)
             {
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 player.GetComponent<Rigidbody2D>().AddForce(-transform.right * 500);
             }
             else if (other.gameObject.transform.position.x < transform.position.x)
             {
-                transform.rotation = new Quaternion(0, -180, 0, 0);
-                player.GetComponent<Rigidbody2D>().AddForce(-transform.right * 500);
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                player.GetComponent<Rigidbody2D>().AddForce(transform.right * 500);
             }
-
+            audioSource.PlayOneShot(BeAttackAudio);
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
@@ -82,7 +86,7 @@ public class PlayerLV5 : Player
                 transform.rotation = new Quaternion(0, -180, 0, 0);
                 player.GetComponent<Rigidbody2D>().AddForce(-transform.right * 500);
             }
-
+            audioSource.PlayOneShot(BeAttackAudio);
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
