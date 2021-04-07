@@ -17,6 +17,7 @@ public class Line : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             theTrail = (GameObject)Instantiate(drawPrefab, transform.position, Quaternion.identity,transform);
+            TrailList.Add(theTrail);
         }
 
         if (Input.GetMouseButton(0))
@@ -34,7 +35,7 @@ public class Line : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             theTrail.transform.parent = LinePrefab;
-            TrailList.Add(theTrail);
+            //TrailList.Add(theTrail);
         }
     }
 

@@ -34,7 +34,7 @@ public class PlayerLV5 : Player
 
     void AvoidAttack()
     {
-        if (useObjButton.Pressed && !cdImage.isStartTimer)
+        if (useObjButton.Pressed && !cdImage.isStartTimer&&isCanMove)
         {
             audioSource.PlayOneShot(safeAudio);
             ShieldEffect.Play();
@@ -52,17 +52,17 @@ public class PlayerLV5 : Player
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked&&RunnerKingController.WinNumber<25)
+        if (other.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked&&RunnerKingController.WinNumber<20)
         {
             if (other.gameObject.transform.position.x > transform.position.x)
             {
                 transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-                player.GetComponent<Rigidbody2D>().AddForce(-transform.right * 500);
+                rigidbody2D.AddForce(-transform.right * 500);
             }
             else if (other.gameObject.transform.position.x < transform.position.x)
             {
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-                player.GetComponent<Rigidbody2D>().AddForce(transform.right * 500);
+                rigidbody2D.AddForce(transform.right * 500);
             }
             audioSource.PlayOneShot(BeAttackAudio);
             isCanMove = false;

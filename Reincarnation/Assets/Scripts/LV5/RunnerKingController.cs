@@ -97,11 +97,12 @@ public class RunnerKingController : MonoBehaviour
     void Update()
     {
         RunnerKingStateJudgment();
-        if (WinNumber == 25)
+        if (WinNumber == 20)
         {
             isAttack = false;
             RunnerKingState = State.FINAL;
         }
+        Debug.Log(WinNumber);
     }
 
     void RunnerKingStateJudgment()
@@ -112,7 +113,7 @@ public class RunnerKingController : MonoBehaviour
             case State.IDLE:
                 if (CountdownTime >= MaxCountdownTime)
                 {
-                    int RangeNumber = Random.Range(1, 2);
+                    int RangeNumber = Random.Range(1, 5);
                     isAttack = false;
                     if (RangeNumber == 1)
                     {
@@ -124,11 +125,11 @@ public class RunnerKingController : MonoBehaviour
                     }
                     else if (RangeNumber == 3)
                     {
-                        RunnerKingState = State.TONADOATTACK;
+                        RunnerKingState = State.TESLAATTACK;
                     }
                     else if (RangeNumber == 4)
                     {
-                        RunnerKingState = State.TESLAATTACK;
+                        RunnerKingState = State.TONADOATTACK;
                     }
                 }
                 break;
