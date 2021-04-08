@@ -9,7 +9,6 @@ public class GroundAttack : MonoBehaviour, IPoolObject
 
     public void OnObjectSpawn()
     {
-        Debug.Log("OK");
         if (RunnerKingController.WinNumber <= 7)
         {
             GroundAttackObject[0].transform.localPosition = new Vector3(4, 0.33f, GroundAttackObject[0].transform.position.z);

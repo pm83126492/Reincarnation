@@ -77,6 +77,7 @@ public class GameControllerLV03 : MonoBehaviour
         if (playerLV3.transform.position.x >= 42)
         {
             SceneSingleton._Instance.SetState(1);
+            SceneSingleton.Instance.m_RebirthNumber = 0;
         }
     }
 

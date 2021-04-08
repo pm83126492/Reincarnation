@@ -13,6 +13,7 @@ public class GameControllerLV4 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(SceneSingleton.Instance.m_RebirthNumber);
         player = GameObject.Find("Player").GetComponent<Player>();
         SceneSingleton._Instance.SetState(0);
         if (SceneSingleton.Instance.m_RebirthNumber == 1)
