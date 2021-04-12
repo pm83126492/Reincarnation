@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RunnerKingController : MonoBehaviour
 {
+    public Image UseObjButton;
+    public Image ProtectButton;
+    public Image ProtectPlane;
+    public Canvas ProtectText;
+
     private Bloom bloom;
     public Volume volume;
     public Material FinalLightMaterial;
@@ -25,8 +31,10 @@ public class RunnerKingController : MonoBehaviour
     public float AnimoverTime;
     public float BrustSpeed;
     float AppearTime;
+    float AppearTime2;
 
     bool isAttack;
+    bool isChangeButton;
 
     public int PointNumber;
     public static int WinNumber;
@@ -80,7 +88,6 @@ public class RunnerKingController : MonoBehaviour
     void Start()
     {
         FinalLightMaterial.color = new Color(2, 2, 2, 0);
-        MaxCountdownTime = 5;
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
@@ -91,6 +98,16 @@ public class RunnerKingController : MonoBehaviour
         {
             bloom = tmp;
         }
+        if (!LV5Introdution.isNotOnce)
+        {
+            MaxCountdownTime = 12;
+            StartCoroutine("ChangeButton");
+        }
+        else
+        {
+            MaxCountdownTime = 3;
+        }
+        
     }
 
     // Update is called once per frame
@@ -102,7 +119,26 @@ public class RunnerKingController : MonoBehaviour
             isAttack = false;
             RunnerKingState = State.FINAL;
         }
-        Debug.Log(WinNumber);
+
+        if (isChangeButton)
+        {
+            AppearTime += Time.deltaTime;
+            if (UseObjButton.color.a > 0)
+            {
+                //ProtectPlane.enabled = true;
+                UseObjButton.color = new Color(1, 1, 1, 0.7f - AppearTime / 3f);
+            }
+            else
+            {
+                AppearTime2 += Time.deltaTime;
+                ProtectButton.color= new Color(1, 1, 1, AppearTime2 / 3f);
+                if (ProtectButton.color.a >= 0.7f)
+                {
+                    StartCoroutine("ChangeButton2");
+                    isChangeButton = false;
+                }
+            }
+        }
     }
 
     void RunnerKingStateJudgment()
@@ -287,7 +323,6 @@ public class RunnerKingController : MonoBehaviour
     {
         int AreaGroundPointRangeNumber= Random.Range(0, 2);
         audioSource.PlayOneShot(EffectAudio[1]);
-        // Instantiate(AreaGround, AreaGroundPoint[AreaGroundPointRangeNumber].position, AreaGroundPoint[AreaGroundPointRangeNumber].rotation);
         objectPool.SpawnFromPool("GroundAttack", new Vector3(Random.Range(-10,10), AreaGroundPoint.position.y, AreaGroundPoint.position.z), AreaGroundPoint.rotation);
     }
 
@@ -325,5 +360,30 @@ public class RunnerKingController : MonoBehaviour
     {
         Instantiate(MomEffect, MomEffectPoint.position, MomEffect.transform.rotation);
         RunnerKingState = State.MOMAPPEAR;
+    }
+
+    IEnumerator ChangeButton()
+    {
+        yield return new WaitForSeconds(5f);
+        ProtectPlane.enabled = true;
+        yield return new WaitForSeconds(1f);
+        isChangeButton = true;
+    }
+
+    IEnumerator ChangeButton2()
+    {
+        yield return new WaitForSeconds(1f);
+        UseObjButton.gameObject.SetActive(false);
+        AppearTime = 0;
+        player.enabled = true;
+        ProtectText.enabled = true;
+        Time.timeScale = 0;
+    }
+
+    public void ProtectTextContinue()
+    {
+        ProtectPlane.enabled = false;
+        ProtectText.enabled = false;
+        Time.timeScale = 1;
     }
 }

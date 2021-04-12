@@ -43,7 +43,6 @@ public class LV5Introdution : MonoBehaviour
     IEnumerator DisappearUI()
     {
         yield return new WaitForSeconds(3f);
-        player.enabled = true;
         isNotOnce = true;
         isBeginDisapear = true;
     }

@@ -19,6 +19,10 @@ public class DontDestroy : MonoBehaviour
             }
             return _Instance;
         }
+        set
+        {
+            _Instance = value;
+        }
     }
     // Start is called before the first frame update
     void Start()

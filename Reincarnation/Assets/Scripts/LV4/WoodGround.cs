@@ -7,7 +7,7 @@ public class WoodGround : MonoBehaviour
     private Rigidbody2D boxrigidbody;
     private BoxCollider2D boxCollider;
     public bool isFallingWater;
-    bool CanMove;
+    public bool CanMove;
 
     public PhysicsMaterial2D NoFriction;
 
@@ -34,11 +34,16 @@ public class WoodGround : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Lian")&& isFallingWater)
+        if (other.gameObject.CompareTag("Lian")&& isFallingWater && transform.localPosition.x<128)
         {
             boxrigidbody.freezeRotation = true;
             CanMove = true;
             transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            CanMove = false;
         }
     }
 

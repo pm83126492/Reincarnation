@@ -74,6 +74,7 @@ public class SceneSingleton : MonoBehaviour
             if (blackFade.CanChangeScene)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+                DontDestroy.Instance = null;
             }
         }
     }

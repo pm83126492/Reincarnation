@@ -13,7 +13,7 @@ public class HeadCollider : MonoBehaviour
     {
         audioSource = GetComponentInParent<AudioSource>();
         playerLV4 = GetComponentInParent<PlayerLV4>();
-        SceneSingleton._Instance.SetState(0);
+        //SceneSingleton._Instance.SetState(0);
     }
 
     private void Update()

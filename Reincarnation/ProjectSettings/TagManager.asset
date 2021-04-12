@@ -36,6 +36,8 @@ TagManager:
   - RunnerKingAttack
   - Bait
   - HighestLadder
+  - Fx
+  - Wall
   layers:
   - Default
   - TransparentFX

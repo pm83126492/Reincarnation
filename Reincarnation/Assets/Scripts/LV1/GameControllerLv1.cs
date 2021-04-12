@@ -223,7 +223,7 @@ public class GameControllerLv1 : MonoBehaviour
             MirrorComplete.transform.position = new Vector3(100, 0, 0);
             MirrorCrack.gameObject.SetActive(true);
             ArtefactEmbers.Pause();
-            AudioManager.Instance.PlaySource("BrokeGlass", 1,"1");
+            AudioManager.Instance.PlaySource("BrokeGlass", 0.3f,"1");
             //audioSource.PlayOneShot(BrokeGlassAudio);
             CowAnim.SetBool("isMirror", false);
             HorseAnim.SetBool("isMirror", false);

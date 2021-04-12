@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -224,6 +225,12 @@ public class Player : MonoBehaviour
                 boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
             }
         }
+        else
+        {
+            anim.SetBool("Slide", false);
+            boxCollider2D.offset = new Vector2(-0.08030701f, 1.668559f);
+            boxCollider2D.size = new Vector2(1.270004f, 3.510725f);
+        }
 
         //判斷是否跳
         if (jumpJoyButton.Pressed&&!jump&&isGround)
@@ -248,7 +255,14 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
             if (!isPushObstacle&&!isWoodGround)
             {
-                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                if (SceneManager.GetActiveScene().buildIndex == 5)
+                {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                }
             }
             else if (isWoodGround)
             {
@@ -262,7 +276,14 @@ public class Player : MonoBehaviour
             rigidbody2D.velocity = new Vector2(-runSpeed * Time.deltaTime, rigidbody2D.velocity.y);
             if (!isPushObstacle && !isWoodGround)
             {
-                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                if (SceneManager.GetActiveScene().buildIndex == 5)
+                {
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                }
             }
             else if (isWoodGround)
             {
@@ -307,10 +328,12 @@ public class Player : MonoBehaviour
         if (leftCheck || rightCheck)
         {
             isGround = true;
+            rigidbody2D.sharedMaterial = null;
         }
         else
         {
             isGround = false;
+            rigidbody2D.sharedMaterial = WallPhysics;
         }
     }
 
