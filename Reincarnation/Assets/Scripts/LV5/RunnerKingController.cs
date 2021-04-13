@@ -10,7 +10,7 @@ public class RunnerKingController : MonoBehaviour
 {
     public Image UseObjButton;
     public Image ProtectButton;
-    public Image ProtectPlane;
+    public Canvas ProtectPlane;
     public Canvas ProtectText;
 
     private Bloom bloom;
@@ -150,6 +150,7 @@ public class RunnerKingController : MonoBehaviour
                 if (CountdownTime >= MaxCountdownTime)
                 {
                     int RangeNumber = Random.Range(1, 5);
+                    Debug.Log(RangeNumber);
                     isAttack = false;
                     if (RangeNumber == 1)
                     {

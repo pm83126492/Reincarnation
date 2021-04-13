@@ -11,6 +11,7 @@ public class PlayerLV4 : Player
     //public GameObject WaterObject;//水物件
     public GameObject WaterVcam;//入水後鏡頭
     public GameObject Shadow;//角色影子
+    public GameObject HeadCam;//罪犯頭鏡頭
 
     public bool isEnemyAttack;//怪物追擊中
     public bool isBeEnemyAttacked;//被怪物攻擊
@@ -255,6 +256,9 @@ public class PlayerLV4 : Player
             if (!isThrow)
             {
                 anim.SetBool("Throw",true);
+                HeadCam.SetActive(true);
+                isCanMove = false;
+                StartCoroutine("CloseHeadCam");
             }
         }
     }
@@ -431,6 +435,13 @@ public class PlayerLV4 : Player
         isCanMove = true;
         isInWater = true;
         //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,90);
+    }
+
+    IEnumerator CloseHeadCam()
+    {
+        yield return new WaitForSeconds(7f);
+        isCanMove = true;
+        HeadCam.SetActive(false);
     }
 
     private RaycastHit2D Raycast3(Vector2 offset, Vector2 rayDirection, float lengh)
