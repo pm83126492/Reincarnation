@@ -56,6 +56,6 @@ public class PlayerLV0 : Player
 
     public void PlayTrickShineAudio()
     {
-        AudioManager.Instance.PlaySource("shine", 1, "0");
+        AudioManager.Instance.PlaySource("shine", "0");
     }
 }

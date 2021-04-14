@@ -46,8 +46,7 @@ public class FireBall : MonoBehaviour,IPoolObject
 
         if (RunnerKingController.WinNumber >= 20)
         {
-            target= GameObject.Find("Mom");
-            transform.LookAt(target.transform);
+            Destroy(gameObject);
         }
     }
 

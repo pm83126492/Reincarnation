@@ -123,7 +123,7 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[0].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[0];
             criminalBody01.SetActive(true);
-            criminalBody01.GetComponent<AudioSource>().PlayOneShot(criminaAudio[0]);
+            criminalBody01.GetComponent<AudioSource>().PlayOneShot(criminaAudio[0],AudioSlider.AudioVoloume);
             criminal01.enabled = false;
             StopAllCoroutines();
         }
@@ -132,7 +132,7 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[1].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[1];
             criminalBody02.SetActive(true);
-            criminalBody02.GetComponent<AudioSource>().PlayOneShot(criminaAudio[1]);
+            criminalBody02.GetComponent<AudioSource>().PlayOneShot(criminaAudio[1], AudioSlider.AudioVoloume);
             criminal02.enabled = false;
             StopAllCoroutines();
         }
@@ -141,7 +141,7 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[2].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[2];
             criminalBody03.SetActive(true);
-            criminalBody03.GetComponent<AudioSource>().PlayOneShot(criminaAudio[2]);
+            criminalBody03.GetComponent<AudioSource>().PlayOneShot(criminaAudio[2], AudioSlider.AudioVoloume);
             criminal03.enabled = false;
             StopAllCoroutines();
         }
@@ -150,7 +150,7 @@ public class GameControllerLV03 : MonoBehaviour
             BloodEffect[3].Play();
             PlayerCirminalHand.GetComponent<SpriteRenderer>().sprite = criminal_hand[3];
             criminalBody04.SetActive(true);
-            criminalBody04.GetComponent<AudioSource>().PlayOneShot(criminaAudio[3]);
+            criminalBody04.GetComponent<AudioSource>().PlayOneShot(criminaAudio[3], AudioSlider.AudioVoloume);
             criminal04.enabled = false;
             StopAllCoroutines();
         }

@@ -272,7 +272,7 @@ public class GameControllerLV0 : MonoBehaviour
             case state.DoorDissolve:
                 if (DissolveTimer == 0)
                 {
-                    AudioManager.Instance.PlaySource("Dissolve", 1,"0");
+                    AudioManager.Instance.PlaySource("Dissolve","0");
                 }
                 DissolveTimer += Time.deltaTime;
                 DoorFlowerDissolveMaterial.SetFloat("_DissolveAmount", Mathf.Clamp(DissolveTimer / OneDuration, 0, 1.1f));
@@ -286,7 +286,7 @@ public class GameControllerLV0 : MonoBehaviour
             case state.DoorWin:
                 if (!isDoorAudio)
                 {
-                    AudioManager.Instance.PlaySource("DoorOpen", 1, "0");
+                    AudioManager.Instance.PlaySource("DoorOpen", "0");
                     isDoorAudio = true;
                 }
                 Camera.main.orthographic = false;

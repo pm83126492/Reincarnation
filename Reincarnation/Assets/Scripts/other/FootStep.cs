@@ -17,7 +17,7 @@ public class FootStep : MonoBehaviour
     public void Step()
     {
         AudioClip clip = GetRandomClip();
-        audioSource.PlayOneShot(clip,0.4f);
+        audioSource.PlayOneShot(clip, AudioSlider.AudioVoloume);
     }
 
     private AudioClip GetRandomClip()
@@ -27,11 +27,11 @@ public class FootStep : MonoBehaviour
 
     public void Jump()
     {
-        audioSource.PlayOneShot(JumpAudio);
+        audioSource.PlayOneShot(JumpAudio,AudioSlider.AudioVoloume);
     }
 
     public void Shine()
     {
-        audioSource.PlayOneShot(ShineAudio);
+        audioSource.PlayOneShot(ShineAudio, AudioSlider.AudioVoloume);
     }
 }

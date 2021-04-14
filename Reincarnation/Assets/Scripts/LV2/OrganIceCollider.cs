@@ -21,7 +21,7 @@ public class OrganIceCollider : MonoBehaviour
         {
             if (CanPlayAudio)
             {
-                AudioManager.Instance.PlaySource("IceFalling", 1, "2");
+                AudioManager.Instance.PlaySource("IceFalling", "2");
                 DustEffect.Play();
             }
             CanPlayAudio = true;

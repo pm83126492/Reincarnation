@@ -504,7 +504,7 @@ public class PlayerLV4 : Player
             if (!isPlayWaterAudio)
             {
                 audioSource.PlayOneShot(audioClip[0], 0.5f);
-                AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4", 1);
+                AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4");
                 isPlayWaterAudio = true;
             }
         }
@@ -513,14 +513,14 @@ public class PlayerLV4 : Player
             CancelInvoke("Drowning");
             if (isPlayWaterAudio && transform.position.y > -2.5f)
             {
-                AudioManager.Instance.CanPausePlaySource(true, true, "UnderWater", "4", 1);
+                AudioManager.Instance.CanPausePlaySource(true, true, "UnderWater", "4");
                 audioSource.PlayOneShot(audioClip[1], 0.2f);
                 isPlayWaterAudio = false;
             }
             else if (!isPlayWaterAudio && transform.position.y < -2.5f)
             {
                 audioSource.PlayOneShot(audioClip[0], 0.5f);
-                AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4", 1);
+                AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4");
                 isPlayWaterAudio = true;
             }
         }

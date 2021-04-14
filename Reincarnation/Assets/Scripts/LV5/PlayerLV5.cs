@@ -36,7 +36,7 @@ public class PlayerLV5 : Player
     {
         if (useObjButton.Pressed && !cdImage.isStartTimer&&isCanMove)
         {
-            audioSource.PlayOneShot(safeAudio);
+            audioSource.PlayOneShot(safeAudio,AudioSlider.AudioVoloume);
             ShieldEffect.Play();
             isCanNotAttacked = true;
             cdImage.isStartTimer = true;
@@ -64,7 +64,7 @@ public class PlayerLV5 : Player
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                 rigidbody2D.AddForce(transform.right * 500);
             }
-            audioSource.PlayOneShot(BeAttackAudio);
+            audioSource.PlayOneShot(BeAttackAudio, AudioSlider.AudioVoloume);
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
@@ -86,7 +86,7 @@ public class PlayerLV5 : Player
                 transform.rotation = new Quaternion(0, -180, 0, 0);
                 player.GetComponent<Rigidbody2D>().AddForce(-transform.right * 500);
             }
-            audioSource.PlayOneShot(BeAttackAudio);
+            audioSource.PlayOneShot(BeAttackAudio, AudioSlider.AudioVoloume);
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);

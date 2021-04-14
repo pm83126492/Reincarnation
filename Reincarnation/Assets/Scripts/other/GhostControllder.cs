@@ -91,7 +91,7 @@ public class GhostControllder : MonoBehaviour
             GhostCamera.SetActive(true);
             if (!isPlayGhostComeAudio)
             {
-                AudioManager.Instance.PlaySource("GhostCome", 1, "other");
+                AudioManager.Instance.PlaySource("GhostCome", "other");
                 isPlayGhostComeAudio = true;
             }
             if (EnemyToPlayerDistance <= 15f)
@@ -254,7 +254,7 @@ public class GhostControllder : MonoBehaviour
     IEnumerator SpellEffectOpen()
     {
         yield return new WaitForSeconds(0.5f);
-        AudioManager.Instance.PlaySource("swell", 1, "other");
+        AudioManager.Instance.PlaySource("swell", "other");
         SpellEffect.Play();
         yield return new WaitForSeconds(2.0f);
         GhostState = State.PASS;

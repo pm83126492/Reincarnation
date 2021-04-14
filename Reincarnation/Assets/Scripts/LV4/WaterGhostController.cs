@@ -105,7 +105,7 @@ public class WaterGhostController : MonoBehaviour
     {
         if (CatchDistance < 2 && playerLV4.isEnemyAttack && !baitController.isAllure)
         {
-            AudioManager.Instance.PlaySource("WaterGhostAttack", 0.5f, "4");
+            AudioManager.Instance.PlaySource("WaterGhostAttack", "4");
             isPlayerBeAttacked = true;
             isCurrentAttackGhost = true;
         }
@@ -261,7 +261,7 @@ public class WaterGhostController : MonoBehaviour
 
     void ReloadScenes()
     {
-        AudioManager.Instance.CanPausePlaySource(true, true, "UnderWater", "4", 1);
+        AudioManager.Instance.CanPausePlaySource(true, true, "UnderWater", "4");
         SceneSingleton._Instance.SetState(2);
     }
 

@@ -40,17 +40,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySource(string sound, float volume, string LV)
+    public void PlaySource(string sound, string LV)
     {
         if (!isMute)
         {
             AudioClip clip = (AudioClip)Resources.Load("AudioClip/LV"+ LV +"/" + sound, typeof(AudioClip));
-            audioSource.PlayOneShot(clip, volume);
+            audioSource.PlayOneShot(clip, AudioSlider.AudioVoloume);
         }
     }
 
-    public void CanPausePlaySource(bool CanPause,bool isPause,string sound, string LV, float volume)
+    public void CanPausePlaySource(bool CanPause,bool isPause,string sound, string LV)
     {
+        audioSource.volume = AudioSlider.AudioVoloume;
         if (!isMute&&!isPause&&!CanPause)
         {
             audioSource.clip = (AudioClip)Resources.Load("AudioClip/LV" + LV + "/" + sound, typeof(AudioClip));

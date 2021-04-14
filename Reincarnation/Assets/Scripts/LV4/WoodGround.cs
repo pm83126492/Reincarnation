@@ -8,6 +8,8 @@ public class WoodGround : MonoBehaviour
     private BoxCollider2D boxCollider;
     public bool isFallingWater;
     public bool CanMove;
+    public AudioSource audioSource;
+    public AudioClip WaterDownAudio;
 
     public PhysicsMaterial2D NoFriction;
 
@@ -52,7 +54,12 @@ public class WoodGround : MonoBehaviour
         if (other.gameObject.CompareTag("Water"))
         {
             transform.rotation = new Quaternion(0, 0, 0, 0);
-            isFallingWater = true;
+            if (!isFallingWater)
+            {
+                isFallingWater = true;
+                audioSource.PlayOneShot(WaterDownAudio);
+            }
+
             boxrigidbody.sharedMaterial = NoFriction;
             gameObject.layer = 8;
             boxrigidbody.gravityScale = 3;

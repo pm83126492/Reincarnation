@@ -81,7 +81,7 @@ public class Drag : MonoBehaviour
         {
             if (thisColTouched&& CanPlayAudio)
             {
-                AudioManager.Instance.PlaySource("Wood", 1,"0");
+                AudioManager.Instance.PlaySource("Wood","0");
             }
         }
     }

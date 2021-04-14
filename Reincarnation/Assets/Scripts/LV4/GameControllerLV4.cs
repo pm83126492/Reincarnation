@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameControllerLV4 : MonoBehaviour
 {
@@ -10,9 +11,15 @@ public class GameControllerLV4 : MonoBehaviour
 
     public GhostControllder GhostObjects;
     public Animator BlackAnim;
+
+    public CinemachineVirtualCamera virtualCamera;//攝影機
     // Start is called before the first frame update
     void Start()
     {
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX = 0.5f;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.75f;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0f;
+        virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 0f;
         player = GameObject.Find("Player").GetComponent<Player>();
         SceneSingleton._Instance.SetState(0);
         if (SceneSingleton.Instance.m_RebirthNumber == 1)

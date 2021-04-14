@@ -199,7 +199,7 @@ public class GameControllerLv1 : MonoBehaviour
         EyesLight.SetActive(true);
         player.isCanMove = false;
         isCine = true;
-        AudioManager.Instance.PlaySource("MirrorScream", 1,"1");
+        AudioManager.Instance.PlaySource("MirrorScream","1");
         //audioSource.PlayOneShot(ScreamAudio);
         mirrorTouch.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine(Play());
@@ -211,7 +211,7 @@ public class GameControllerLv1 : MonoBehaviour
         {
             if (DissolveTimer == 0)
             {
-                AudioManager.Instance.PlaySource("Dissolve", 1,"0");
+                AudioManager.Instance.PlaySource("Dissolve","0");
                 //audioSource.PlayOneShot(DissolveAudio);
             }
             DissolveTimer += Time.deltaTime;
@@ -223,7 +223,7 @@ public class GameControllerLv1 : MonoBehaviour
             MirrorComplete.transform.position = new Vector3(100, 0, 0);
             MirrorCrack.gameObject.SetActive(true);
             ArtefactEmbers.Pause();
-            AudioManager.Instance.PlaySource("BrokeGlass", 0.3f,"1");
+            AudioManager.Instance.PlaySource("BrokeGlass","1");
             //audioSource.PlayOneShot(BrokeGlassAudio);
             CowAnim.SetBool("isMirror", false);
             HorseAnim.SetBool("isMirror", false);
@@ -258,7 +258,7 @@ public class GameControllerLv1 : MonoBehaviour
                     if (!isDieEffect)
                     {
                         //audioSource.PlayOneShot(ChokingAudio);
-                        AudioManager.Instance.PlaySource("PlayerScream", 1,"other");
+                        AudioManager.Instance.PlaySource("PlayerScream","other");
                         player.anim.SetBool("GhostWhiteAttack",true);
                         isDieEffect = true;
                     }

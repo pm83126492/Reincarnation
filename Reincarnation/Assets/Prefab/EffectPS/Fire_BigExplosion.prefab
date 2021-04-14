@@ -9458,6 +9458,7 @@ GameObject:
   - component: {fileID: 7977524528919900967}
   - component: {fileID: 5109159414142960473}
   - component: {fileID: 9055928929906771826}
+  - component: {fileID: 3327011968102323173}
   m_Layer: 0
   m_Name: Fire_BigExplosion
   m_TagString: Untagged
@@ -14302,6 +14303,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78eee305dcd5fa0488cf407973c6fac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3327011968102323173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977524528925500169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435a7c9cfc1c5264b99dcc219d9f95e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7977524528925500171

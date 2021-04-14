@@ -12,6 +12,14 @@ public class StartUI : MonoBehaviour
 
     public GameObject AudioSettingCanvas;
 
+
+    private void Start()
+    {
+        //AudioSettingCanvas.SetActive(false);
+        BGMSlider.BGMVoloume = 0.5f;
+        AudioSlider.AudioVoloume = 1;
+    }
+
     public void StartGame()
     {
         HaloBG[0].enabled = true;

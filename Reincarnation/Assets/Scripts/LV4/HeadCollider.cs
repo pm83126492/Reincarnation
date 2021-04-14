@@ -32,7 +32,7 @@ public class HeadCollider : MonoBehaviour
             Invoke("Drowning", 5f);
             if (!isPlayWaterAudio)
             {
-                audioSource.PlayOneShot(audioClip[0], 0.5f);
+                audioSource.PlayOneShot(audioClip[0], AudioSlider.AudioVoloume);
                 audioSource.Play();
                 //AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4", 1);
                 isPlayWaterAudio = true;
@@ -49,13 +49,13 @@ public class HeadCollider : MonoBehaviour
             {
                 audioSource.Stop();
                 //AudioManager.Instance.CanPausePlaySource(true, true, "UnderWater", "4", 1);
-                audioSource.PlayOneShot(audioClip[1], 0.2f);
+                audioSource.PlayOneShot(audioClip[1], AudioSlider.AudioVoloume);
                 isPlayWaterAudio = false;
             }
             else if (!isPlayWaterAudio && transform.position.y < -2.5f)
             {
                 audioSource.Stop();
-                audioSource.PlayOneShot(audioClip[0], 0.5f);
+                audioSource.PlayOneShot(audioClip[0], AudioSlider.AudioVoloume);
                 //AudioManager.Instance.CanPausePlaySource(true, false, "UnderWater", "4", 1);
                 isPlayWaterAudio = true;
             }
@@ -66,7 +66,7 @@ public class HeadCollider : MonoBehaviour
     {
         if (!isPlayDrownAudio)
         {
-            AudioManager.Instance.PlaySource("Drown", 1, "4");
+            AudioManager.Instance.PlaySource("Drown", "4");
             isPlayDrownAudio = true;
         }
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);

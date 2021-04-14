@@ -128,7 +128,7 @@ public class PlayerLV2 : Player
         {
             if (!isPlayOrganAudio)
             {
-                AudioManager.Instance.CanPausePlaySource(false,false, "RotateOrgan", "2", 1);
+                AudioManager.Instance.CanPausePlaySource(false,false, "RotateOrgan", "2");
                // OrganCircle.GetComponent<AudioSource>().Play();
                 isPlayOrganAudio = true;
             }
@@ -142,7 +142,7 @@ public class PlayerLV2 : Player
             anim.enabled = false;
             if (isPlayOrganAudio)
             {
-                AudioManager.Instance.CanPausePlaySource(false, true, "RotateOrgan", "2", 1);
+                AudioManager.Instance.CanPausePlaySource(false, true, "RotateOrgan", "2");
                 isPlayOrganAudio = false;
             }
         }
@@ -179,7 +179,7 @@ public class PlayerLV2 : Player
             anim.SetBool("Roll", false);
             if (isPlayOrganAudio)
             {
-                AudioManager.Instance.CanPausePlaySource(false,true, "RotateOrgan", "2", 1);
+                AudioManager.Instance.CanPausePlaySource(false,true, "RotateOrgan", "2");
                 isPlayOrganAudio = false;
             }
         }
@@ -210,7 +210,7 @@ public class PlayerLV2 : Player
                     anim.enabled = false;
                     if (isPlayPushIceAudio)
                     {
-                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2");
                         isPlayPushIceAudio = false;
                     }
                 }
@@ -218,7 +218,7 @@ public class PlayerLV2 : Player
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                 if (!isPlayPushIceAudio && joystick.Horizontal != 0)
                 {
-                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2");
                     //obstacle.GetComponent<AudioSource>().Play();
                     isPlayPushIceAudio = true;
                 }
@@ -244,7 +244,7 @@ public class PlayerLV2 : Player
                     anim.enabled = false;
                     if (isPlayPushIceAudio)
                     {
-                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2");
                         //obstacle.GetComponent<AudioSource>().Pause();
                         isPlayPushIceAudio = false;
                     }
@@ -253,7 +253,7 @@ public class PlayerLV2 : Player
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                 if (!isPlayPushIceAudio && joystick.Horizontal != 0)
                 {
-                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2");
                     //obstacle.GetComponent<AudioSource>().Play();
                     isPlayPushIceAudio = true;
                 }
@@ -279,7 +279,7 @@ public class PlayerLV2 : Player
                     anim.enabled = false;
                     if (isPlayPushIceAudio)
                     {
-                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2", 1);
+                        AudioManager.Instance.CanPausePlaySource(true, true, "IceFriction", "2");
                         //obstacle.GetComponent<AudioSource>().Pause();
                         isPlayPushIceAudio = false;
                     }
@@ -288,7 +288,7 @@ public class PlayerLV2 : Player
                 obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                 if (!isPlayPushIceAudio && joystick.Horizontal != 0)
                 {
-                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2", 1);
+                    AudioManager.Instance.CanPausePlaySource(true, false, "IceFriction", "2");
                     isPlayPushIceAudio = true;
                 }
             }
@@ -296,7 +296,7 @@ public class PlayerLV2 : Player
         else if (!useObjButton.Pressed && obstacle != null)
         {
             
-            AudioManager.Instance.CanPausePlaySource(false, true, "IceFriction", "2", 1);
+            AudioManager.Instance.CanPausePlaySource(false, true, "IceFriction", "2");
             isPlayPushIceAudio = false;
             isPushObstacle = false;
             anim.enabled = true;
@@ -319,7 +319,7 @@ public class PlayerLV2 : Player
             GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
             if (!isPlayFallIceAudio)
             {
-                AudioManager.Instance.PlaySource("FallIce", 0.3f, "2");
+                AudioManager.Instance.PlaySource("FallIce", "2");
                 isPlayFallIceAudio = true;
             }
             //GetComponent<PlayerLV2>().enabled = false;

@@ -5,12 +5,19 @@ using UnityEngine;
 public class BaitController : MonoBehaviour
 {
     public bool isAllure;
+    public AudioSource audioSource;
+    public AudioClip WaterDownAudio;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Water"))
         {
-            isAllure = true;
+            if (!isAllure)
+            {
+                audioSource.PlayOneShot(WaterDownAudio);
+                isAllure = true;
+            }
+
             //Invoke("DestoryObjects", 3f);
         }
     }

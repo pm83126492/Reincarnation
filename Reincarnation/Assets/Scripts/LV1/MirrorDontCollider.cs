@@ -15,7 +15,7 @@ public class MirrorDontCollider : MonoBehaviour
 
     IEnumerator MovePosition()
     {
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(10f);
         transform.position = new Vector3(100f, 0, 0);
     }
 }

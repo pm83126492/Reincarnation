@@ -13,6 +13,8 @@ public class RunnerKingController : MonoBehaviour
     public Canvas ProtectPlane;
     public Canvas ProtectText;
 
+    public GameObject NextButton;
+
     private Bloom bloom;
     public Volume volume;
     public Material FinalLightMaterial;
@@ -105,6 +107,10 @@ public class RunnerKingController : MonoBehaviour
         }
         else
         {
+            NextButton.SetActive(true);
+            UseObjButton.gameObject.SetActive(false);
+            ProtectButton.gameObject.SetActive(true);
+            ProtectButton.color = new Color(1, 1, 1, 0.7f);
             MaxCountdownTime = 3;
         }
         
@@ -116,6 +122,7 @@ public class RunnerKingController : MonoBehaviour
         RunnerKingStateJudgment();
         if (WinNumber == 20)
         {
+            CancelInvoke("ChangeIdleAnim");
             isAttack = false;
             RunnerKingState = State.FINAL;
         }
@@ -125,7 +132,6 @@ public class RunnerKingController : MonoBehaviour
             AppearTime += Time.deltaTime;
             if (UseObjButton.color.a > 0)
             {
-                //ProtectPlane.enabled = true;
                 UseObjButton.color = new Color(1, 1, 1, 0.7f - AppearTime / 3f);
             }
             else
@@ -150,7 +156,6 @@ public class RunnerKingController : MonoBehaviour
                 if (CountdownTime >= MaxCountdownTime)
                 {
                     int RangeNumber = Random.Range(1, 5);
-                    Debug.Log(RangeNumber);
                     isAttack = false;
                     if (RangeNumber == 1)
                     {
@@ -174,7 +179,7 @@ public class RunnerKingController : MonoBehaviour
                 if (!isAttack)
                 {
                     objectPool.SpawnFromPool("FireBall", FireballPoint.position, FireballPoint.rotation);
-                    audioSource.PlayOneShot(EffectAudio[0]);
+                    audioSource.PlayOneShot(EffectAudio[0], AudioSlider.AudioVoloume);
                     //Instantiate(Fireball, FireballPoint.position, FireballPoint.rotation);
                     isAttack = true;
                 }
@@ -193,7 +198,7 @@ public class RunnerKingController : MonoBehaviour
                 {
                     //Instantiate(TonadoIce, TonadoIcePoint.position, TonadoIce.transform.rotation);
                     objectPool.SpawnFromPool("Tonadolce", TonadoIcePoint.position, TonadoIce.transform.rotation);
-                    audioSource.PlayOneShot(EffectAudio[2]);
+                    audioSource.PlayOneShot(EffectAudio[2], AudioSlider.AudioVoloume);
                     anim.SetTrigger("RightHand");
                     isAttack = true;
                 }
@@ -227,7 +232,7 @@ public class RunnerKingController : MonoBehaviour
                         if (!isDieEffect)
                         {
                             //audioSource.PlayOneShot(ChokingAudio);
-                            AudioManager.Instance.PlaySource("PlayerScream", 1, "other");
+                            AudioManager.Instance.PlaySource("PlayerScream", "other");
                             player.anim.SetBool("GhostWhiteAttack", true);
                             isDieEffect = true;
                             Invoke("FinalAttackEvent", 2f);
@@ -323,7 +328,7 @@ public class RunnerKingController : MonoBehaviour
     public void GroundAttack()
     {
         int AreaGroundPointRangeNumber= Random.Range(0, 2);
-        audioSource.PlayOneShot(EffectAudio[1]);
+        audioSource.PlayOneShot(EffectAudio[1], AudioSlider.AudioVoloume);
         objectPool.SpawnFromPool("GroundAttack", new Vector3(Random.Range(-10,10), AreaGroundPoint.position.y, AreaGroundPoint.position.z), AreaGroundPoint.rotation);
     }
 
@@ -343,14 +348,14 @@ public class RunnerKingController : MonoBehaviour
         }
         //Instantiate(TeslaEffect, TeslaPoint[PointNumber].position, transform.rotation);
         objectPool.SpawnFromPool("Tesla", TeslaPoint[0].position, transform.rotation);
-        audioSource.PlayOneShot(EffectAudio[3]);
+        audioSource.PlayOneShot(EffectAudio[3], AudioSlider.AudioVoloume);
         IdleState();
     }
 
     void FinalAttackEvent()
     {
         Time.timeScale = 0.5f;
-        audioSource.PlayOneShot(EffectAudio[4]);
+        audioSource.PlayOneShot(EffectAudio[4], AudioSlider.AudioVoloume);
         anim.SetTrigger("FinalHand");
         PlayerTarget.GetComponent<PlayerLV5>().isCanMove = false;
         Invoke("FinalAttackEvent2", 1f);
@@ -379,6 +384,7 @@ public class RunnerKingController : MonoBehaviour
         player.enabled = true;
         ProtectText.enabled = true;
         Time.timeScale = 0;
+        NextButton.SetActive(true);
     }
 
     public void ProtectTextContinue()
