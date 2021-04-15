@@ -11,4 +11,12 @@ public class Tonadolce : MonoBehaviour
         this.transform.position += this.transform.forward * Speed * Time.fixedDeltaTime;
     }
 
+    private void Update()
+    {
+        if (RunnerKingController.WinNumber >= 20)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

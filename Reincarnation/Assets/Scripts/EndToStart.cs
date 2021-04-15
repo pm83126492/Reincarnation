@@ -13,5 +13,7 @@ public class EndToStart : MonoBehaviour
     public void ChangeScene()
     {
         SceneManager.LoadScene(2);
+        SceneSingleton.Instance.m_RebirthNumber = 0;
+        LV5Introdution.isNotOnce = false;
     }
 }

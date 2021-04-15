@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameControllerLV4 : MonoBehaviour
 {
@@ -16,12 +17,22 @@ public class GameControllerLV4 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BGMSlider.BGMVoloume = 0.5f;
+        AudioSlider.AudioVoloume = 1;
+
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX = 0.5f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.75f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 0f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 0f;
         player = GameObject.Find("Player").GetComponent<Player>();
         SceneSingleton._Instance.SetState(0);
+        if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
+        {
+            IntrodutionUI.isNotOnce = false;
+            IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
+            SceneSingleton.Instance.m_RebirthNumber = 0;
+        }
+
         if (SceneSingleton.Instance.m_RebirthNumber == 1)
         {
             player.transform.position = RebirthPoint.transform.position;

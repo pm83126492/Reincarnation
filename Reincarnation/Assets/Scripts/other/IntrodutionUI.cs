@@ -20,7 +20,6 @@ public class IntrodutionUI : MonoBehaviour
             isNotOnce = false;
             SceneNubmer = SceneManager.GetActiveScene().buildIndex;
         }*/
-
         if (isNotOnce)
         {
             canvasGroup.alpha = 0;

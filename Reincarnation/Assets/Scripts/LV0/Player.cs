@@ -90,7 +90,6 @@ public class Player : MonoBehaviour
         joystick = FindObjectOfType<Joystick>();
         jumpJoyButton = FindObjectOfType<JumpJoyButton>();
         useObjButton = FindObjectOfType<UseObjButton>();
-
         isCanMove = true;
         player = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();

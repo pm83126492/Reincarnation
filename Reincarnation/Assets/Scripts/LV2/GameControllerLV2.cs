@@ -44,7 +44,10 @@ public class GameControllerLV2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // GhostObjects = GameObject.Find("Ghost");
+        BGMSlider.BGMVoloume = 0.5f;
+        AudioSlider.AudioVoloume = 1;
+
+        // GhostObjects = GameObject.Find("Ghost");
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 2f;

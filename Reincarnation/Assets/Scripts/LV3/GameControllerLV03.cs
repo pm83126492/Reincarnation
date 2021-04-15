@@ -38,6 +38,7 @@ public class GameControllerLV03 : MonoBehaviour
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         if (IntrodutionUI.SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
+            SceneSingleton.Instance.m_RebirthNumber = 0;
             IntrodutionUI.isNotOnce = false;
             IntrodutionUI.SceneNubmer = SceneManager.GetActiveScene().buildIndex;
         }
@@ -45,8 +46,7 @@ public class GameControllerLV03 : MonoBehaviour
         if (SceneSingleton.Instance.m_RebirthNumber==1)
         {
             playerLV3.transform.position = RebirthPoint.transform.position;
-        }
-        SceneSingleton.Instance.m_RebirthNumber = 0;
+        }   
     }
 
     // Update is called once per frame

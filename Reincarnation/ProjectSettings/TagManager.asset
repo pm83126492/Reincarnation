@@ -38,6 +38,7 @@ TagManager:
   - HighestLadder
   - Fx
   - Wall
+  - Mom
   layers:
   - Default
   - TransparentFX

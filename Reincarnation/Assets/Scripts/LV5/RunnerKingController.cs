@@ -93,7 +93,7 @@ public class RunnerKingController : MonoBehaviour
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
-        WinNumber = 0;
+        WinNumber = 19;
         SceneSingleton._Instance.SetState(0);
         Bloom tmp;
         if (volume.profile.TryGet<Bloom>(out tmp))
@@ -103,7 +103,7 @@ public class RunnerKingController : MonoBehaviour
         if (!LV5Introdution.isNotOnce)
         {
             MaxCountdownTime = 12;
-            StartCoroutine("ChangeButton");
+            StartCoroutine(ChangeButton());
         }
         else
         {
@@ -125,6 +125,7 @@ public class RunnerKingController : MonoBehaviour
             CancelInvoke("ChangeIdleAnim");
             isAttack = false;
             RunnerKingState = State.FINAL;
+            //StartCoroutine("ChangStateToFINAL");
         }
 
         if (isChangeButton)
@@ -216,7 +217,8 @@ public class RunnerKingController : MonoBehaviour
                 if (!isAttack)
                 {
                     player.isCanMove = false;
-                    Ghost.gameObject.SetActive(true);             
+                    Ghost.gameObject.SetActive(true);
+                    player.transform.localScale = new Vector3(1, 1, 1);
                     isAttack = true;
                     WinNumber += 1;
                 }
@@ -244,7 +246,7 @@ public class RunnerKingController : MonoBehaviour
             case State.MOMAPPEAR:
                 AppearTime += Time.deltaTime;
                 MomSprite.color = new Color(1, 1, 1, AppearTime / 1f);
-                if (MomSprite.color.a >= 1)
+                if (MomSprite.color.a >= 0.5f)
                 {
                     RunnerKingState = State.FINALLIGHT;
                     AppearTime = 0;
@@ -387,7 +389,13 @@ public class RunnerKingController : MonoBehaviour
         NextButton.SetActive(true);
     }
 
-    public void ProtectTextContinue()
+    IEnumerator ChangStateToFINAL()
+    {
+        yield return new WaitForSeconds(2f);
+        RunnerKingState = State.FINAL;
+    }
+
+        public void ProtectTextContinue()
     {
         ProtectPlane.enabled = false;
         ProtectText.enabled = false;

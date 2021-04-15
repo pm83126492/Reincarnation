@@ -36,5 +36,18 @@ public class FinalFireball : MonoBehaviour
         CanFire = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Mom")
+        {
+            Spawn();
+        }
+    }
 
+    void Spawn()
+    {
+        Instantiate(Explose, transform.position, target.transform.rotation);
+        gameObject.SetActive(false);
+        CanFire = false;
+    }
 }
