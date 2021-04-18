@@ -11,6 +11,7 @@ public class GameControllerLV2 : MonoBehaviour
     public GameObject IcePlate;//過關平台冰塊物件
     public GameObject Player;//玩家物件
     public GameObject Icelittle;//小冰塊物件
+    public GameObject HandIce;//手冰塊物件
     public GameObject RebirthPoint;//玩家重生點1
     public GameObject RebirthPoint2;//玩家重生點2
     public GameObject RebirthCollider;//玩家重生點碰撞器
@@ -129,7 +130,18 @@ public class GameControllerLV2 : MonoBehaviour
     //冰塊地板洞Collider控制
     void IceColliderHole()
     {
-        if (Icelittle.transform.localPosition.x >= 105)
+        if (Icelittle.transform.localPosition.x >= 106)
+        {
+            collider2d_hole.enabled = true;
+            collider2d.enabled = false;
+        }
+        else
+        {
+            collider2d_hole.enabled = false;
+            collider2d.enabled = true;
+        }
+
+        if (HandIce.transform.position.x < 108.5f)
         {
             collider2d_hole.enabled = true;
             collider2d.enabled = false;

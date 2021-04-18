@@ -189,7 +189,7 @@ public class PlayerLV2 : Player
     //推冰塊事件
     void PushUseObjButton()
     {
-        if (useObjButton.Pressed && isObstacle)
+        if (useObjButton.Pressed && isObstacle&&isGround)
         {
             if (hit2.collider != null && hit2.collider.gameObject.tag == "obstacle")
             {
@@ -294,7 +294,7 @@ public class PlayerLV2 : Player
                 }
             }
         }
-        else if (!useObjButton.Pressed && obstacle != null)
+        else if (!useObjButton.Pressed && obstacle != null||!isGround)
         {
             
             AudioManager.Instance.CanPausePlaySource(false, true, "IceFriction", "2");
