@@ -153,6 +153,7 @@ public class PlayerLV2 : Player
     {
         if (useObjButton.Pressed && isObstacle && hit2.collider.gameObject.tag == "organ")
         {
+            transform.rotation = new Quaternion(0, 0, 0, 0);
             rigidbody2D.velocity = Vector2.zero;
             isCanMove = false;
             isTouchOrgan = true;

@@ -13,7 +13,7 @@ public class Tonadolce : MonoBehaviour
 
     private void Update()
     {
-        if (RunnerKingController.WinNumber >= 20)
+        if (RunnerKingController.WinNumber >= 21)
         {
             Destroy(gameObject);
         }

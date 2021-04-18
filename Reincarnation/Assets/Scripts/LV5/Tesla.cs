@@ -33,6 +33,8 @@ public class Tesla : MonoBehaviour,IPoolObject
         }
         else if (RunnerKingController.WinNumber > 14 && RunnerKingController.WinNumber <= 20)
         {
+            TeslaChild[5].SetActive(true);
+            TeslaChild[6].SetActive(true);
             TeslaChild[7].SetActive(true);
             TeslaChild[8].SetActive(true);
 
@@ -53,5 +55,13 @@ public class Tesla : MonoBehaviour,IPoolObject
     void End()
     {
         isStart = false;
+    }
+
+    void Update()
+    {
+        if (RunnerKingController.WinNumber >= 21)
+        {
+            Destroy(gameObject);
+        }
     }
 }

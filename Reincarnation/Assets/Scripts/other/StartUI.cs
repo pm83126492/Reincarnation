@@ -11,12 +11,14 @@ public class StartUI : MonoBehaviour
     private string sceneToLoad;
 
     public GameObject AudioSettingCanvas;
+    public static bool isAfterStartUI;
 
 
     private void Start()
     {
         //AudioSettingCanvas.SetActive(false);
-        BGMSlider.BGMVoloume = 0.5f;
+        isAfterStartUI = true;
+        BGMSlider.BGMVoloume = 0.7f;
         AudioSlider.AudioVoloume = 1;
     }
 

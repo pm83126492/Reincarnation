@@ -46,7 +46,13 @@ public class GameControllerLV03 : MonoBehaviour
         if (SceneSingleton.Instance.m_RebirthNumber==1)
         {
             playerLV3.transform.position = RebirthPoint.transform.position;
-        }   
+        }
+
+        if (!StartUI.isAfterStartUI)
+        {
+            BGMSlider.BGMVoloume = 0.7f;
+            AudioSlider.AudioVoloume = 1;
+        }
     }
 
     // Update is called once per frame

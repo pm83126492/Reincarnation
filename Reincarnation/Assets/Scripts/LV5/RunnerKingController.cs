@@ -37,6 +37,7 @@ public class RunnerKingController : MonoBehaviour
 
     bool isAttack;
     bool isChangeButton;
+    bool isStart;
 
     public int PointNumber;
     public static int WinNumber;
@@ -82,6 +83,7 @@ public class RunnerKingController : MonoBehaviour
         FINAL,
         MOMAPPEAR,
         FINALLIGHT,
+        NONE,
     };
 
     public State RunnerKingState;
@@ -89,11 +91,16 @@ public class RunnerKingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!StartUI.isAfterStartUI)
+        {
+            BGMSlider.BGMVoloume = 0.7f;
+            AudioSlider.AudioVoloume = 1;
+        }
         FinalLightMaterial.color = new Color(2, 2, 2, 0);
         anim = GetComponent<Animator>();
         RunnerKingRb = GetComponent<Rigidbody2D>();
         PlayerTarget = GameObject.Find("Player").GetComponent<Transform>();
-        WinNumber = 19;
+        WinNumber = 0;
         SceneSingleton._Instance.SetState(0);
         Bloom tmp;
         if (volume.profile.TryGet<Bloom>(out tmp))
@@ -102,7 +109,7 @@ public class RunnerKingController : MonoBehaviour
         }
         if (!LV5Introdution.isNotOnce)
         {
-            MaxCountdownTime = 12;
+            //MaxCountdownTime = 12;
             StartCoroutine(ChangeButton());
         }
         else
@@ -111,9 +118,9 @@ public class RunnerKingController : MonoBehaviour
             UseObjButton.gameObject.SetActive(false);
             ProtectButton.gameObject.SetActive(true);
             ProtectButton.color = new Color(1, 1, 1, 0.7f);
-            MaxCountdownTime = 3;
+            isStart = true;
         }
-        
+        MaxCountdownTime = 3;
     }
 
     // Update is called once per frame
@@ -124,8 +131,14 @@ public class RunnerKingController : MonoBehaviour
         {
             CancelInvoke("ChangeIdleAnim");
             isAttack = false;
-            RunnerKingState = State.FINAL;
-            //StartCoroutine("ChangStateToFINAL");
+            StartCoroutine(ChangStateToFINAL());
+            RunnerKingState = State.NONE;
+        }
+        else if(WinNumber == 30)
+        {
+            CancelInvoke("ChangeIdleAnim");
+            isAttack = false;
+            RunnerKingState = State.FINAL ;
         }
 
         if (isChangeButton)
@@ -150,7 +163,10 @@ public class RunnerKingController : MonoBehaviour
 
     void RunnerKingStateJudgment()
     {
-        CountdownTime += Time.deltaTime;
+        if (isStart)
+        {
+            CountdownTime += Time.deltaTime;
+        }
         switch (RunnerKingState)
         {
             case State.IDLE:
@@ -216,6 +232,7 @@ public class RunnerKingController : MonoBehaviour
             case State.FINAL:
                 if (!isAttack)
                 {
+                    MomSprite.gameObject.GetComponent<BoxCollider2D>().enabled = true;
                     player.isCanMove = false;
                     Ghost.gameObject.SetActive(true);
                     player.transform.localScale = new Vector3(1, 1, 1);
@@ -255,6 +272,7 @@ public class RunnerKingController : MonoBehaviour
 
             case State.FINALLIGHT:
                 FinalLightCanvas.enabled = true;
+                //WinNumber = 21;
                 AppearTime += Time.deltaTime;
                 //bloom.intensity.value = 1.74f;
                 FinalLightMaterial.color = new Color(2, 2, 2, AppearTime / 5f);
@@ -385,7 +403,7 @@ public class RunnerKingController : MonoBehaviour
         AppearTime = 0;
         player.enabled = true;
         ProtectText.enabled = true;
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         NextButton.SetActive(true);
     }
 
@@ -395,10 +413,10 @@ public class RunnerKingController : MonoBehaviour
         RunnerKingState = State.FINAL;
     }
 
-        public void ProtectTextContinue()
+    public void ProtectTextContinue()
     {
+        isStart = true;
         ProtectPlane.enabled = false;
         ProtectText.enabled = false;
-        Time.timeScale = 1;
     }
 }

@@ -108,6 +108,12 @@ public class GameControllerLV0 : MonoBehaviour
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.72f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = 2f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 2f;
+
+        if (!StartUI.isAfterStartUI)
+        {
+            BGMSlider.BGMVoloume = 0.7f;
+            AudioSlider.AudioVoloume = 1;
+        }
     }
 
     void Update()
@@ -124,10 +130,10 @@ public class GameControllerLV0 : MonoBehaviour
             GameState = state.DoorWin;
         }
 
-        if (blackFade.CanChangeScene)
+        /*if (blackFade.CanChangeScene)
         {
             SceneManager.LoadScene("LV1");
-        }
+        }*/
     }
 
     void DoorState()
@@ -370,7 +376,8 @@ public class GameControllerLV0 : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            BlockFadeAnim.SetTrigger("FadeOut");
+            SceneSingleton.Instance.SetState(1);
+            //BlockFadeAnim.SetTrigger("FadeOut");
         }
     }
 

@@ -37,4 +37,12 @@ public class GroundAttack : MonoBehaviour, IPoolObject
     {
         gameObject.SetActive(false);
     }
+
+    void Update()
+    {
+        if (RunnerKingController.WinNumber >= 21)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

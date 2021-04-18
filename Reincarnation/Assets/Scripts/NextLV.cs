@@ -19,7 +19,7 @@ public class NextLV : MonoBehaviour
     {
         if (!isTouch)
         {
-            RunnerKingController.WinNumber = 20;
+            RunnerKingController.WinNumber = 30;
             isTouch = true;
         }
     }

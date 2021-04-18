@@ -44,7 +44,7 @@ public class FireBall : MonoBehaviour,IPoolObject
             transform.position += transform.forward * Speed * Time.deltaTime;
         }
 
-        if (RunnerKingController.WinNumber >= 20)
+        if (RunnerKingController.WinNumber >= 21)
         {
             Destroy(gameObject);
         }

@@ -17,8 +17,11 @@ public class GameControllerLV4 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BGMSlider.BGMVoloume = 0.5f;
-        AudioSlider.AudioVoloume = 1;
+        if (!StartUI.isAfterStartUI)
+        {
+            BGMSlider.BGMVoloume = 0.7f;
+            AudioSlider.AudioVoloume = 1;
+        }
 
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenX = 0.5f;
         virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_ScreenY = 0.75f;
@@ -74,7 +77,7 @@ public class GameControllerLV4 : MonoBehaviour
 
     void CanGoLV5()
     {
-        if (player.transform.position.x >= 263)
+        if (player.transform.position.x >= 258)
         {
             SceneSingleton._Instance.SetState(1);
             player.isCanMove = false;

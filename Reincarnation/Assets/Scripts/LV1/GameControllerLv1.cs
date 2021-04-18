@@ -100,6 +100,12 @@ public class GameControllerLv1 : MonoBehaviour
         {
             player.transform.position = ReloadPoint.position;
         }
+
+        if (!StartUI.isAfterStartUI)
+        {
+            BGMSlider.BGMVoloume = 0.7f;
+            AudioSlider.AudioVoloume = 1;
+        }
     }
 
     // Update is called once per frame
@@ -162,6 +168,7 @@ public class GameControllerLv1 : MonoBehaviour
 
                 if (FailTimer >= 40f)
                 {
+                    player.transform.localScale = new Vector3(1, 1, 1);
                     Camera.main.orthographic = false;
                     EyesLight.SetActive(true);
                     isFail = true;

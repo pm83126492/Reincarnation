@@ -6,6 +6,7 @@ public class FinalFireball : MonoBehaviour
 {
     public float Speed;
     bool CanFire;
+    public bool isDestoryBall;
     public GameObject target;
 
     public GameObject Explose;
@@ -38,8 +39,9 @@ public class FinalFireball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Mom")
+        if (collision.gameObject.tag == "Mom"&& isDestoryBall)
         {
+            //Destroy(gameObject);
             Spawn();
         }
     }
