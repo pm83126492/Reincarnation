@@ -10,7 +10,7 @@ public class RunnerKingController : MonoBehaviour
 {
     public Image UseObjButton;
     public Image ProtectButton;
-    public Canvas ProtectPlane;
+    public Image ProtectPlane;
     public Canvas ProtectText;
 
     public GameObject NextButton;
@@ -391,7 +391,7 @@ public class RunnerKingController : MonoBehaviour
     IEnumerator ChangeButton()
     {
         yield return new WaitForSeconds(5f);
-        ProtectPlane.enabled = true;
+        ProtectPlane.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         isChangeButton = true;
     }
@@ -416,7 +416,7 @@ public class RunnerKingController : MonoBehaviour
     public void ProtectTextContinue()
     {
         isStart = true;
-        ProtectPlane.enabled = false;
+        ProtectPlane.gameObject.SetActive(false);
         ProtectText.enabled = false;
     }
 }
