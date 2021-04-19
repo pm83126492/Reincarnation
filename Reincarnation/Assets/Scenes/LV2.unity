@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -996,7 +996,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111237412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.5, y: 4.6460514, z: -29}
+  m_LocalPosition: {x: 99.1, y: 4.6460514, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1546453066}
@@ -5339,7 +5339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.5, y: 4.6460514, z: -29}
+  m_LocalPosition: {x: 99.1, y: 4.6460514, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7598,15 +7598,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   Vertical: 0
-  PlayerRenderer: {fileID: 0}
+  PlayerRenderer: {fileID: 3701154132634879113}
   WallPhysics: {fileID: 6200000, guid: 0647407efb2044a4ca92aff0e6e90455, type: 2}
-  rigidbody2D: {fileID: 0}
-  anim: {fileID: 0}
+  rigidbody2D: {fileID: 3701154132634879122}
+  anim: {fileID: 3701154132634879112}
   runSpeed: 250
   JumpForce: 13
   ObjectsGravity: 4.5
   StopSlideTime: 0
-  isCanMove: 0
+  isCanMove: 1
   isNotStop: 0
   isNotStop2: 0
   isInWater: 0
@@ -7632,7 +7632,7 @@ MonoBehaviour:
   jump3: 0
   isJumpButton3: 0
   isGround: 1
-  isObstacle: 0
+  isObstacle: 1
   isTouch2: 0
   isTouch3: 0
   isSlide: 0
@@ -7640,11 +7640,11 @@ MonoBehaviour:
   isClimbing: 0
   isWoodGround: 0
   footOffset: 0
-  groundDistance: 0.5
-  playerWidth: 0.24
+  groundDistance: 0.3
+  playerWidth: 0.37
   forwardOffset: 0.6
-  forwardDistance: 1.2
-  forwardWidth: -0.6
+  forwardDistance: 0.83
+  forwardWidth: -0.34
   groundLayer:
     serializedVersion: 2
     m_Bits: 4352
@@ -7883,7 +7883,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452752609}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 107.16, y: 3.9400003, z: 0}
+  m_LocalPosition: {x: 99.7, y: 3.9400003, z: 0}
   m_LocalScale: {x: 0.7067555, y: 0.7067555, z: 0.7067555}
   m_Children: []
   m_Father: {fileID: 1114987420}
@@ -22558,7 +22558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2730510420802479786
 Transform:
   m_ObjectHideFlags: 0
@@ -29248,7 +29248,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08030701, y: 1.6685591}
+  m_Offset: {x: 0.0013847351, y: 1.6685591}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.42, y: 0.1}
@@ -29259,7 +29259,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2700043, y: 3.5107255}
+  m_Size: {x: 0.72537994, y: 3.5107255}
   m_EdgeRadius: 0
 --- !u!33 &3701154132634879126
 MeshFilter:
@@ -29277,7 +29277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701154132634879117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.5, y: 2.05, z: 0}
+  m_LocalPosition: {x: 99.1, y: 2.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1387265963}

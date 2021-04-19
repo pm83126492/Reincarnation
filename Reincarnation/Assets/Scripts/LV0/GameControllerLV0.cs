@@ -27,6 +27,7 @@ public class GameControllerLV0 : MonoBehaviour
     public Line line;//符畫線程式
     public PlayableDirector playableDirector;//TimeLine
     public CinemachineVirtualCamera virtualCamera;//攝影機
+    public BoxCollider2D GhostWall;
 
     public Material DoorCircleLightMaterial;//解謎門花圈Material
     public Material DoorCrackHDR;//門縫發光Material
@@ -217,7 +218,7 @@ public class GameControllerLV0 : MonoBehaviour
                 break;
 
             case state.EnemyAppearUI:
-
+                GhostWall.enabled = false;
                 player.isCanMove = true;
                 player.anim.SetBool("SquatPush", false);
                 if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
