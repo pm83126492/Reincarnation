@@ -413,7 +413,7 @@ public class PlayerLV4 : Player
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("boxGround") && collision.gameObject.GetComponent<WoodGround>().isFallingWater)
+        if (collision.gameObject.CompareTag("boxGround") && collision.gameObject.GetComponent<WoodGround>().isFallingWater&&!isInWater)
         {
             isWoodGround = true;
             transform.parent = collision.transform;
@@ -422,7 +422,7 @@ public class PlayerLV4 : Player
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("boxGround") && collision.gameObject.GetComponent<WoodGround>().isFallingWater)
+        if (collision.gameObject.CompareTag("boxGround") && collision.gameObject.GetComponent<WoodGround>().isFallingWater && !isInWater)
         {
             isWoodGround = false;
             transform.parent = null;
