@@ -48,12 +48,14 @@ public class PlayerLV2 : Player
                 {
                     if (joystick.Horizontal > 0)
                     {
+                        transform.rotation = new Quaternion(0, 0, 0, 0);
                         anim.enabled = true;
                         anim.SetBool("Push", true);
                         anim.SetBool("-Push", false);
                     }
                     else if (joystick.Horizontal < 0)
                     {
+                        transform.rotation = new Quaternion(0, 180, 0, 0);
                         anim.enabled = true;
                         anim.SetBool("Push", false);
                         anim.SetBool("-Push", true);
@@ -69,6 +71,7 @@ public class PlayerLV2 : Player
                 {
                     Obstacle();
                     obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.SetBool("SquatPush", true);
                 }
                 else if (hit2.collider != null && hit2.collider.gameObject.tag == "SmallobstacleRight")
@@ -77,6 +80,7 @@ public class PlayerLV2 : Player
                     obstacle.GetComponent<Rigidbody2D>().gravityScale = ObjectsGravity;
                     if (rigidbody2D.velocity.x > 0)
                     {
+                        transform.rotation = new Quaternion(0, 180, 0, 0);
                         anim.SetBool("SquatPush", false);
                         obstacle.GetComponent<Rigidbody2D>().gravityScale = 10;
                         obstacle.GetComponent<FixedJoint2D>().enabled = false;
@@ -196,12 +200,14 @@ public class PlayerLV2 : Player
                 isPushObstacle = true;
                 if (joystick.Horizontal > 0)
                 {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("Push", true);
                     anim.SetBool("-Push", false);
                 }
                 else if (joystick.Horizontal < 0)
                 {
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("Push", false);
                     anim.SetBool("-Push", true);
@@ -230,12 +236,14 @@ public class PlayerLV2 : Player
                 isPushObstacle = true;
                 if (joystick.Horizontal > 0)
                 {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", true);
                     anim.SetBool("-SquatPush", false);
                 }
                 else if (joystick.Horizontal < 0)
                 {
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", false);
                     anim.SetBool("-SquatPush", true);
@@ -265,12 +273,14 @@ public class PlayerLV2 : Player
                 isPushObstacle = true;
                 if (joystick.Horizontal < 0)
                 {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", true);
                     anim.SetBool("-SquatPush", false);
                 }
                 else if (joystick.Horizontal > 0)
                 {
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", false);
                     anim.SetBool("-SquatPush", true);
