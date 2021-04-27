@@ -6,13 +6,21 @@ public class PlayerLV5 : Player
 {
     public bool isCanNotAttacked;
     bool isAvoidCD;
+
+    int DieNumber;
+
     public ParticleSystem ShieldEffect;
 
     public AudioSource audioSource;
     public AudioClip safeAudio;
     public AudioClip BeAttackAudio;
 
+    public RunnerKingController runnerKingController;
+
+    public GameObject LianAppearEffect;
+
     public CDImage cdImage;
+    public ObjectPool objectPool;
 
     protected override void Start()
     {
@@ -68,7 +76,16 @@ public class PlayerLV5 : Player
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
-            Invoke("PlayerDie", 2f);
+            DieNumber += 1;
+            if (DieNumber >= 2)
+            {
+                Invoke("PlayerDie", 2f);
+            }
+            else
+            {
+                runnerKingController.isStart = false;
+                Invoke("PlayerRebirth", 3f);
+            }
         }
     }
 
@@ -99,4 +116,16 @@ public class PlayerLV5 : Player
         SceneSingleton.Instance.SetState(2);
     }
 
+    void PlayerRebirth()
+    {
+        transform.position = new Vector3(0, transform.position.y, transform.position.z);
+        runnerKingController.isStart = true;
+        runnerKingController.MaxCountdownTime = 3;
+        //runnerKingController.RunnerKingState = RunnerKingController.State.IDLE;
+        objectPool.SpawnFromPool("AppearEffect", transform.position, ShieldEffect.transform.rotation);
+        isCanMove = true;
+        isCanNotAttacked = false;
+        anim.SetBool("AttackDie", false);
+        anim.Play("Idle");
+    }
 }

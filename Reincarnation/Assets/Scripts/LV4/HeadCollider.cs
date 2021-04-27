@@ -67,9 +67,17 @@ public class HeadCollider : MonoBehaviour
         if (!isPlayDrownAudio)
         {
             AudioManager.Instance.PlaySource("Drown", "4");
+            playerLV4.anim.SetBool("WillSwim", false);
             isPlayDrownAudio = true;
         }
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);
+        if (playerLV4.transform.localScale.x > 0)
+        {
+            playerLV4.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);
+        }
+        else if (playerLV4.transform.localScale.x < 0)
+        {
+            playerLV4.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
+        }
         playerLV4.isInWater = playerLV4.isCanMove = playerLV4.isEnemyAttack = false;
         playerLV4.rigidbody2D.velocity = Vector2.zero;
         playerLV4.rigidbody2D.isKinematic = false;

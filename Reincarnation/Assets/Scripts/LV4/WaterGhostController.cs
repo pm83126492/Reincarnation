@@ -82,6 +82,7 @@ public class WaterGhostController : MonoBehaviour
             playerLV4.anim.SetBool("SwimingBeginIdle", false);
             playerLV4.anim.SetBool("SwimingIdle", false);
             playerLV4.anim.SetBool("Swiming", false);
+            playerLV4.anim.SetBool("WillSwim", false);
             playerLV4.anim.SetBool("WaterGhostAttack", true);
         }
     }

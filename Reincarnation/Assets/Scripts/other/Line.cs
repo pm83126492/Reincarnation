@@ -16,6 +16,8 @@ public class Line : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            fingerPositions.Clear();
+            LineCollider.ColliderNumber = 0;
             theTrail = (GameObject)Instantiate(drawPrefab, transform.position, Quaternion.identity,transform);
             TrailList.Add(theTrail);
         }
@@ -29,12 +31,20 @@ public class Line : MonoBehaviour
             if (objPlane.Raycast(mRay, out rayDistance))
                 this.transform.position = mRay.GetPoint(rayDistance);
             UpdateLine((Vector2)transform.position);
-            edgeCollider.points = fingerPositions.ToArray();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             theTrail.transform.parent = LinePrefab;
+            fingerPositions.Clear();
+            for (int i = 0; i < TrailList.Count; i++)
+            {
+                Destroy(TrailList[i]);
+                if (i == TrailList.Count - 1)
+                {
+                    TrailList.Clear();
+                }
+            }
             //TrailList.Add(theTrail);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Cinemachine;
 using UnityEngine.Playables;
 
@@ -12,6 +12,8 @@ public class GameControllerLV0 : MonoBehaviour
     public Canvas SkipUI;//跳過教學Canvas
     public Canvas GetStickUI;//獲得禪杖Canvas
     public Canvas ButtonCanvas;//移動ButtonCavcas
+
+    public Image NextLVButton;
 
     public CanvasGroup DoorCanvasGroup;//解謎門CanvasGroup
     public CanvasGroup DoorCicleFlowerCanvasGroup;//解謎門花圈CanvasGroup
@@ -119,6 +121,8 @@ public class GameControllerLV0 : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(LineCollider.ColliderNumber);
+
         PlayableTime();//教學關TimeLine時間
 
         DoorState();//關卡門狀態機
@@ -126,7 +130,7 @@ public class GameControllerLV0 : MonoBehaviour
         UIEvent();//教學關使用物件碰撞
 
         //解謎成功
-        if (IsWin == true && IsWin02 == true)
+        if (IsWin == true && IsWin02 == true&& !isDoorAudio)
         {
             GameState = state.DoorWin;
         }
@@ -221,6 +225,7 @@ public class GameControllerLV0 : MonoBehaviour
                 GhostWall.enabled = false;
                 player.isCanMove = true;
                 player.anim.SetBool("SquatPush", false);
+                player.anim.SetBool("Slide", false);
                 if (player.isObstacle == true && player.hit2.collider.gameObject.tag == "EnemyAppearCollider")
                 {
                     ghostControllder.enabled = true;
@@ -250,6 +255,7 @@ public class GameControllerLV0 : MonoBehaviour
 
                 if (ghostControllder.isGhostAttackDie)
                 {
+                    LineCollider.ColliderNumber = 0;
                     StartCoroutine(GhostAttack());
                     GameState = state.DrawAppearUI;
                     ghostControllder.isPlayGhostComeAudio = false;
@@ -378,6 +384,7 @@ public class GameControllerLV0 : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             SceneSingleton.Instance.SetState(1);
+            player.isCanMove = false;
             //BlockFadeAnim.SetTrigger("FadeOut");
         }
     }
@@ -452,6 +459,7 @@ public class GameControllerLV0 : MonoBehaviour
     {
         if (player.isObstacle == true)
         {
+            player.isCanMove = false;
             DoorCanvas.enabled = true;
             GameState = state.DoorLightFadeIn;
         }
@@ -504,6 +512,7 @@ public class GameControllerLV0 : MonoBehaviour
     public void CloseGetStickUI()
     {
         Time.timeScale = 1;
+        NextLVButton.enabled = true;
         GetStickUI.enabled = false;
         player.isCanMove = true;
     }
@@ -543,7 +552,7 @@ public class GameControllerLV0 : MonoBehaviour
         ghostControllder.isDrawUI = false;
         ghostControllder.isGhostAttackDie = false;
         ghostControllder.SignAppearTime = 0;
-        LineCollider.ColliderNumber = 0;
+        //LineCollider.ColliderNumber = 0;
         GhostAttackUI.SetActive(false);
         for (int i = 0; i< line.TrailList.Count; i++)
         {

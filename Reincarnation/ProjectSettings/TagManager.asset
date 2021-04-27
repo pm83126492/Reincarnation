@@ -39,6 +39,7 @@ TagManager:
   - Fx
   - Wall
   - Mom
+  - WaterGhostSpeed
   layers:
   - Default
   - TransparentFX

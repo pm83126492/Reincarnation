@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class IntrodutionUI : MonoBehaviour
 {
@@ -12,9 +12,13 @@ public class IntrodutionUI : MonoBehaviour
     public Player player;
     public static bool isNotOnce;
     public static int SceneNubmer;
+
+    public Image NextLVButton;
     // Start is called before the first frame update
     void Start()
     {
+        NextLVButton = GameObject.Find("NextLV").GetComponentInChildren<Image>();
+        NextLVButton.enabled = false;
         /*if (SceneNubmer != SceneManager.GetActiveScene().buildIndex)
         {
             isNotOnce = false;
@@ -22,6 +26,7 @@ public class IntrodutionUI : MonoBehaviour
         }*/
         if (isNotOnce)
         {
+            NextLVButton.enabled = true;
             canvasGroup.alpha = 0;
             gameObject.SetActive(false);
         }
@@ -44,6 +49,7 @@ public class IntrodutionUI : MonoBehaviour
                 canvasGroup.gameObject.SetActive(false);
             }
             isNotOnce = true;
+            NextLVButton.enabled = true;
         }
     }
 

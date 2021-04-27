@@ -37,7 +37,7 @@ public class RunnerKingController : MonoBehaviour
 
     bool isAttack;
     bool isChangeButton;
-    bool isStart;
+    public bool isStart;
 
     public int PointNumber;
     public static int WinNumber;
@@ -63,6 +63,7 @@ public class RunnerKingController : MonoBehaviour
     public GameObject MomEffect;
     public Transform MomEffectPoint;
     public SpriteRenderer MomSprite;
+    public SpriteRenderer LianSprite;
 
     public ObjectPool objectPool;
 
@@ -82,6 +83,7 @@ public class RunnerKingController : MonoBehaviour
         TESLAATTACK,
         FINAL,
         MOMAPPEAR,
+        LIANAPPEAR,
         FINALLIGHT,
         NONE,
     };
@@ -384,7 +386,8 @@ public class RunnerKingController : MonoBehaviour
 
     void FinalAttackEvent2()
     {
-        Instantiate(MomEffect, MomEffectPoint.position, MomEffect.transform.rotation);
+        //Instantiate(MomEffect, MomEffectPoint.position, MomEffect.transform.rotation);
+        objectPool.SpawnFromPool("AppearEffect", MomEffectPoint.transform.position, MomEffectPoint.transform.rotation);
         RunnerKingState = State.MOMAPPEAR;
     }
 

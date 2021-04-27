@@ -124,7 +124,7 @@ public class PlayerLV2 : Player
         rope.ChangeRopeBendLimit(0);
         gameObject.transform.position = OrganPosition.position;
         gameObject.transform.localScale = new Vector3(1, 1, 1);
-        if (organIce.transform.position.y < 11)
+        if (organIce.transform.position.y < 12.5f)
         {
             if (!isPlayOrganAudio)
             {
@@ -136,9 +136,9 @@ public class PlayerLV2 : Player
         }
         organIce.GetComponent<Rigidbody2D>().isKinematic = true;
         organIce.GetComponent<Rigidbody2D>().velocity = Vector2.up * 1f;
-        if (organIce.transform.position.y >= 11f)
+        if (organIce.transform.position.y >= 12.5f)
         {
-            organIce.transform.position = new Vector3(organIce.transform.position.x, 11f, organIce.transform.position.z);
+            organIce.transform.position = new Vector3(organIce.transform.position.x, 12.5f, organIce.transform.position.z);
             anim.enabled = false;
             if (isPlayOrganAudio)
             {

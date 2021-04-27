@@ -47,6 +47,9 @@ public class PlayerLV4 : Player
     public BoxCollider2D HeadCollider;
 
     public SortingGroup sortingGroup;
+
+    public WaterGhostController waterGhostController;
+    public BoxCollider2D SpeedCollider;
     protected override void Start()
     {
         base.Start();
@@ -164,6 +167,7 @@ public class PlayerLV4 : Player
                 isInWaterLadder = isClimbing = true;
                 anim.SetBool("SwimingIdle", false);
                 anim.SetBool("Swiming", false);
+                anim.SetBool("WillSwim", false);
                 anim.SetBool("Climb", true);
                 WaterVcam.SetActive(false);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -255,6 +259,7 @@ public class PlayerLV4 : Player
         {
             if (!isThrow)
             {
+                SpeedCollider.enabled = false;
                 anim.SetBool("Throw",true);
                 HeadCam.SetActive(true);
                 isCanMove = false;
@@ -305,6 +310,11 @@ public class PlayerLV4 : Player
                 }
 
         }
+
+        if (other.CompareTag("WaterGhostSpeed"))
+        {
+            waterGhostController.speed = 300;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -337,6 +347,7 @@ public class PlayerLV4 : Player
                 transform.parent = other.gameObject.transform;
                 transform.localPosition = new Vector3(0f, transform.localPosition.y, transform.localPosition.z);
                 isInWaterLadder = isClimbing = true;
+                anim.SetBool("WillSwim", false);
                 anim.SetBool("SwimingIdle", false);
                 anim.SetBool("Swiming", false);
                 anim.SetBool("Climb", true);

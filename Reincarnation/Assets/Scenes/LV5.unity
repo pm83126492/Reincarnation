@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -655,7 +655,7 @@ PrefabInstance:
     - target: {fileID: 9181853847141665561, guid: e20e6981bbdcf7c47bc40cfdff88381e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e20e6981bbdcf7c47bc40cfdff88381e, type: 3}
@@ -746,7 +746,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 1420443717}
   m_PlaneDistance: 18.44
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -860,8 +860,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -963, y: 552.2}
-  m_SizeDelta: {x: 1502.9106, y: 976.6466}
+  m_AnchoredPosition: {x: -963, y: 710.2}
+  m_SizeDelta: {x: 1502.9106, y: 1195.7162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &381563577
 GameObject:
@@ -1231,6 +1231,7 @@ MonoBehaviour:
   MaxCountdownTime: 0
   AnimoverTime: 3
   BrustSpeed: 0
+  isStart: 0
   PointNumber: 0
   Fireball: {fileID: 1141178501527027645, guid: d87403ba333c7ba44bb86b6f572da9a1,
     type: 3}
@@ -1252,6 +1253,7 @@ MonoBehaviour:
     type: 3}
   MomEffectPoint: {fileID: 2023331534}
   MomSprite: {fileID: 218322003}
+  LianSprite: {fileID: 0}
   objectPool: {fileID: 1904274866}
   audioSource: {fileID: 500867406}
   EffectAudio:
@@ -1681,7 +1683,7 @@ PrefabInstance:
     - target: {fileID: 3885087623390739946, guid: 530bcb523a8dd1a48976081dca7c29fc,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3885087623390739951, guid: 530bcb523a8dd1a48976081dca7c29fc,
         type: 3}
@@ -2646,7 +2648,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 1420443717}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -3030,16 +3032,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317749560}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 362628233}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -183, y: -63}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -183.0003, y: 425.43967}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1317749562
@@ -3378,7 +3380,7 @@ GameObject:
   - component: {fileID: 1420443716}
   - component: {fileID: 1420443715}
   m_Layer: 0
-  m_Name: Main Camera (1)
+  m_Name: Main CameraIpad
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4164,11 +4166,15 @@ MonoBehaviour:
       type: 3}
     size: 2
   - tag: Tesla
-    prefab: {fileID: 1363625296658656702, guid: 3c2d326ab90db05489ac7fb7436d0f0e,
+    prefab: {fileID: 8735818743973112437, guid: 648ae285eff9e404eb500352f071eaba,
       type: 3}
     size: 1
   - tag: Explosion
     prefab: {fileID: 7977524528925500169, guid: b535fd839bb4f494e813102a32689a6a,
+      type: 3}
+    size: 1
+  - tag: AppearEffect
+    prefab: {fileID: 8117584524505407498, guid: aa152b8211645ab4a8f4d43b4c4f4cd2,
       type: 3}
     size: 1
 --- !u!4 &1904274867
@@ -4306,13 +4312,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2023331533}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.28, y: -0.03, z: 0}
   m_LocalScale: {x: 0.34467447, y: 0.34467447, z: 0.34467447}
   m_Children: []
   m_Father: {fileID: 3701154132634879127}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &2040417050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400012, guid: 4d72a4ceba550bc42a5d36ae0e9e848d,
@@ -4496,7 +4502,7 @@ Canvas:
   m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 1420443717}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4666,7 +4672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.29803923}
+  m_Color: {r: 0.4811321, g: 0.0022694964, b: 0.03406828, a: 0.8666667}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -109160,7 +109166,10 @@ MonoBehaviour:
   audioSource: {fileID: 3701154132634879120}
   safeAudio: {fileID: 8300000, guid: 556038ef1583a234b9b86bcc0b0fedfe, type: 3}
   BeAttackAudio: {fileID: 8300000, guid: 35a8f8d93863c9f4795ab1a97ff1a90c, type: 3}
+  runnerKingController: {fileID: 500867405}
+  LianAppearEffect: {fileID: 0}
   cdImage: {fileID: 2120142877}
+  objectPool: {fileID: 1904274866}
 --- !u!82 &3701154132634879120
 AudioSource:
   m_ObjectHideFlags: 0
@@ -109589,7 +109598,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 1420443717}
   m_PlaneDistance: 19.18
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -110368,7 +110377,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 1420443717}
   m_PlaneDistance: 20.8
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
