@@ -207,7 +207,7 @@ public class PlayerLV2 : Player
                 }
                 else if (joystick.Horizontal < 0)
                 {
-                    transform.rotation = new Quaternion(0, 180, 0, 0);
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("Push", false);
                     anim.SetBool("-Push", true);
@@ -243,7 +243,7 @@ public class PlayerLV2 : Player
                 }
                 else if (joystick.Horizontal < 0)
                 {
-                    transform.rotation = new Quaternion(0, 180, 0, 0);
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", false);
                     anim.SetBool("-SquatPush", true);
@@ -273,7 +273,7 @@ public class PlayerLV2 : Player
                 isPushObstacle = true;
                 if (joystick.Horizontal < 0)
                 {
-                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", true);
                     anim.SetBool("-SquatPush", false);
@@ -326,13 +326,18 @@ public class PlayerLV2 : Player
         if (collision.gameObject.CompareTag("DieObjects"))
         {
             //Physics2D.IgnoreLayerCollision(9, 12);
-            GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
-            GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
+            if (isGround)
+            {
+                GetComponent<BoxCollider2D>().offset = new Vector2(-0.08030701f, -0.04518163f);
+                GetComponent<BoxCollider2D>().size = new Vector2(1.270004f, 0.08324409f);
+            }
+
             if (!isPlayFallIceAudio)
             {
                 AudioManager.Instance.PlaySource("FallIce", "2");
                 isPlayFallIceAudio = true;
             }
+
             //GetComponent<PlayerLV2>().enabled = false;
             isCanMove = false;
             rigidbody2D.sharedMaterial = null;
@@ -347,4 +352,5 @@ public class PlayerLV2 : Player
         SceneSingleton._Instance.SetState(2);
         //BlackAnim.SetTrigger("FadeOut");
     }
+
 }
