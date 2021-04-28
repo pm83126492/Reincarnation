@@ -334,6 +334,7 @@ public class PlayerLV2 : Player
 
             if (!isPlayFallIceAudio)
             {
+                Debug.Log("OK");
                 AudioManager.Instance.PlaySource("FallIce", "2");
                 isPlayFallIceAudio = true;
             }
