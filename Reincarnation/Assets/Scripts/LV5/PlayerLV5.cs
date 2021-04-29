@@ -7,7 +7,7 @@ public class PlayerLV5 : Player
     public bool isCanNotAttacked;
     bool isAvoidCD;
 
-    int DieNumber;
+    public int DieNumber;
 
     public ParticleSystem ShieldEffect;
 
@@ -22,6 +22,9 @@ public class PlayerLV5 : Player
     public CDImage cdImage;
     public ObjectPool objectPool;
 
+    public float SignAppearTime;//符咒顯示時間
+    public CanvasGroup SignCanvasGroup;//符咒CanvasGroup
+    public GameObject DrawObject, DrawCanvas;//符咒物件 符咒Canvas
     protected override void Start()
     {
         SceneSingleton.Instance.SetState(0);
@@ -36,6 +39,8 @@ public class PlayerLV5 : Player
     protected override void Update()
     {
         base.Update();
+
+        DrawToNoDie();
 
         AvoidAttack();
     }
@@ -77,19 +82,20 @@ public class PlayerLV5 : Player
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
             DieNumber += 1;
-            if (DieNumber >= 2)
+            if (DieNumber >= 3)
             {
                 Invoke("PlayerDie", 2f);
             }
             else
             {
                 runnerKingController.isStart = false;
-                Invoke("PlayerRebirth", 3f);
+                Invoke("PlayerDie", 5f);
+                //Invoke("PlayerRebirth", 3f);
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+   /* private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("RunnerKingAttack") && !isCanNotAttacked)
         {
@@ -107,12 +113,15 @@ public class PlayerLV5 : Player
             isCanMove = false;
             isCanNotAttacked = true;
             anim.SetBool("AttackDie", true);
-            Invoke("PlayerDie", 2f);
+            Invoke("PlayerDie", 5f);
         }
-    }
+    }*/
 
     void PlayerDie()
     {
+        DrawObject.SetActive(false);
+        DrawCanvas.SetActive(false);
+        DieNumber += 1;
         SceneSingleton.Instance.SetState(2);
     }
 
@@ -127,5 +136,35 @@ public class PlayerLV5 : Player
         isCanNotAttacked = false;
         anim.SetBool("AttackDie", false);
         anim.Play("Idle");
+    }
+
+    void DrawToNoDie()
+    {
+        if (DieNumber == 1)
+        {
+            SignAppearTime += Time.deltaTime;
+            SignCanvasGroup.alpha = SignAppearTime / 1f;
+            if (SignCanvasGroup.alpha == 1)
+            {
+                DrawObject.SetActive(true);
+            }
+
+            if (LineCollider.ColliderNumber == 6)
+            {
+                DieNumber += 1;
+                transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                runnerKingController.isStart = true;
+                runnerKingController.MaxCountdownTime = 3;
+                //runnerKingController.RunnerKingState = RunnerKingController.State.IDLE;
+                objectPool.SpawnFromPool("AppearEffect", transform.position, ShieldEffect.transform.rotation);
+                isCanMove = true;
+                isCanNotAttacked = false;
+                anim.SetBool("AttackDie", false);
+                anim.Play("Idle");
+                CancelInvoke("PlayerDie");
+                DrawCanvas.SetActive(false);
+                DrawObject.SetActive(false);
+            }
+        }
     }
 }

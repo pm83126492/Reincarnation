@@ -29,12 +29,10 @@ public class FireBall : MonoBehaviour,IPoolObject
         //transform.LookAt(target.transform);
         Invoke("Fire",1f);
     }
-    /*oid Start()
+    void Start()
     {
-        target = GameObject.Find("Player");
-        transform.LookAt(target.transform);
-        Invoke("Fire",1f);
-    }*/
+        Physics2D.IgnoreLayerCollision(5, 0);
+    }
 
     // Update is called once per frame
     void Update()
