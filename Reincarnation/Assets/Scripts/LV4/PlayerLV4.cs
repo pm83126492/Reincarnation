@@ -114,12 +114,14 @@ public class PlayerLV4 : Player
                 isPushObstacle = true;
                 if (joystick.Horizontal > 0)
                 {
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", true);
                     anim.SetBool("-SquatPush", false);
                 }
                 else if (joystick.Horizontal < 0)
                 {
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                     anim.enabled = true;
                     anim.SetBool("SquatPush", false);
                     anim.SetBool("-SquatPush", true);

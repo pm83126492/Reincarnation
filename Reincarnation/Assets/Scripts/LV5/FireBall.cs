@@ -31,7 +31,7 @@ public class FireBall : MonoBehaviour,IPoolObject
     }
     void Start()
     {
-        Physics2D.IgnoreLayerCollision(5, 0);
+        //Physics2D.IgnoreLayerCollision(5, 0);
     }
 
     // Update is called once per frame

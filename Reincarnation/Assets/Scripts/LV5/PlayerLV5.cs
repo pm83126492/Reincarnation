@@ -39,7 +39,7 @@ public class PlayerLV5 : Player
     protected override void Update()
     {
         base.Update();
-
+        Debug.Log(LineCollider.ColliderNumber);
         DrawToNoDie();
 
         AvoidAttack();
@@ -88,8 +88,9 @@ public class PlayerLV5 : Player
             }
             else
             {
+                DrawCanvas.SetActive(true);
                 runnerKingController.isStart = false;
-                Invoke("PlayerDie", 5f);
+                Invoke("PlayerDie", 6f);
                 //Invoke("PlayerRebirth", 3f);
             }
         }
@@ -149,9 +150,10 @@ public class PlayerLV5 : Player
                 DrawObject.SetActive(true);
             }
 
-            if (LineCollider.ColliderNumber == 6)
+            if (LineCollider.ColliderNumber == 9)
             {
                 DieNumber += 1;
+                LineCollider.ColliderNumber += 1;
                 transform.position = new Vector3(0, transform.position.y, transform.position.z);
                 runnerKingController.isStart = true;
                 runnerKingController.MaxCountdownTime = 3;

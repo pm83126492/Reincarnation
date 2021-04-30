@@ -121,8 +121,6 @@ public class GameControllerLV0 : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(LineCollider.ColliderNumber);
-
         PlayableTime();//教學關TimeLine時間
 
         DoorState();//關卡門狀態機

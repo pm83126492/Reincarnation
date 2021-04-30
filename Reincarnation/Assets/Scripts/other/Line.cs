@@ -35,6 +35,7 @@ public class Line : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            //LineCollider.ColliderNumber = 0;
             theTrail.transform.parent = LinePrefab;
             fingerPositions.Clear();
             for (int i = 0; i < TrailList.Count; i++)
