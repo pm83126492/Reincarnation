@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4595,7 +4595,7 @@ MonoBehaviour:
       type: 3}
     size: 2
   - tag: Tesla
-    prefab: {fileID: 8735818743973112437, guid: 648ae285eff9e404eb500352f071eaba,
+    prefab: {fileID: 1363625296658656702, guid: 3c2d326ab90db05489ac7fb7436d0f0e,
       type: 3}
     size: 1
   - tag: Explosion
