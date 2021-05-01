@@ -148,12 +148,12 @@ public class RunnerKingController : MonoBehaviour
             AppearTime += Time.deltaTime;
             if (UseObjButton.color.a > 0)
             {
-                UseObjButton.color = new Color(1, 1, 1, 0.7f - AppearTime / 3f);
+                UseObjButton.color = new Color(1, 1, 1, 0.7f - AppearTime / 1.5f);
             }
             else
             {
                 AppearTime2 += Time.deltaTime;
-                ProtectButton.color= new Color(1, 1, 1, AppearTime2 / 3f);
+                ProtectButton.color= new Color(1, 1, 1, AppearTime2 / 1.5f);
                 if (ProtectButton.color.a >= 0.7f)
                 {
                     StartCoroutine("ChangeButton2");
@@ -393,7 +393,7 @@ public class RunnerKingController : MonoBehaviour
 
     IEnumerator ChangeButton()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         ProtectPlane.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         isChangeButton = true;
@@ -401,7 +401,7 @@ public class RunnerKingController : MonoBehaviour
 
     IEnumerator ChangeButton2()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         UseObjButton.gameObject.SetActive(false);
         AppearTime = 0;
         player.enabled = true;

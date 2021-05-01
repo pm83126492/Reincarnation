@@ -39,7 +39,7 @@ public class PlayerLV5 : Player
     protected override void Update()
     {
         base.Update();
-        Debug.Log(LineCollider.ColliderNumber);
+
         DrawToNoDie();
 
         AvoidAttack();

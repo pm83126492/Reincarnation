@@ -8,7 +8,7 @@ public class EndToStart : MonoBehaviour
     void Start()
     {
         SceneSingleton._Instance.SetState(0);
-        Time.timeScale = 1;
+        Time.timeScale = 1.3f;
     }
     public void ChangeScene()
     {

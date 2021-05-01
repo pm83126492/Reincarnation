@@ -92,6 +92,7 @@ public class GameControllerLV0 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StopAllCoroutines();
         PlayerAnim.runtimeAnimatorController = NotrickAnim as RuntimeAnimatorController;
         bloom.SetActive(false);
         Door.SetActive(true);
@@ -117,6 +118,8 @@ public class GameControllerLV0 : MonoBehaviour
             BGMSlider.BGMVoloume = 0.7f;
             AudioSlider.AudioVoloume = 1;
         }
+
+        DoorCollider.enabled = true;
     }
 
     void Update()
